@@ -1,0 +1,277 @@
+=======================
+Module 2: AWS IAM  - Part 3
+=======================
+11) Exam Tips
+12) Exam #2 - AWS IAM
+
+============
+11) Exam Tips
+============
+
+1) IAM Service:
+--------------------
+=> IAM is a Global Service so does not require Region Selection
+
+2) Root Account:
+--------------------
+=> Root Account is an Account created when you Sign-Up the AWS first time.
+=> Root Account has full Administative Access to All AWS Resources.
+=> So You need to Secure the Root Account.
+
+3) Users:
+------------
+=>   One User = One Physical Person
+=>  When User is first created , No Permisions will be given
+=> Dont Assign the Policies to Users directly
+
+4) Groups:
+-------------
+=> Group contains Users
+=> Group does not contain another Group.
+=> Always Assign the Policies to Groups 
+
+5) Roles:
+-----------
+=> For Internal use to access AWS Resources
+=> Assign the Policies to Roles
+
+6) Policies:
+--------------
+=> You can assign the Permissions  using Policy Documents
+=> Policy Documents are written in JSON
+
+Ex: AdministratorAccess
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principle":"*"
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
+}
+
+7) Username and Passowrd:
+-----------------------------------
+=> To Access AWS management Console
+
+8) Access Key ID and Secret Access Key:
+---------------------------------------------------
+=> To Access AWS Services from AWS CLI/SDK/Other Dev Tools
+=> You can see these only once. So download and keep safely.
+=> If you lost them , You have to Re-Generate.
+
+9) Identity Federation:
+----------------------------
+=> You can combine Your Existing User Accounts with AWS
+=> Use SAML Standard, Which is Active Directory
+Ex:
+When login to your PC , You can use same credentials to login to AWS also If you set Federation.
+
+10)Security:
+----------------
+=> Enable MFA
+=> Set Password Policy
+=> Set Password Rotation Policy
+
+11) Audit:
+-------------
+=> IAM Credential Report   - Account Level
+=> IAM Access Advisor - User Level
+
+===================
+12) Exam #2 - AWS IAM
+===================
+
+Q1) As part of the security administration team, one of your tasks is to determine the IAM users who have not logged into their AWS accounts for the past 30 days. What are the different options that you can implement?
+
+A) Using console, download the credential report 
+B) AWS CLI list-users command
+C) AWS API call on IAM
+D) All of the above                
+
+Ans: D
+
+Q2)As your development team is growing, you have identified that onboarding and managing the developer's account is becoming tedious. Developers should have access to only resources tagged to development, and once they leave the team, remove their access. What would be your recommendation?
+
+A) Set up a checklist for onboarding, and exit and manage permission for each user
+B) Define a dedicated development super user IAM account and share credentials with all the developer
+C) Create individual IAM user for developer and manage permission through policies
+D) Create a developer group, attach policy to the group and add IAM developer user account to the group 
+
+Ans: D
+
+Q3) You are building an application that will invoke AWS API for S3 to list all the bucket items. In the app, you are using the AWS SDK. What method would you use to authenticate the user to allow access to AWS API?
+
+A) Store the User Name and Password for IAM user in config file for application and use it to authenticate user on AWS from the web application
+B) Generate the Access Key and Secret Key for the IAM user and use these to authenticate user on AWS from the web applications 
+C) Invoke AWS API on SSL connection
+D) Provide dedicated access to the application for that to access the AWS resource
+
+Ans: B
+
+Q4) One of the vendors working with your organization wants to have access to your AWS resources to perform operations. As a security architect, what would be your recommended approach?
+
+A) Create an Admin IAM account for them and provide them with credentials
+B) Share your Access Key with the vendor
+C) Create an IAM role and map it to your vendor AWS Account 
+D) Build an IAM policy for your vendor
+
+Ans:  C
+
+Q5) As a part of the external security audit, it has been identified that the IAM users with administrator access are using highly predictable password like Srinivas123 What is you recommendation to fix this security issue?
+
+A) Reach out to the IAM user with administrative access to change to complex password
+B) Set up a password policy for all the IAM user 
+C) Ask root user to change password for all IAM Admin accounts and then share password with IAM users
+D) Set up password rotation policy
+
+Ans: B
+
+Q6) A developer in your team needs to access S3 bucket. As an IAM administrator, what would be your recommended approach?
+
+A) Grant permission to the developers to access IAM account
+B) Attach S3 Full access policy to developer IAM account
+C) Create a Customer managed policy for the S3 bucket. Attach the policy to IAM account 
+D) Attach S3 Full access AWS managed policy to the Developer Group
+
+Ans: C
+
+Q7)  A developer working in your team has mistakenly eliminated AWS Access Key from your QA environment, and there is no back up available for those. How do you solve this problem?
+
+A) Under IAM role, you can retrieve the lost Access Key
+B) Provide Access Key from another IAM account
+C) Redeploy the QA application, and the key will be restored
+D) Inactivate the older key and generate a new key which should be updated in the QA environment
+
+Ans:  D
+
+Q8) As your organisation is setting up the AWS environment, you hired a 3rd party contractor to assist you with the setup. The 3rd party contractor has IAM Admin account and Root account credentials. What steps do you recommend when the 3rd party contractor moves out of the organisation upon expiry of the contract?
+
+A) Change the Root account password
+B) Change the IAM Admin account password and Root account password
+C) Set up an MFA on Admin account and Root account
+D) Both B and C 
+
+Ans: D
+
+Q9) True or False? An allow statement in a policy document will override an explicit deny statement.
+
+A) True
+B) False
+
+Ans:  B
+
+Q10) Select the recommended steps for securing your AWS account.
+
+Choose 3
+
+A) Create an admin group for your administrators, and assign the appropriate permissions to the group.
+B) Only use the root account (with MFA enabled) for regular administration of your AWS account.
+C) Enable MFA on the root account, and on any admin user account.
+D) Create user accounts for your administrators and add them to the admin group.
+
+Ans: A,C,D
+
+Q11)What does the "EAR" in a policy document stand for?
+
+A) Every, Always, Roles
+B) Effect, Action, Resource
+C) Effects, APIs, Roles
+D) Every, Action, Reasonable
+
+Ans: B
+
+Q12) What is the single best thing you can do to secure the root account in AWS?
+
+A) You don't have to do anything; AWS will do it for you
+B) Enable multi-factor authentication (MFA)
+C) Remove the root account password
+D) Delete the root account
+
+Ans: B
+
+Q13) Why are IAM users considered "permanent" users?
+
+A) IAM users aren't permanent; they only last for a few weeks before they "expire."
+B) Because once the password for the account is set, it can never be changed.
+C) Because once they are created, they can't be deleted.
+D) Because once their password, access key, or secret key is set, these credentials don't automatically rotate or change without human interaction.
+
+Ans: D
+
+Q14) Which of the following statements describes the principle of least privilege?
+
+A) Giving a user full permission to most services
+B) Giving a user too few permissions
+C) Only assigning a user the minimum amount of permissions that they need to do their job
+D) Standardizing permissions across all users in your company
+
+Ans: C
+
+Q15) True or False? Does AWS require MFA to be enabled for all users?
+
+A) true
+B) false
+
+Ans: B
+
+Q16) Which answer is INCORRECT regarding IAM Users?
+
+A) IAM Users can belong to Multiple User Groups
+B) IAM User Does not have to belong to Any User Group
+C) IAM Policies can be attched directly to IAM Users
+D) IAM Users access AWS Resources using Root Acccount Credentials
+
+Ans: D
+
+Q17) Which of the following is an IAM best practice?
+
+A) Create Multiple IAM User Accounts for One Physical Person
+B) Do not Use Root User Account.
+C) Share You AWS Credentials to Your Friends
+D) Dont Enable MFA for Root for Easy Access.
+
+Ans: B
+
+Q18) IAM User Groups can contain IAM Users and other User Groups.
+
+A) True
+B) False
+
+Ans: B
+
+Q19) An IAM policy consists of one or more statements. A statement in an IAM Policy consists of the following, EXCEPT:
+
+A) Effect
+B) Pricipal
+C) Resource
+D) Version
+E) Action
+
+Ans: D
+
+Q20)  Which of the following is an IAM Security Tool?
+
+A) IAM Credential Report
+B) IAM Root Account Manager
+C) IAM Service Report
+D) IAM Security Advisor
+
+Ans:  A
+
+
+
+
+
+
+
+
+
+
+
+
+

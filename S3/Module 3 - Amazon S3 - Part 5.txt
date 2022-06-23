@@ -1,0 +1,247 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+Part 3:
+======
+D) Versioning Objects in S3
+E) S3 Storage Classes
+
+Part 4:
+=====
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+
+Part 5:
+=====
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+
+Part 6:
+======
+J) Backup Data with S3 Replication
+
+Part 7:
+======
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+===================
+H) Enrypting S3 Objects
+===================
+1) Types of Encryption
+2) Enforcing Server-Side Encryption
+3) Demo : Enrypting S3 Objects
+
+1) Types of Encryption
+==================
+=> Encryption: Convert Data to Different Data 
+
+Encrytyion =====> hello123 => abcdefgh 
+Decryption =====> abcdefgh  => hello123 
+
+=> Pupurpose of Encryption is to Secure or Protect your Data.
+
+a) Encryption in Transit
+-----------------------------------
+=> HTTPS
+=> SSL/TSL
+
+b) Encryption at Rest : Server-Side Encryption
+----------------------------------------------------------------
+=> Server-side encryption is the encryption of data at its destination by S3 service that receives it.
+=> Amazon S3 encrypts your data at the object level as it writes it to disks
+=> Amazon S3 decrypts it for you when you access it. 
+
+
+You have three Options
+
+1) SSE-S3 ***
+--------------
+=> Amazon S3-Managed Keys
+=> Uses AES 256 Bit Encryption Algorithm
+
+2) SSE-KMS ***
+----------------
+=> KMS Managed Keys
+=> KMS - Key Management Service
+
+3) SSE-C:
+-------------
+=> Customer-Provided Keys
+
+
+c) Encryption at Rest : Client-Side Encryption
+----------------------------------------------------------------
+=> Client-side encryption is the act of encrypting your data locally
+
+=>  Amazon S3 does not play a role in encrypting or decrypting.
+
+Uploading:
+---------------
+=> You Encrypt the Files yourself before upload them to S3
+=> Amazon S3 Receives your encrypted data
+=> Amazon S3 Stores the encrypted data on ths Disk.
+
+Download/Access:
+----------------------------
+=> When You Access the Files , Amazon S3 Provides Encrypted data to you.
+=> You Decrypt and Use it.
+
+=> To enable client-side encryption, you have the following options:
+*** Use a key stored in AWS Key Management Service (AWS KMS).
+***Use a key that you store within your application.
+
+2) Enforcing Server-Side Encryption with S3
+==================================
+Two Ways to do it.
+
+a) Console
+--------------
+=> Select the Encryption Settings on your S3 Bucket
+=> We will see in Demo
+
+b) Bucket Policy
+----------------------
+=> You can also enforce Encryption using bucket policy.
+
+=> You can create the bucket policy that denies S3 Put Request that does not include 
+x-amz-server-side-encryption parameter in the request header.
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::myjlc-bucket-7/*",
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption": "false"
+                },
+                "StringNotEqualsIfExists": {
+                    "s3:x-amz-server-side-encryption": "AES256"
+                }
+            }
+        }
+    ]
+}
+
+
+https://awspolicygen.s3.amazonaws.com/policygen.html
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Deny",
+      "Action": [    "s3:PutObject"     ],
+      "Principal": "*"
+
+      "Resource": "arn:aws:s3:::myjlc-bucket-7/*",
+      "Condition": {
+        "StringNotEqualsIfExists": {
+          "s3:x-amz-server-side-encryption": "AES256"
+        }
+      },
+
+    }
+  ]
+}
+
+3) Demo : Enrypting S3 Objects
+========================
+Steps:
+--------
+
+
+
+=======================
+I) Optimizing S3 Performance
+=======================
+1) S3 Prefixes
+2) S3 Performance : Prefixes
+3) S3 Performance : Uploads
+4) S3 Performance : Downloads
+5) S3 Limitations with KMS
+
+1) S3 Prefixes
+-------------------
+=> You can use prefixes to organize the data that you store in S3 buckets.
+=> You can think of prefixes as a way to organize your data in a similar way to directories. 
+
+https://myjlc-bucket-7.s3.amazonaws.com/jlc-lms/videos/aws/hello.html
+
+jlc-lms/videos/aws/session1.mp4   => jlc-lms/videos/aws
+jlc-lms/videos/aws/session2.mp4   => jlc-lms/videos/aws
+
+jlc-lms/videos/devops/docker/session1.mp4  => jlc-lms/videos/devops/docker
+jlc-lms/videos/devops/docker/session2.mp4  => jlc-lms/videos/devops/docker
+
+jlc-lms/videos/devops/kubernetes/session1.mp4  => jlc-lms/videos/devops/kubernetes
+jlc-lms/videos/devops/kubernetes/session2.mp4  => jlc-lms/videos/devops/kubernetes
+
+2) S3 Performance with Prefixes
+--------------------------------------------
+=> S3 has extremely Low-Latency.
+=> First-Byte-Out latency for larger objects is roughly 100–200 milliseconds.
+=> You can easily achieve high number of requests.
+
+*** 3,500 PUT/COPY/POST/DELETE Http Requests per Second Per Prefix
+*** 5,500 GET/HEAD Http Requests per Second Per Prefix
+
+=> There are no limits to the number of prefixes in a bucket.
+=>  You can increase your read or write performance by using parallelization.
+
+ For example,
+	1 Prefix => 5500  GET Requests per Second Per Prefix
+	2 Prefixes  => 11000 Requests per Second 
+	4 Prefixes  => 22000 Requests per Second 
+	10 Prefixes  => 55000 Requests per Second
+
+So you can scale Your operations by using multiple prefixes.
+
+3) S3 Performance : Uploads
+-----------------------------------------
+=> When you upload large files to S3, it's a best practice to use Multipart Uploads.
+
+=> Multipart Uploads 
+	*** Recommended for the files over 100MB
+	*** Required for the files over 5GB
+	*** Parallelize Uploads 
+
+4) S3 Performance : Downloads
+-------------------------------------------
+=> When you Download large files from S3, it's a best practice to use Byte-Range Fetches
+
+=> Byte-Range Fetches
+	*** Parallelize downloads by Specifing Byte Ranges
+	*** Typical sizes for byte-range requests are 8 MB or 16 MB
+
+
+5) S3 Limitations with KMS
+------------------------------------
+=> If you are using SSE-KMS to Encrypt your S3 Objects then you must keep the KMS Limits in Mind.
+
+=> When you Upload a file , S3 will call GenerateDataKey in KMS API.
+=> When you Download a file , S3 will call Decrypt in KMS API.
+
+KMS Request Rates:
+----------------------------
+=> Uplaoding and  Downloading will count towards KMS Quota.
+=> KMS Request Rates are Region - Specific
+=> However it is either 5500 or 10000 or 50,000 requests per second.
+
+https://docs.aws.amazon.com/kms/latest/developerguide/requests-per-second.html
+
+
+

@@ -1,0 +1,138 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+Part 3:
+======
+D) Versioning Objects in S3
+E) S3 Storage Classes
+
+Part 4:
+=====
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+
+Part 5:
+=====
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+J) Backup Data with S3 Replication
+
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+==========================
+F) Lifecycle Management with S3
+==========================
+1) What is Lifecycle Management
+2) Lifecycle Management and Versioning
+3) Demo : Creating Lifecycle Rules
+
+
+1) What is Lifecycle Management
+==========================
+=> Lifecycle Management Automates Moving your Objects between different Storage Tiers, there by Minimizes the Cost.
+
+S3 Standard                =>   S3 Standard-IA        =>  S3 Glacier
+( Keep 30 Days)                  ( After 30 Days)             ( After 90 Days)
+
+1st June - hello.html     
+15th June - hai.html  
+
+2) Lifecycle Management and Versioning
+===============================
+=> You can use Lifecycle Management to Move Different Version of Objects to different Storage Tiers.
+
+3) Demo : Creating Lifecycle Rules
+==========================
+
+================================
+G) S3 Bucket Lock and Glacier Vault Lock
+================================
+1) S3 Object Lock
+2) Object Lock Modes
+3) Governance Mode
+4) Compliance Mode
+5) Retiontion Periods
+6) LegalHolds
+7) Glacier Vault Lock
+8) Demo : S3 Object Lock
+
+
+1) S3 Object Lock:
+==============
+=> You can use S3 Object Lock to store objects using WORM Model
+=> WORM => Write Once Read Many 
+
+=> It can help Prevent Objects from being Deleted or Modified for fixed amout of time or Indefinitely.
+
+=> You can use S3 Object Lock to meet Regulatory requirements that need WORM storage or Add an Extra Layer of Protection aganist Object Changes and Deletions.
+ 
+2) Object Lock Modes
+=================
+=> S3 Object Lock comes in two modes
+=> These two also called as Retention Modes
+
+a) Governance Mode
+b) Compliance Mode
+
+3) Governance Mode
+=================
+=> In governance mode, users can't overwrite or delete an object version or alter its lock settings unless they have special permissions. 
+
+=> With governance mode, you protect objects against being deleted by most users, but you can still grant some users permission to alter the retention settings or delete the object if necessary.
+
+4) Compliance Mode
+=================
+=> In compliance mode, a protected object version can't be overwritten or deleted by any user, including the root user in your AWS account. 
+
+=> When an object is locked in compliance mode, its retention mode can't be changed, and its retention period can't be shortened.
+
+=> Compliance mode helps ensure that an object version can't be overwritten or deleted for the duration of the retention period.
+
+5) Retiontion Periods
+=================
+=> A retention period protects an object version for a fixed amount of time. (180 Days)
+
+=> When you place a retention period on an object version, Amazon S3 stores a timestamp in the object version's metadata to indicate when the retention period expires. 
+
+=> After the retention period expires, the object version can be overwritten or deleted unless you also placed a legal hold on the object version.
+
+6) LegalHolds
+===========
+=> With Object Lock you can also place a legal hold on an object version. 
+
+=> Like a retention period, a legal hold prevents an object version from being overwritten or deleted. 
+
+=> However, a legal hold doesn't have an associated retention period and remains in effect until removed.
+
+=>  Legal holds can be freely placed and removed by any user who has the s3:PutObjectLegalHold permission. 
+
+
+7) Glacier Vault Lock
+=================
+=> Glacier vault is a container for storing archives. 
+=> When you create a vault, you specify a vault name and the AWS Region in which you want to create the vault. 
+=> You can store an unlimited number of archives in a vault.
+
+
+=>  S3 Glacier Vault Lock allows you to easily deploy and enforce compliance controls for individual S3 Glacier vaults with a vault lock policy.
+
+=>  You can specify controls such as “Write Once Read Many” (WORM) in a vault lock policy and lock the policy from future edits. 
+
+=>  Once locked, the policy can no longer be changed.
+
+8) Demo : S3 Object Lock
+====================
+
+
+
+

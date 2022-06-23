@@ -1,0 +1,287 @@
+=============================
+Module 1:AWS Fundamentals - Part 2
+=============================
+1) Sign-up with AWS
+2) Accessing AWS from Console
+3) Accessing AWS from CLI
+4) CloudShell
+5) Shared Reesponsibility Model
+6) Key AWS Services
+7) Summary
+
+Exam #1 on AWS Fundamentals 
+
+
+1) Sign-up with AWS
+================
+Hello Srinivas
+hellosrinivas99@gmail.com
+Phone No.
+Card Details
+
+https://aws.amazon.com/console/
+
+
+2) Accessing AWS from AWS Console
+=========================
+Console Login for Root Account - Username and Password 
+
+Username  : hellosrinivas99@gmail.com
+Password  : sdjhsjhdjhs
+
+3) Accessing AWS from CLI
+=========================
+To Access AWS Resources from CLI or  SDK, you need two things
+
+1) Access Key ID
+2) Secrect Access Key
+
+=> Logon to AWS Console with AWS Root Account.
+
+=> Create the IAM User with the name -  hello123
+
+=> When you create User in AWS , You can give two types of Acesss.
+A) Access to Management Console
+B) Progrmatic Access
+
+=> When User is Created , AWS assigns least permissions to that user.
+
+=> You can assign the required permissions to that user.
+
+
+=> When user wants to access the AWS with Management Console then user needs the Username and Passoword.
+
+=> When user wants to access the AWS Progrmatically with Commandline or any other tools  then user needs Access key ID and Secret access key
+
+Keep the following belongs to the User
+==============================
+User name : yashwant123
+Password	 : Yashwant123
+Access key ID	: AKIASNQUWN6SRPYEAATN
+Secret access key	: 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
+Console login link :  https://166473396133.signin.aws.amazon.com/console
+
+
+How to Access AWS from Command Line
+=================================
+1) Download AWS CLI
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+https://awscli.amazonaws.com/AWSCLIV2.msi
+
+2) Install AWS CLI
+
+D:\Amazon\AWSCLIV2
+
+ aws.exe => 
+
+3) Configure the AWS CLI 
+
+aws configure
+AWS Access Key ID [None]: AKIASNQUWN6SRPYEAATN
+AWS Secret Access Key [None]: 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
+Default region name [None]: us-east-2
+Default output format [None]: json
+
+4) Create IAM User as follows.
+
+aws iam create-user --user-name hai12345
+
+aws ec2 describe-regions
+
+aws ec2 describe-availability-zones --region ap-south-1
+
+aws s3 ls
+
+
+4) AWS CloudShell
+=============
+=> AWS CloudShell is a browser-based shell that makes it easy to securely manage and  interact with your AWS resources. 
+
+=> CloudShell is pre-authenticated with your console credentials. Common development and operations tools are pre-installed, so no local installation or configuration is required. 
+
+=> With CloudShell, you can quickly run scripts with the AWS Command Line Interface (AWS CLI)
+
+=> You can use CloudShell right from your browser and at no additional cost.
+
+=> AWS CloudShell is available only in Limited Regions. Check your region.
+
+===============
+5) Key AWS Services
+===============
+
+25 Service Types provided by AWS on 4th-JUne-2022.
+
+A) Compute 
+   => EC2, Lambda, ElasticBeanstalk
+
+B) Storage
+   => S3, EBS, EFS, Fsx, Storage Gateways
+
+C) Databases
+   => RDS, DynamoDB, RedShift
+
+D) Networking
+   => VPC, Route 53, Direct Connect, API Gateways
+
+6) Shared Responsibility Model
+========================
+=> Not all the things done by AWS.
+
+AWS - Responsibility for Security OF the Cloud
+----------------------------------------------------------
+=> Hardware , Regions , Availabilit Zones , Edge Locations
+=>Compute , Storage , DataBases , NetWorking
+
+YOU - Responsibility for Security IN the Cloud
+----------------------------------------------------------
+=> Customer Data 
+=> Platforms, Applications, IAM
+=> OS Patches, Updates
+=> Client Side Encryption
+=> Server Side Encryption
+
+Q) Can you do this in AWS Console?
+
+=> if the Answer is Yes, You are likely Responsible
+
+=> if the Answer is No, AWS is likely Responsible
+
+=========
+7) Summary
+========
+
+=====================
+1) Building Blocks of AWS
+=====================
+***  AWS Global Infrastructure
+***  Regions
+***  Availability Zones
+***  Local Zones
+***  Data Centers
+***  Edge Locations
+
+AWS Global Infrastructure
+----------------------------------
+=> 26 Regions and 8 Regions Announced
+=> 84 Availability Zones and 17 Local Zones
+=> 410 + Edge Locations/POP locations
+
+Data Center:
+----------------
+=> Data Center is just a building filled with Servers with Redundant Power , Networking , Connectivity etc
+
+Availability Zone
+---------------------
+=> One or more discrete data centers with redundant power, networking, and connectivity in an AWS Region
+=> Group of 1 or more Data Centers called as Availability Zone
+
+Local Zone
+----------------
+=> Local Zone is an extension of AWS Region  where you can run your Latency Sensitive Applications.
+
+Region: 
+-----------
+=> Region is a Physical Location aroud the World where Data Centers present.
+=> Region Consists of 2 or more  Availability Zones
+
+Edge Locations/POP Location :
+-------------------------------------------
+=> Edge Locations are endpoints for AWS that are used for caching content.
+=> This Includes CloudFront and Amazon CDN
+
+========================
+2) Shared Responsibility Model
+========================
+=> What You have to do
+=> What AWS will do 
+
+=============
+3) Key AWS Services
+=============
+A) Compute 
+   => EC2, Lambda, ElasticBeanstalk
+
+B) Storage
+   => S3, EBS, EFS, Fsx, Storage Gateways
+
+C) Databases
+   => RDS, DynamoDB, RedShift
+
+D) Networking
+   => VPC, Route 53, Direct Connect, API Gateways
+
+
+Exam #1 - AWS Fundamentals 
+========================
+Q1)  What category would the VPC service fall into?
+
+A) Machine Learning
+B) Compute
+C) Database
+D) Networking
+
+Answer : D
+
+Q2) Which statement best describes an Availability Zone?
+
+A) A physical data center that is connected to AWS cloud services.
+B) A single data center that makes up an Edge location.
+C) One or more discrete data centers with redundant power, networking, and connectivity in an AWS Region.
+D) A collection of EC2 instances that is guaranteed not to fail.
+
+Ans: C 
+
+Q3) Which category would the EC2 service fall under?
+
+A) Compute
+B) Networking
+C) Database
+D) Machine Learning
+
+Ans: A
+
+Q4) Which statement best describes an Edge location?
+
+A) A physical location somewhere in the world where data is stored.
+B) A virtual type of compute instance that is located all over the world to deliver your content to your customers in a speedy fashion.
+C) A virtual location that can be used to handle authentication and authorization of your users in the cloud.
+D) A networking point of presence that is one of many spread across the globe that is commonly used to cache content.
+
+Ans: D
+
+Q5) Which one of the following items are NOT managed by AWS according to the shared responsibility model?
+
+A) Preventing power outages
+B) Customer data
+C) Security of the data center
+D) Physical networking infrastructure
+
+Ans: B
+
+Q6)  According to the Shared Responsibility Model, who is responsible for patching, updating, and maintaining the OS of EC2 instances in AWS?
+
+A) Srinivas Dande
+B) You
+C) AWS
+D) No one (EC2 instances never need to be updated)
+
+Ans: B
+
+Q7) Which of the following is NOT an AWS storage service?
+
+A) Storage Gateway
+B) EBS
+C) EC2
+D) S3
+
+Ans: C
+
+Q8) Which statement best describes a Region?
+
+A) A virtual location around the world where you can create Availability Zones.
+B) The original location of your data center that you're going to migrate into AWS.
+C) A networking point of presence in a country.
+D) A physical location around the world comprised of two or more Availability Zones.
+
+Ans: D
