@@ -1,0 +1,130 @@
+========================
+Module 4 : Amazon EC2 - Part 6
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Tenancy Models
+
+Part 6:
+======
+13) EC2 Tenancy Models
+14) EC2 Placement Groups
+
+Part 7:
+======
+15) Launch and Connect to Windows Instance
+16) Exam Tips
+Exam #4 - Amazon EC2
+
+===================
+13) EC2 Tenancy Models
+===================
+=> Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing. 
+=> There are three tenancy options available:
+
+A) Shared (default):
+B) Dedicated Instance (dedicated):
+C) Dedicated Host (host):
+
+A) Shared (default):
+----------------------------
+=>Multiple AWS accounts may share the same physical hardware.
+=> This is the default tenancy model and is most commonly used with AWS. 
+=> Multiple AWS accounts will share the same pieces of hardware even though they don’t interact with each other. 
+=> Shared tenancy model is also the cheapest option for running your EC2 instances.
+
+B) Dedicated Instance (dedicated):
+-------------------------------------------------
+=> Your instance runs on single-tenant hardware.
+
+=> You do not need to worry about the capacity of the hosts but you’re being charged a higher rate for the instances. This type of instance model is similar to the default model where you don’t worry about where the instances are, but it does ensure they’re kept separate.
+
+C) Dedicated Host (host):
+-----------------------------------
+=> Your instance runs on a physical server with EC2 instance capacity fully dedicated to your use, an isolated server with configurations that you can control.
+
+=> With a dedicated host, you purchase an entire physical host from AWS and that host is billed to you on an hourly basis.
+=> Once you’ve purchased that host, you’re allowed to spin up as many EC2 instances as that host will allow for no additional charges. 
+
+=> You may not mix EC2 instance types on the same dedicated host.
+=> For example you would purchase an m4.large host meaning that you could put as many m4.large instances on that host that you want up to the maximum (22 ) but you are not allowed to add m3.large or m4.xlarge for example. If you want to add m4.xlarge instances on dedicated hosts then you must purchase another dedicated host.
+
+=> You are responsible for waste 
+
+=====================
+14) EC2 Placement Groups
+=====================
+=> When you launch a new EC2 instance, the EC2 service attempts to place the instance in such a way that all of your instances are spread out across underlying hardware to minimize correlated failures.
+=> You can use placement groups to influence the placement of a group of interdependent instances to meet the needs of your workload.
+=> Depending on the type of workload, you can create a placement group using one of the following placement strategies:
+
+A) Cluster Placement Group
+B) Partition  Placement Group
+C) Spread Placement Group
+
+A) Cluster Placement Group
+----------------------------------------
+=> Cluster placement group is a logical grouping of instances within a single Availability Zone.
+=> Cluster placement group is recommended for applications that need Low network Latency, High network throughput, or both. 
+=> They are also recommended when the majority of the network traffic is between the instances in the group
+
+=> Only Certain Instance Types can be Launched into Cluster Placement Group
+
+B) Partition  Placement Group 
+------------------------------------------
+=> Partition placement groups help reduce the hardware failures for your application.
+=> When using partition placement groups, Amazon EC2 divides each group into logical segments called partitions.
+=> Amazon EC2 ensures that each partition within a placement group has its own set of racks. 
+=> Each rack has its own network and power source. 
+=> No two partitions within a placement group share the same racks, allowing you to isolate the impact of hardware failure within your application.
+
+=> When you launch instances into a partition placement group, Amazon EC2 tries to distribute the instances evenly across the number of partitions that you specify. 
+=> You can also launch instances into a specific partition to have more control over where the instances are placed.
+
+=> Partition placement group can have partitions in multiple Availability Zones in the same Region. 
+=> Partition placement group can have a maximum of seven partitions per Availability Zone.
+
+=> Partition placement groups can be used to deploy large distributed and replicated workloads, such as HDFS, HBase, and Cassandra, across distinct racks
+
+
+C) Spread Placement Group
+--------------------------------------
+=> Spread placement group is a group of instances that are each placed on distinct racks, with each rack having its own network and power source.
+
+=> Launching instances in a spread placement group reduces the risk of simultaneous failures that might occur when instances share the same racks. 
+
+=> Spread placement groups provide access to distinct racks, and are therefore suitable for mixing instance types or launching instances over time.
+
+=> Spread placement group can span multiple Availability Zones in the same Region. 
+=> You can have a maximum of seven running instances per Availability Zone per group.
+
+=> Spread placement groups are recommended for applications that have a small number of critical instances that should be kept separate from each other. 
+
+Note : There is no charge for creating a placement group.
+
+
+

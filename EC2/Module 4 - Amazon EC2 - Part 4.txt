@@ -1,0 +1,170 @@
+========================
+Module 4 : Amazon EC2 - Part 3
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Placement Groups
+
+Part 6:
+======
+14) Exam Tips
+Exam #4 - Amazon EC2
+
+==============
+9) Using IAM Roles
+===============
+=> IAM Role is Similar to IAM User
+
+=> IAM Role is an Identity with specific Permissions
+=> IAM User is also an Identity with specific Permissions 
+     that determine what that user can do and can not do in AWS.
+
+=> IAM User is being uniquely associated with One Person.
+=> IAM Role is intended to be used by anyone who needs it.
+
+=> IAM Roles does not have any standard long-tem credentials like Password or Access Keys like User.
+
+=> Instead, When you assume a Role, It Provides you the Temporary credentials for your Role-Session.
+
+=> Roles can be assumed by people, system accounts etc.
+
+=> Roles can allow Cross-Account Access.
+ This means One AWS Account has the ability to interact with Resources in other AWS Account.
+
+
+Demo1: Without Using IAM Roles
+=========================
+1) Create the EC2 Instance
+2) Try to Access S3 from EC2 - Error
+3) Intsall AWS CLI in EC2 
+
+sudo apt-get update
+sudo apt-get install awscli -y
+aws --version
+
+4) Configure AWSCLI with User-Specific Access Keys
+aws configure
+AWS Access Key ID [None]: ccccccccccccccc
+AWS Secret Access Key [None]: ccccccccccccccccc
+Default region name [None]: us-east-1
+Default output format [None]: json
+
+5) Now EC2 can Access the ANy other Resources
+
+aws iam list-users
+aws s3 ls
+aws s3 ls s3://myjlc-bucket-1
+
+Problems:
+=======
+=> Complexity in Configuring AWS for All Instances
+
+Demo2: Using IAM Roles
+==================
+1) Create IAM Role
+------------------------
+=> Makesure It has S3 Access.
+
+2) Create EC2 Instance
+----------------------------------
+=> Attach the IAM Role Created above to EC2 Instance
+
+3)Access S3
+----------------------
+=> Try to Access S3 from our EC2 Instances.
+aws iam list-users
+aws s3 ls
+aws s3 ls s3://myjlc-bucket-1
+
+
+BootStracp Script
+---------------------------
+#!/bin/bash
+/bin/apt-get update
+/bin/apt-get install awscli -y
+/bin/echo "Hello Guys!!!" >> /home/ubuntu/hello.txt
+
+==========================
+10) BootStrap Scripts with UserData
+==========================
+=> Script that Runs when the EC2 Instance first Starts
+
+#!/bin/bash
+/bin/echo "Hello Guys!!!" >> /home/ubuntu/hello.txt
+
+=> Adding these tasks at Boottime increases the amount of time it takes to boot the Instance.
+=> However, It allows to automate the Installations of Required Softwares and Applications.
+
+DO the following on MyWeb-Server-1
+===============================
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+systemctl enable nginx
+systemctl status nginx
+
+cd /var/www/html
+sudo mv index.nginx-debian.html index.html
+echo "<h1> Hello Guys, Welcome to JLC !!! </h1>" > index.html
+
+
+Demo:
+======
+1) Create EC2 Instance
+----------------------------------
+=> Provide some script at User Data.
+
+BootStracp Script
+---------------------------
+#!/bin/bash
+/bin/apt-get update
+/bin/apt-get install awscli -y
+/bin/apt-get install nginx -y
+/bin/systemctl start nginx
+/bin/systemctl enable nginx
+cd /var/www/html
+sudo mv index.nginx-debian.html index.html
+/bin/echo "<h1> Hello Guys, Welcome to JLC !!! </h1>" >> index.html
+
+=============
+11) EC2 MetaData 
+=============
+=> EC2 MetaData is simply Data about your EC2 Instance.
+=>  EC2 MetaData includes information such as
+Private IP
+Public IP
+hostname
+Security Groups
+etc
+
+=> You can fetch the EC2 MetaData  as follows
+
+curl http://169.254.169.254/latest/meta-data
+curl http://169.254.169.254/latest/meta-data/public-ipv4
+curl http://169.254.169.254/latest/meta-data/iam/info
+
+

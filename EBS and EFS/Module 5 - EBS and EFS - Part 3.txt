@@ -1,0 +1,77 @@
+========================
+Module 5 : EBS and EFS - Part 3
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+2) Volumes and SnapShots
+
+Part 3:
+======
+3) Encrypting EBS Volumes
+
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+6) EFS Fundamentals
+7) FSx Fundamentals
+8) AWS Backup
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+=======================
+3) Encrypting EBS Volumes
+=======================
+=> EBS Encrypts your Data with Data Key using Industry-Standard AES-256 Algorithm
+=> You aren't required to build, maintain, and secure your own key management infrastructure
+=> EBS encryption uses AWS KMS keys when Encrpting the Volumes and Snapshots.
+=> You can attach both encrypted and unencrypted volumes to an instance simultaneously.
+
+What happens When you Encrypt the EBS Volumes:
+-------------------------------------------------------------------------
+=> All Data at Rest will be Encrypted inside the Volume.
+=> All Data in the Flight between the Instance and Volume will be Encrypted.
+=> All the Snapshots created from Encrypted Volumes will be Encrypted automatically.
+=> All the Volumes Created from Encrypted Snapshots  will be Encrypted automatically.
+
+=>Encryption and Decryption are handled transperently. You noo need to do anything.
+=>Encryption has minimal Impact on the Latency.
+=> You can encrypt the Root device Volumes upon Creation.
+
+
+Demo 1:
+
+How to Encrypt the Existing Volumes
+=============================
+1) Create the Snapshot of Unencrypted root device volume
+2) Create the Copy of the Snapshot and Select the Encryption option
+3) Create the AMI from Encrypted Snapshot 
+4) Use the AMI to Launch new Encrypted Instance.
+
+Demo 2:
+
+How to Encrypt the New Volumes
+=============================
+
+
+
+=====================================
+Student Questions:
+=================
+Q1) Snapshot will be taken after X amount of time, what will happen to the data with in an interval of taking snapshot ?
+SunDay:9P.M 
+---> Friday Crashed
+Next Sunday : 9P.M
+
+Q2)  If i detached EBS and delete this, Then Snapshot will be delete at same time ?
+
+Q3) will restore from latest snapshot or need to restore base plus incremental snapshot
+
+Q4) whether we need to create or amazon will take care for new volume ?  You 
+
+Q5) can we take snapshot of root volume aswell Yes Yes
+
+Q6)  its mandatory to take S3 service for snapshot?? or we can take backup in our physical system?
+S3
