@@ -1,0 +1,145 @@
+========================
+Module 5 : Databases - Part 2
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) DynamoDB
+4) ElastiCache
+5) Exam Tips
+Exam #6 - Databases
+
+
+====================
+1) Amazon RDS - (Contin..)
+====================
+SQL Eectron
+
+https://www.electronjs.org/apps/sqlectron
+
+
+Following 4 are required To Connect to DB from Your Aplication
+==================================================
+host : jlc-mysql-database.cgafvjcfxazf.us-east-1.rds.amazonaws.com
+port : 3306
+username : srinivas
+password : srinivas
+database : mybookstoredb
+
+
+create table mycustomers(
+cid int primary key,
+cname char(15),
+email char(15),
+phone int
+);
+
+select * from mycustomers;
+
+insert into mycustomers values(101,'sri','sri@jlc.com',111);
+
+insert into mycustomers values(102,'vas','vas@jlc.com',222);
+
+select * from mycustomers;
+
+
+ ======================
+2) RDS - Read Replicas
+ ======================
+Q) How Can I improve the Performance of RDS Instances?
+Ans: Read Replicas
+
+*** Diagram 2 ***
+
+=> Read Replica is a Read-Only Copy of Your Primary database.
+=> Great for Read-Heavy Workloads and Reduces the load on Your Primary database
+=> Main Purpose of Read Replica is Scalability where main Purpose of Multi-AZ is Availability.
+
+=>  Read Replica can be Same-AZ or Cross-AZ or Cross-Region.
+i.e Read Replica can be in Same Zone or Different Zone or Different Region
+
+=> Read Replicas can be Promoted as Primary databases if needed.
+
+=> Primarily Used for Scaling , Not for DR(Disaster recovery)
+=> Automatic Backups must be enabled in order to deploy Read-Replicas.
+=> RDS Database allows to add upto 5 Read Replicas for Each DB Instance.
+
+
+=========================
+Demo 2: Creating Read Replicas
+=========================
+
+1) Settings
+---------------------
+a) Read replica source : jlc-mysql-database
+b) DB instance identifier  : jlc-mysql-database-replica-1
+
+2) AWS Region
+----------------------
+us-east-1
+
+3) Instance configuration
+-------------------------------------
+DB instance class
+
+Select Burstable classes (includes t classes)
+=> db.t2.micro
+Select Include previous generation classes
+
+4) Storage
+---------------
+=> Storage type : gp2 
+=> Allocated storage : 20GB
+
+=> Storage autoscaling : Enable
+=> Maximum storage threshold : 1000GB
+
+5) Availability and durability
+------------------------------------------
+a) Do not create a standby instance -- Select This One
+b) Create a standby instance (recommended for production usage) 
+
+6) Connectivity
+--------------------------
+a) Network type : IPv4
+b) Subnet group  : Default
+c) Public access : Yes
+d) VPC security group : jlc-db-group 
+e) Availability Zone : us-east-1b
+
+=> Additional configuration
+     Port : 3306
+
+7) Database authentication
+---------------------------------------
+=> Password Autntocation
+
+8) Additional configuration
+---------------------------------------
+a) Backup    --Use Defaults
+b) Encryption   --Use Defaults
+c) Monitoring  - Use Defaults
+d) Log exports - Use Defaults
+e) Maintenance : Use Defaults
+f) Deletion protection : Use Defaults
+
+
+Following 4 are required To Connect to DB from Your Aplication
+==================================================
+host : jlc-mysql-database-replica-1.cgafvjcfxazf.us-east-1.rds.amazonaws.com
+host : jlc-mysql-database-replica-2.cdg5vrugcit1.us-east-2.rds.amazonaws.com
+port : 3306
+username : srinivas
+password : srinivas
+database: mybokstoredb
+
+insert into mycustomers values(103,'sri','sri@jlc.com',333);
+insert into mycustomers values(104,'sd','sd@jlc.com',444);
+insert into mycustomers values(105,'dandes','dandes@jlc.com',5599);
+
+insert into mycustomers values(109,'dandes','dandes@jlc.com',5599);
+
+select * from mycustomers;
+
+
+
+

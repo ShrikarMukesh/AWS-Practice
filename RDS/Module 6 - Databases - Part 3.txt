@@ -1,0 +1,90 @@
+========================
+Module 5 : Databases - Part 3
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) DynamoDB
+4) ElastiCache
+5) Exam Tips
+Exam #6 - Databases
+
+
+ ======================
+3) RDS - Storage Auto-Scaling
+ ======================
+=> You can Increase the Sorage of RDS Instance Dynamically.
+=> You can start with Minimum Storage -  say 20GB and set Maximum Storage Threshold (max be 65,535 GB)
+=> Automatically Updates the Storage if free storage is less than 10% of Allocated Storage.
+=> Useful for the Applications with Un-Predictable Workloads.
+=> Supports EBS Storage only.
+
+==============
+4) RDS Backups
+==============
+=> Backups are automatcally enabled in RDS.
+=> Backups are stored in Amazon S3.
+=> Because of Automated Backups
+  *** Daily full-backup of the Database will be taken during the maintainance window
+  *** Backup the Transaction Logs for Every 5 Minutes
+  *** Default backup retention period is 7 days ( can be increased to 35 days)
+=> You can disable automated backups(Not Recommanded) and you can take the backups manually also.
+
+ ==============
+5) RDS Snapshots
+==============
+=> Snapshots are automatcally enabled in RDS.
+=> You can creates a Snapshot of your DB instance manually. ***
+=> Snapshots are stored in Amazon S3.
+=> Manual snapshots are retained forever until you delete them.
+=> You can create a new DB instance by restoring from a DB snapshot. 
+=> You can replicate snapshots to a different AWS Region of your choice. 
+
+=> You can copy automated snapshots or manual DB snapshots. 
+=> You can make multiple copies of an automated snapshots or manual snapshot, but each copy must have a unique identifier.
+=> You can copy a snapshot within the same Region 
+=>You can also copy a snapshot across Regions with some limitations.
+
+ ======================
+6) RDS - Encryption
+ ======================
+a) Encryption in Transit
+----------------------------------
+=> Use SSL Certificates to Encrypt the RDS data in Transit
+
+b) Encryption at Rest
+-------------------------------
+=> You can Encrypt Primary Database and Its Read-Replicas with KMS - AES 256 Encryption Alogorithm.
+=> Encryption has to be defined at RDS Instance Creation time.
+=> If the  Primary Database is Encrypted then all of its Read-Replicas will be Encrypted automatically.
+=> If the  Primary Database is Not Encrypted then all of its Read-Replicas will Not be Encrypted.
+
+=> Snapshots of Un-Encrypted  Database are Un-Encrypted.
+=> Snapshots of Encrypted  Database are Encrypted.
+
+Demo3:  How to Encrypt an Un-Encrypted RDS Databse?
+-------------------------------------------------------------
+a) Create the Snapshot of Un-Encrypted  Database
+b) Copy the Snapshot and Enable the Encryption
+c) Restore the Database from Encrypted  Snapshot 
+d) Configure the applications to talk to New Encrypted  Database and Delete Old Un-Encrypted Database.
+e) Create the Replicas from  Newly Encrypted  Database
+f)  Configure the applications to talk to New Encrypted  Replicas and Delete Old Un-Encrypted Replicas 
+
+ ===========================
+7) RDS - From Single-AZ to Multi-AZ
+ ===========================
+=> You can move from Single-AZ to Multi-AZ
+	** with Zero Downtime Operation
+	** without Stoping the Database.
+=> Just Click on Modify and Select Multi-AZ
+
+Internally following things will happen
+--------------------------------------------------
+1) Take the Snapshot of Primary DB
+2) Restore Standby DB from Snapshot 
+
+===================
+Multi-AZ DB Cluster - new
+Creates a DB cluster with a primary DB instance and two readable standby DB instances, 
+with each DB instance in a different Availability Zone (AZ)
+

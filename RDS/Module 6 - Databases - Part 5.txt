@@ -1,0 +1,127 @@
+========================
+Module 6 : Databases - Part 4
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+=======================
+2) Amazon Aurora - ( Contin..)
+=======================
+
+f) Push-Button Compute Scaling
+---------------------------------------------
+=> You can scale provisioned instances up or down. 
+=>  You can scale the Compute Resources upto 
+	** 96 vCPUs and 768 GB of RAM. ( r5 Classes)
+	** 64 vCPUs and 1024 GB of RAM. (X2g Classes)
+=> Compute scaling operations typically complete in a few minutes.
+
+
+g) Fault-Tolerant and Self-Healing Storage
+------------------------------------------------------------
+=> 2 Copies of Your Data is contained in each AZ , with minimum of 3 AZ's  -- So 6 Copies of your data will be aiailable.
+
+=> Aurora storage is transparently handling the loss of up to two copies of data without affecting database write availability and up to three copies without affecting read availability. 
+
+=> Aurora storage is also self-healing; data blocks and disks are continuously scanned for errors and replaced automatically.
+
+
+h) Automatic, Continuous, Incremental Backups and Point-in-Time Restore
+--------------------------------------------------------------------------------------------------------
+=> Aurora's backup capability enables point-in-time recovery for your instance. 
+
+=> This allows you to restore your database to any second during your retention period, up to the last five minutes. 
+=> Your automatic backup retention period can be configured up to thirty-five days. 
+
+=> Automated backups are stored in  S3 which is designed for 99.999999999% durability. 
+
+=> Aurora backups are automatic, incremental, and continuous and have no impact on database performance.
+
+i) Snapshots
+---------------
+=> You can creates a Snapshot of your Aurora DB manually. 
+=> Snapshots are stored in Amazon S3.
+=> Manual snapshots are retained forever until you delete them.
+=> You can create a new DB instance by restoring from a DB snapshot. 
+=> You can copy snapshots 
+
+j) Encryption
+-----------------
+a) Encryption in Transit
+----------------------------------
+=> Aurora Uses SSL (AES-256)  Certificates to Encrypt the data in Transit
+
+b) Encryption at Rest
+-------------------------------
+=> You can Encrypt Aurora Database and Its Read-Replicas with KMS - AES 256 Encryption Alogorithm.
+=> Encryption has to be defined at Aurora Database Instance Creation time.
+=> If the  Aurora Master Database is Encrypted then 
+	*** all of its automated backups will be Encrypted automatically.
+	*** all of its snapshots will be Encrypted automatically.
+	*** all of its replicas  will be Encrypted automatically.
+
+
+k) Backtrack for Aurora MySQL
+------------------------------------------
+=> Backtrack allows you to move a database to a prior point in time without restoring data from a backup. 
+
+=> This lets you quickly recover from user errors, such as dropping the wrong table or deleting the wrong row. 
+=> Backtrack completes in seconds, even for large databases, because no data records need to be copied. 
+=> You can go backwards and forwards to find the point just before the error occurred.
+
+=> When you enable Backtrack, Aurora will retain data records for the specified Backtrack duration. 
+Ex:
+=> you could set up Backtrack to allow you to move your database up to 72 hours back. 
+
+
+=================
+Aurora Multi-Master
+=================
+=> In a multi-master cluster, all DB instances can perform write operations. 
+
+=> The notions of a single read/write primary instance and multiple read-only Aurora Replicas don't apply. 
+
+=> There isn't any failover when a writer DB instance becomes unavailable, because another writer DB instance is immediately available to take over the work of the failed instance.
+
+====================
+Aurora Global Database
+====================
+a) Aurora Cross-Region Read Replicas
+b) Aurora Global Database
+	=> One Primary Region for Read-Write
+	=> Upto 5 Secondary Regions for Read-Only
+	=> Upto 16 Read Replicas per Secondary Region
+
+c) Helps for Decreasing Latency
+d) Helps for DR.
+
+
+==============
+Aurora Serverless
+==============
+=> Aurora Serverless  is an on-demand autoscaling configuration for Aurora database. 
+
+=> Aurora Serverless DB cluster is a DB cluster that scales compute capacity up and down based on your application's needs. 
+
+=> Aurora Serverless provides a relatively simple, cost-effective option for infrequent, intermittent, or unpredictable workloads. 
+
+=> It is cost-effective because it automatically starts up, scales compute capacity to match your application's usage, and shuts down when it's not in use.
+
+
+*** Aurora DB Cluster Vs Aurora Serverless DB cluster ****
+
+=====================
+Aurora Machine Learning
+=====================
+=> Aurora supports Machine Learning
+=> Enables to add ML-based Predctions to Your applications via SQL
+=> Provides Simple and Optimized Integration between Aurora and AWS ML-based Services.
+=> Supported AWS ML-based Services
+	a) Amazon SageMaker 
+	b) Amazon Comprehed 
+
+

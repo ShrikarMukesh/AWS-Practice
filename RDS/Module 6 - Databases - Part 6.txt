@@ -1,0 +1,155 @@
+========================
+Module 6 : Databases - Part 6
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+==================
+3) ElastiCache
+==================
+=> RDS is to manage the Relational databases like MySQL, Oracle, PostgreSQL etc
+=> Similarly, ElastiCache is to manage the In-Memory Databases or Cache databases Redis , MemCached
+
+***** ElastiCache with Redis 
+***** ElastiCache with MemCached
+
+=> Caches are In-Memory Databases with High-Performance and Low-Latency.
+
+=> Helps to Reduce the Load on the Database Servers for Read-Intensive Workloads.
+
+*** Diagram ***
+
+Based On Diagram
+---------------------------
+=> Application queries the ElastiCache
+=> If the Data required is found in ElastiCache then Application takes that and Uses.
+=> If the Data required is Not found in ElastiCache then Application does the following
+	***  Hits the Databases
+	*** Gets the Data from Databases
+	*** Stores in ElastiCache
+	*** Uses the data.
+
+=> This Helps to Reduce the load on Database
+=> Cache must have an Invalidation Strategy to makesure that only Most current Data is used.
+
+Benefits of ElastiCache:
+--------------------------------
+*** O.S Maintainance
+*** O.S Patching
+*** Setup
+*** Configurations
+*** Auto-failovers
+*** Read Replicas
+*** Backups
+
+=================================
+Demo 5: Creating ElastiCache Redis Cluster
+=================================
+1) Choose a cluster creation method
+-----------------------------------------------------
+=> Configure and create a new cluster
+
+2) Cluster mode
+---------------------------
+=> Disabled
+
+3) Cluster info
+---------------------
+a)  Name :  myjlc-redis-cluster
+b) Description : myjlc-redis-cluster
+
+4) Location
+-----------------
+a) Location :- AWS Cloud
+b) Multi-AZ : Select Enable
+
+5) Cluster settings
+------------------------------------
+a) Engine version : 6.2
+b) Port : 6379
+c) Parameter groups : default.redis6.x
+d) Node type : cache.t2.micro
+e)  Number of replicas : 2
+
+6) Subnet group settings
+------------------------------------
+a) Select Create a new subnet group
+b) Name : myjlc-subnet-123
+c) Description  : myjlc-subnet-123
+d) VPC ID : Select Available
+
+7) Selected subnets (3)
+--------------------------
+=> Choose 3 Subnets
+
+8) Availability Zone placements
+-------------------------------------
+=> Select Specify Availability Zones
+
+Click on Next Button
+
+9) Security
+---------------------------------------
+a) Encryption at rest
+Enable ( No need to select )
+
+b) Encryption in transit
+Enable ( No need to select )
+
+9) Selected security groups
+-------------------------------------
+Select security group 
+
+10) Backup
+------------------
+Enable automatic backups ( No need to select )
+
+11) Maintenance
+----------------------------
+=> Use Defaults
+
+12) Logs
+-----------
+=> Use Defaults
+
+13) Tags
+-------------
+=> -----
+
+**Click On Next
+
+**Review All and Click On Create
+
+================================
+Q1) 
+can we interact with elasti-redis cache with the spring-boot-starter-redis
+
+Q2) 
+Does Elastic Cache support 100% availability, creating snapshots, backups, and so on? If this is the case, we can use elastic cache without a database.
+
+Q3)
+I've had a question about cache databases for a long time. When compared to other databases, Redis is relatively fast.
+
+We were using cache in conjunction with the database to reduce latency.
+***Can I use elastic cache without a database?****
+Is it recommended to use elastic cache without a db
+
+Q4) sir will redis+db will be cheaper or db only will be cheaper for suppose 500k daily load of e-commerce application?
+
+5 Node DB Cluster => 1 Laks Daily
+Solution - 1: 
+--------------
+10 Node DB Cluster => 2 Laks Daily
+
+Solution - 2:
+----------------
+5 Node DB Cluster + Cache Cluster => 2 Laks Daily
+
+
+
+
+
