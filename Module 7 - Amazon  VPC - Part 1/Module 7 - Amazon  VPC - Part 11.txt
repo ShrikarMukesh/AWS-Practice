@@ -1,0 +1,762 @@
+==========================
+Module 7 - Amazon  VPC - Part 11
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring Site-to-Site VPN Connection
+14) Exploring VPN CloudHub
+
+Part 9:
+=====
+15) Exploring AWS DirectConnect
+16) Exploring Transit Gateway
+
+
+Part 10:
+=======
+17) Understanding IPv6 for VPC
+18) Egress-Only Internet Gateway
+19) VPC Flow Logs
+
+Part 11:
+=======
+20) Exam Tips
+Exam #7 - VPC
+
+============
+20) Exam Tips
+============
+
+A) VPC Fundamentals
+=================
+=> Think VPC as Virtual Data Center in the Cloud 
+=> VPC Consists of
+	Subnets
+	Route Tables
+	Internet Gateways
+	NAT Gateways
+	Igress Internet Gateways
+	Security Groups
+	Network ACLs
+
+=> 1 Subnet is always in 1 AZ
+=> 1 AZ contains multiple Subnets
+
+B) Route Tables
+================
+=> Route table contains a set of rules, called routes, that determine where network traffic from your subnet or gateway is directed.
+
+a) Main route table:
+----------------------------
+=> Route table that automatically comes with your VPC. 
+=> It controls the routing for all subnets that are not explicitly associated with any other route table.
+
+b) Custom route table:
+----------------------------
+=>Route table that you create for your VPC.
+=> You can associate the Subnets to Your Route Table
+
+c) Destination:
+-------------------
+=> Range of IP addresses where you want traffic to go (destination CIDR). 
+=> Ex: 
+*** External corporate network with the CIDR 10.0.0.0/20
+*** Any with the CIDR 0.0.0.0/0
+*** Any with the CIDR ::/0
+
+d) Target:
+-----------
+=> Gateway, network interface, or connection through which to send the destination traffic
+=>Ex:  
+*** Internet Gateway, 
+*** NAT Gateway
+*** Igress-Only Internet Gateway
+
+e) Route table association:
+-----------------------------------
+=> Association between a route table and a subnet, internet gateway, or virtual private gateway.
+
+f) Local route: 
+-------------------
+=> Default route for communication within the VPC.
+
+C) Internet Gateways
+=================
+=> Allow EC2 Instances in VPC to Connect to the Internet
+=> Internet Gateway Must be created separately
+=> One VPC can only be attached to One Internet Gateway and vice versa
+
+D) NAT Gateways
+==============
+NAT - Network Address Translation
+
+=> NAT Gateways allows the Instances in the Private Subnet to connect to the Internet.
+=> Provision the NAT Gateway in the Public Subet.
+=> NAT Gateway should be in the Same AZ where the Public Subnet is there.
+=> Can not used by the EC2 Instances in the Same Subnet( Only from Other Subnets).
+
+=> Starts with 5 Gbps and scales currently upto 45 Gbps.
+=> Not Associated with any Security Groups.
+=> NAT Gateway uses Elastic IP ( Static IP)
+
+=> NAT Gateway is Resilient within a Single AZ
+=> You must Create multiple NAT Gateways in  multiple  AZs for Fault-Tolerance.
+
+E) Security Groups
+================
+=> A Security Group acts as a virtual firewall for your EC2 instances to control incoming and outgoing traffic. 
+
+=> Inbound rules control the incoming traffic to your instance
+=> Outbound rules control the outgoing traffic from your instance. 
+
+Security Groups are Stateful:
+----------------------------------------
+=> If you send the Request to EC2 Instance, Response Traffic for that Request is allowed to Flow-Out regardless of Outbound Rules.
+
+=> If you send the Request from EC2 Instance, Response Traffic for that Request is allowed to Flow-In regardless of Inbound Rules.
+
+F) Network ACLs
+===============
+*** ACLs --- Access Control List
+
+1) Default Network ACLs:
+------------------------------------
+=> Your VPC automatically comes with  Default Network ACL.
+=> By Default, It allows all In-bound and Out-bound traffic.
+=> By Default, All the Subnets in the VPC will be Associated with Default Network ACL
+
+2) Custom Network ACLs:
+------------------------------------
+=> You can create Custom Network ACLs
+=> By Default, each Custom Network ACL denies all In-bound and Out-bound traffic until you add rules.
+
+3) Subnet Associations:
+------------------------------------
+=> Each Subnet in your VPC must be associated with Network ACL
+=> If you dont associate the subnet with Network ACL explicitly, then that Subnet will be associated automatically with Default Network ACL.
+=> You can associate One Network ACL with multiple Subnets; however One Subnet can be associated with Only One Network ACL at a time.
+
+4) Block IP Addresses:
+---------------------------------
+=> You can block required IP Addresses using Network ACL , not with Security Group.
+
+5) Numbered List of Rules:
+-------------------------------------
+=> Network ACL contains Numbered List of Rules that are Evaluated in Order starting with Lowest-Numbered Rule.
+
+6) Allow or Deny Traffic:
+----------------------------------
+=>  Network ACLs have Separate  In-bound and Out-bound Rules 
+=> Each Rule can either Allow or Deny Traffic.
+
+7) Network ACLs are Stateless:
+------------------------------------------
+=> Response to allowed In-bound traffic subject to the rules for Out-bound traffic
+=> Response to allowed out-bound traffic subject to the rules for In-bound traffic
+
+Q) Diff between Security Groups and Network ACLs
+
+
+G) VPC Endpoints
+=================
+=> VPC Endpoint allows you to connect Your VPC to AWS Services without leaving AWS Internal Network .
+=> VPC Endpoints are powered by PrivateLink without requiring Internet Gateway, NAT Gateway, VPN Connection or AWS Direct Connect Connection.
+
+
+Types of  VPC Endpoints:
+----------------------------------
+=> There are two types of  VPC Endpoints
+	1) Interface Endpoints
+	2) Gateway Endpoints
+
+1) Interface Endpoints:
+--------------------------------
+=>  Interface Endpoint is an Elastic Network Interface(ENI) with Private IP Address that Serves as an Entry point for the traffic handled to a supported services.
+=> This supports a large number of AWS Services 
+
+2) Gateway Endpoints:
+--------------------------------
+=> Similar to NAT Gateways
+=> Gateway Endpoint is a Virtual Device you Provision
+=> This supports Connect to S3 and DynamoDB currently.
+
+ 
+H) VPC Peering
+===========
+=> VPC Peering allows to connect One VPC to another VPC via Direct Network Route using private IP Address.
+
+=> Instances behave as they are on the Same Private Network
+
+=> Multiple VPCs must not have Overlapping CIDRs
+
+=> You can peer VPC with other VPC in the same AWS Account as well as with other VPC in the different AWS Account
+
+=> You can peer between regions.
+
+=> Peering is done in Star Configuration
+	( 1 Control VPC peers with  4 other VPCs)
+=> Transitive Peering is not supported with VPCs.
+
+
+I) AWS PrivateLink(VPC Endpoint Services):
+=================================
+=> AWS PrivateLink allows to  expose Service VPC to tens, hendreds or thousands of Customer VPCs
+=> PrivateLink is Most secure and Scalable
+=> PrivateLink does not require VPC Peering , Route Tables, NAT Gateways , Internet Gateways etc.
+=> You can expose Service VPC to your own account or other aws accounts.
+
+=> You just need the following
+*** You need Network LoadBalancer on the Service VPC
+*** You need ENI on the Customer VPC
+
+J) Site-to-Site VPN Connection
+=========================
+=> VPN connection refers to the connection between your VPC and your own Corporate Data Center.
+
+=>  Site-to-Site VPN supports Internet Protocol security (IPsec) VPN connections.
+
+VPN Connection - Encryption
+---------------------------------------------
+=> Uses Public Internet 
+=> Data in Transit is Encrypted with IPsec-encrypted
+
+AWS Site-to-Site VPN connection
+--------------------------------------------
+=> Needs Two things
+1) Virtual Private Gateway(VGW) 	- on the AWS side 
+2) Customer Gateway(CGW)  		- on the Customer side
+
+
+K) Exploring VPN CloudHub
+========================
+=> If you have multiple sites and each site is having its own VPN Connection , then you can use AWS VPN CloudHub to connect these sites together.
+
+=> Hub-and-Spoke model
+=> Low Cost and easy to manage
+=> It Operates on the public internet, but all the traffic between Customer gateway and AWS VPN CloudHub is encrypted.
+
+=> Simplifies VPN Network Topology.
+
+
+L) DirectConnect(DX) 
+=================
+=>  DirectConnect is used to establish Private Connectivity between AWS Cloud and Your Data Center.
+=> You can reduce the Network Costs
+=> Usefull for high-throughput workloads( lots of network traffic)
+=> Provides stable and reliable secure Connection.
+
+Types of DirectConnect(DX) Connections
+--------------------------------------------------
+=> There are Two Types of DirectConnect Connections
+1) Dedicated Connection
+2) Hosted Connection
+
+M) Transit Gateway
+================
+=> AWS Transit Gateway connects VPCs and On-Premises Networks through Central Hub.
+=> This simplifies your network topology and puts an end to complex Peering Relationships.
+
+=> Works on Hub-and-Spoke(Star) Model
+=> Works on Regional basis, But you can have it accross multiple regions.
+=> You can use it accross multiple AWS Accounts using RAM ( Resource Access Manager)
+=> Allows you to have Transitive Peering between thousands of VPCs and On-premises Data Centers.
+=> Works with Direct Connect Gateway and VPN Connections
+=> Supports IP Multicast ( Not supported by any other AWS Service).
+
+N) Understanding IPv6 for VPC
+==========================
+=> IPv4 is designed to provide 4.3 Billion IP Addresses. ( This number will be exhausted soon)
+=> IPv6 is successor of IPv4.
+=> IPv6 is designed to provide 3.4 x 10 ^ 38 Unique IP Addresses. 
+=> Every IPv6 Address is Public and Internet-Routable
+=> No Private IP Range in  IPv6 Addresses
+
+Format:
+----------
+X:X:X:X:X:X:X:X
+
+=> X is Hexa-Decimal Digits tanging from 0000 to FFFF
+=> IPv6 address consists of 8 groups/Segments (separated with colons) 
+
+IPv6 and CIDR
+----------------------
+2345:425:2CA1:0000:0000:567:5673:23b5/64
+
+IPv6 in VPC
+----------------
+=> IPv4 can not be disabled for your VPC and Subnets
+=> You can enable IPv6 to Operate in dual-stack mode.
+
+O) Egress-Only Internet Gateway
+==========================
+=> Egress-Only Internet Gateway is used for IPv6 only.
+=> This is Similar to NAT Gateway
+	NAT Gateway 		- IPv4
+	Egress-Only Internet Gateway - IPv6
+=> Allow EC2 Instances in the Private Subnet to Access the Internet.
+=> You must update the Route Tables
+
+P) VPC Flow Logs
+===============
+=> Flow Logs are used to Capture the Information about IP Traffic going into your interfaces.
+=> 3 Types of Flow Logs
+	a) VPC Flow Logs
+	b) Subnet Flow Logs
+	c) ENI Flow Logs
+=> Helps to Monitor and troubleshoot connectivity issues
+=> Flow Logs data can go to S3 or Cloud Watch Logs
+
+====================
+Exam #7 - Amazon VPC
+====================
+
+Q1) By default, what range of IP addresses and ports do security groups leave open for inbound traffic?
+
+A) None. They are closed by default.
+
+B) 0.0.0.0/0, port 22
+
+C) 0.0.0.0/0, port 80
+
+D) 127.0.0.1, port 3389
+
+Ans: A
+
+
+Q2) Fill in the blank: Security groups are ____.
+
+A) Both Stateless and Stateful
+
+B) Stateless
+
+C) Stateful
+
+Ans: C 
+
+
+Q3)  True or False? Direct Connect provides you with an encrypted connection to your AWS account by default.
+
+A) False
+
+B) True
+
+Ans: A
+
+
+Q4) Your security team will only approve S3 usage if your EC2 instances don't transmit data over the public internet. What service can you use to comply with this requirement?
+
+A) NAT Gateway
+
+B) Route Table
+
+C) NACL
+
+D) VPC Endpoint
+
+Ans: D
+
+
+Q5) What is an optional layer of security for your VPC that acts as a firewall for controlling traffic in and out of one or more subnets?
+
+A) AWS WAF
+
+B) AWS Shield
+
+C) Network ACLs
+
+D) Security groups
+
+Ans: C
+
+
+Q6) Why would you use Transit Gateway over VPC peering?
+
+A) VPC peering causes networking bottlenecks.
+
+B) You have too many VPCs to reasonably peer together.
+
+C) Transit Gateway works across regions where VPC peering doesn't.
+
+D) VPC peering isn't as secure as Transit Gateway.
+
+Ans: B
+
+
+Q7) Which of the following items are NOT a part of a VPC?
+
+A) Subnet
+
+B) Service Gateway
+
+C) Internet Gateway
+
+D) Route Table
+
+Ans: B
+
+
+Q8) What is the safest way to open up a single API endpoint to another AWS VPC?
+
+A) Peer the VPCs together to allow them to communicate.
+
+B) Host your API behind a publicly accessible IP address.
+
+C) Upload your API to an S3 bucket and enable "API Share". Input the ID of the other VPC.
+
+D) Use PrivateLink to securely share out your API.
+
+Ans: D
+
+
+Q9)  True or False? Transitive peering is not a supported VPC peering connection configuration.
+
+A) True
+
+B) False
+
+Ans:  A
+
+Q10) How do you scale a NAT Gateway?
+
+A) You don't. AWS handles this for you.
+
+B) Create a second NAT Gateway and mirror the traffic.
+
+C) Stop the NAT Gateway and resize it to a larger instance size.
+
+D) Enable the Auto-Scaling option during creation.
+
+Ans: A
+
+
+Q11)  Fill in the blank: Network Access Control Lists (NACLs) are ____.
+
+A) Stateful
+
+B) Stateless
+
+C) Both Stateless and Stateful
+
+Ans: B
+
+
+Q12) When would you want to use Direct Connect?
+
+A) When you need to talk directly to AWS and don't want to use the normal support channels for a request
+
+B) When you need your database to be able to move from one region to another
+
+C) When your EC2 instance needs to enable enhanced networking
+
+D) When you need a high-speed private connection from your on-premises environment to AWS
+
+Ans: D
+
+
+Q13) Which of the following is a reason that VPC peering could fail?
+
+A) The VPCs use different numbers of AZs.
+
+B) The VPCs have overlapping IP addresses.
+
+C) The VPCs are in different regions.
+
+D) The VPCs are in different accounts
+
+Ans: B
+
+
+Q14) What is the purpose of a NAT Gateway?
+
+A) To forward traffic to other EC2 instances
+
+B) To act as a firewall for your resources
+
+C) To forward traffic from private subnets to services outside your VPC
+
+D) To block malicious traffic from leaving your network
+
+Ans: C
+
+
+Q15) What is the IPv4 CIDR block of the default VPC in AWS?
+
+A) 172.31.0.0/16
+
+B) 172.0.0.0/16
+
+C) 192.168.1.0/16
+
+D) 10.0.0.0/16
+
+Ans: A
+
+
+Q16) What does this CIDR 10.0.9.0/28 correspond to?
+
+A) 10.0.9.0 to 10.0.9.15
+
+B) 10.0.9.0 to 10.0.32.0
+
+C) 10.0.9.0 to 10.0.9.28
+
+D) 10.0.0.0 to 10.0.0.16
+
+Ans: A
+
+
+Q17) You have a corporate network of size 10.0.0.0/8 and a satellite office of size 192.168.0.0/16. Which CIDR is acceptable for your AWS VPC if you plan on connecting your networks later on?
+
+A) 172.16.0.0/12
+
+B) 172.16.0.0/16
+
+C) 10.0.16.0/16
+
+D) 192.168.4.0/18
+
+
+Ans: B
+
+Q18) You plan on creating a subnet and want it to have at least capacity for 28 EC2 instances. What's the minimum size you need to have for your subnet?
+
+A) /28
+
+B) /27
+
+C) /26
+
+D) /25
+
+Ans: C
+
+
+Q19) Security Groups operate at the ................. level while NACLs operate at the ................. level.
+
+A) EC2 Instance , Subnet
+
+B) Subnet , EC2 Instance 
+
+Ans: A
+
+
+Q20) You would like to provide Internet access to your EC2 instances in private subnets with IPv4 What should you use?
+
+A) Internet Gateway
+
+B) Egress Only Internet Gateway
+
+C) NAT Gateway
+
+Ans: C
+
+
+Q21) You would like to provide Internet access to your EC2 instances in private subnets with IPv6 What should you use?
+
+A) Internet Gateway
+
+B) Egress Only Internet Gateway
+
+C) NAT Gateway
+
+Ans: B
+
+
+Q22) VPC Peering has been enabled between VPC A and VPC B, and the route tables have been updated for VPC A. But, the EC2 instances cannot communicate. What is the likely issue?
+
+A) Check the NACL
+
+B) Check the Route Tables in VPC B
+
+C) Check the EC2 Instance Attached Security Groups
+
+Ans: B
+
+
+Q23) You have set up a Direct Connect connection between your corporate data center and your VPC A in your AWS account. You need to access VPC B in another AWS region from your corporate datacenter as well. What should you do?
+
+A) Enable VPC Peering
+
+B) Use Customer Gateway
+
+C) Use Direct Connect Gateway
+
+D) Setup NAT Gateway
+
+Ans: C
+
+Note : VPN Connection and VPN CloudHUB
+            Direct Connect and Direct Connect Gateway
+
+Q24) When using VPC Endpoints, what are the only two AWS services that have a Gateway Endpoint available?
+
+A) Amazon S3 and Amazon  SQS
+
+B) Amazon SQS and DynamoDB
+
+C) Amazon  S3 and DynamoDB
+
+
+Ans: C
+
+
+Q25) AWS reserves 5 IP addresses each time you create a new subnet in a VPC. When you create a subnet with CIDR 10.0.0.0/24, the following IP addresses are NOT reserved,
+
+A) 10.0.0.1
+
+B) 10.0.0.2
+
+C) 10.0.0.3
+
+D) 10.0.0.4
+
+Ans: D
+
+
+Q26) You have 3 VPCs A, B, and C. You want to establish a VPC Peering connection between all the 3 VPCs. What should you do?
+
+A) VPC Peering supports Transitive Peering. So You need to establish 2 VPC Peering Connections
+(A->B , B->C)
+
+B)  VPC Peering does not support Transitive Peering. So You need to establish 3 VPC Peering Connections (A->B , B->C , C->A)
+
+Ans: B
+
+
+Q27) How can you capture information about IP traffic inside your VPCs?
+
+A) Enable VPC Flow Logs
+
+B) Enable VPC Traffic Mirroring
+
+C) Enable CloudWatch Traffic Logs
+
+Ans: A
+
+
+Q28) If you want a 500 Mbps Direct Connect connection between your corporate datacenter to AWS, Which Connection You would choose?
+
+A) Dedicated Connection
+
+B) Hosted Connection
+
+Ans: B
+
+
+Q29) You have an internal web application hosted in a private subnet in your VPC that you want to be used by other customers. You don't want to expose the application to the Internet or open your whole VPC to other customers. What should you do?
+
+A) Use NAT Gateway
+
+B) Use VPC Endpoint Services (PrivateLink)
+
+C) Use VPC Peering
+
+Ans: B
+
+
+Q30) When you set up an AWS Site-to-Site VPN connection between your corporate on-premises datacenter and VPCs in AWS Cloud, what are the two major components you want to configure for this connection?
+
+A) Customer Gateway and NAT Gateway
+
+B) Internet Gateway and Customer Gateway
+
+C) Virtual Private Gateway and Internet Gateway
+
+D) Virtual Private Gateway and Customer Gateway
+
+Ans: D
+
+
+Q31) Your company has created a REST API that it will sell to hundreds of customers as a SaaS. Your customers are on AWS and are using their own VPCs. You would like to allow your customers to access your SaaS without going through the public Internet while ensuring your infrastructure is not left exposed to network attacks. What do you recommend?
+
+A) Use VPC Endpoint
+
+B) Use VPC Endpoint Services (PrivateLink)
+
+C) Use VPC Peering
+
+Ans: B
+
+
+Q32) Your company has several on-premises sites across the USA. These sites are currently linked using private connections, but your private connections provider has been recently quite unstable, making your IT architecture partially offline. You would like to create a backup connection that will use the public Internet to link your on-premises sites, that you can failover in case of issues with your provider. What do you recommend?
+
+A) VPC Peering
+
+B) VPN CloudHub
+
+C) DirectConnect
+
+D) Private LINK
+
+Ans: B
+
+
+Q33) You need to set up a dedicated connection between your on-premises corporate datacenter and AWS Cloud. This connection must be private, consistent, and traffic must not travel through the Internet. Which AWS service should you use?
+
+A) Site-to-Site VPN
+
+B) Private LINK 
+
+C) DirectConnect
+
+D) VPN CloudHub
+
+Ans: C
+
+
+Q34) Using a Direct Connect connection, you can access both public and private AWS resources.
+
+A) True
+
+B) False
+
+Ans: A
+
+
+Q35) You have a VPC in your AWS account that runs in a dual-stack mode. You are continuously trying to launch an EC2 instance, but it fails. After further investigation, you have found that you are no longer have IPv4 addresses available. What should you do?
+
+A) Modify Your VPC to Run in IPv6 mode only
+
+B) Modify Your VPC to Run in IPv4 mode only
+
+C) Add Additional IPv4 CIDR to Your VPC
+
+Ans: C
+
+
+
+
+

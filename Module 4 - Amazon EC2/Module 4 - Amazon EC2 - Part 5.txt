@@ -1,0 +1,270 @@
+========================
+Module 4 : Amazon EC2 - Part 5
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Tenancy Models
+
+Part 6:
+======
+13) EC2 Tenancy Models
+14) EC2 Placement Groups
+
+Part 7:
+======
+15) Launch and Connect to Windows Instance
+16) Exam Tips
+Exam #4 - Amazon EC2
+
+====================
+12) EC2 Pricing Options
+=====================
+1) On-Demand Instances
+2) Reserved Instances
+3) Spot Instances
+4) Decicated Instances
+
+1) On-Demand Instances
+===================
+=> Pay for the Hour or Second you use.
+=> You pay only for the seconds that your On-Demand Instances are in the running state, with a 60-second minimum.
+=> Low Cost and Flexible without any upfront payments or Long-term commitments
+=> You have full control over its lifecycle—You decide when to launch, stop, hibernate, start, reboot, or terminate it.
+
+Use Cases
+========
+=> Suitable for Applications Short-term or Unpredictable workloads
+=> Suitable for Applications being developed or tested on EC2 for the first time.
+
+2) Reserved Instances
+===================
+=> You can purchase a Reserved Instance for a one-year or three-year commitment.
+One-year: A year is defined as 31536000  seconds (365 days).
+Three-year: Three years is defined as 94608000 seconds (1095 days)
+
+=> Reserved Instances do not renew automatically; when they expire.
+=> You can continue using the EC2 instance without interruption, but you are charged On-Demand rates. 
+
+=> You can sekect one of the following payment options for Reserved Instances:
+
+A) All Upfront
+B) Partial Upfront
+C) No Upfront
+
+Offering class
+------------------
+=> If your computing needs change, you might be able to modify or exchange your Reserved Instance, depending on the offering class.
+
+Standard: 
+=======
+=> These provide the most significant discount, but can only be modified. Standard Reserved Instances can't be exchanged.
+=> When you choose Standard RI , You can get Upto 72% Discount on On-Demand Instance Prices.
+
+Convertible:
+=========
+=> These provide a lower discount than Standard RI, but can be exchanged for another Convertible Reserved Instance with different instance attributes. 
+=> Convertible Reserved Instances can also be modified.
+=> When you choose Convertible RI , You can get Upto 54% Discount on On-Demand Instance Prices.
+
+Use-cases:
+========
+=> Suitable for Applications with Steady State or Predictable workloads
+
+
+3) Spot Instances
+===================
+=> Purchase the Unused Capacity at discount upto 90% comapred to On-Demand Instances.
+
+Spot Price
+=========
+=> The hourly price for a Spot Instance is called a Spot price. 
+=> Hourly Spot Price varies depending on the Capacity and Region.
+
+=> You first decide on your Maximum Spot Price.
+=> Instance will be provisioned as long as Spot Price is Below your Max Spot Price.
+=> If the Spot Price goes above your max Spot Price , then you will have 2 minutes to Stop or Terminate the Instance.
+
+Spot Blocks
+=========
+=> You can use the Spot Block to stop your Instances being terminated  If the Spot Price goes above your max Spot Price.
+=> You can set the BlockDuration between 1 to 6 hours currently.
+
+Pricing History:
+===========
+=> You can get all the Pricing History of Spot Instances.
+
+How It Works
+===========
+1) Create the Spot Request with the following Info
+*** Max Price
+*** Desired No. of Instances
+*** Launch Specification
+*** Request Type - Onetime or Persistent
+      etc
+
+2) If Matching Launch Pools are not there then your Spot Request will fail.
+3) If Matching Launch Pools are there then Launches the Instances as per your request.
+*Request for Spot Instances is fullfilled if
+a) There is Available Capacity
+b) You Max Price in the Request is above the Current Spot Price.
+
+4) If the Spot Price goes above your max Spot Price , then Your Instance will be Terminated
+
+Note: If your Spot Request is persistent then you have to cancel the Request if you want to terminate the Instances.
+
+Spot Fleet:
+========
+=> Spot Fleet is Collection of Spot Instances and (Optionally) On-Demand Instances
+=> Spot Fleet attempts to launch the number of Spot Instances and On-Demand Instances to meet the Target Capacity Specified in the Spot Fleet Request.
+=> Spot Fleet also attempts to maintain the Target capacity if your spot Instances are Interrupted.
+
+Launch Pools:
+==========
+=> Spot Fleet will try and match the Target Capacity with your Price.
+=> Spot Fleet setup diffetent Launch Pools
+=> Spot Fleet will choose best way to implement depending on the Allocation Strategy you specified.
+
+Allocation strategies:
+----------------------------
+* Capacity optimized (recommended)
+* Lowest price
+* Diversified across instance pools in my fleet
+
+
+Use-cases:
+========
+=> Suitable for Applications that have flexible Start and End Time.
+=> You can not use Spot Instances for Web Servers.
+=> CI/ID and Testing 
+=> Hadoop Data Analytics
+=> Image Processing
+=> Batch Jobs
+=> Background Processing
+=> Optional tasks
+
+4) Decicated Instances
+===================
+=> Dedicated Instances are Physical Servers  that are dedicated to a single customer. 
+=> Dedicated Instances can be launched into an Amazon VPC only.
+=> When you launch an instance, the instance's tenancy attribute determines the hardware that it runs on. To launch a Dedicated Instance, you must specify an instance tenancy of dedicated.
+
+=> Decicated Instances can be Purchased On-Demand( Hourly basis)
+=> Decicated Instances can be Purchased as Reservation for upto 70% off on the On-Demand Instances.
+
+Use Cases:
+========
+=> Regulatory Requirements that may not support Multi-Tenant Virtualization
+=> Great for Licensing that does not support Multi-Tenant Virtualization
+
+===================
+13) EC2 Tenancy Models
+===================
+=> Tenancy defines how EC2 instances are distributed across physical hardware and affects pricing. 
+=> There are three tenancy options available:
+
+A) Shared (default):
+B) Dedicated Instance (dedicated):
+C) Dedicated Host (host):
+
+A) Shared (default):
+----------------------------
+=>Multiple AWS accounts may share the same physical hardware.
+=> This is the default tenancy model and is most commonly used with AWS. 
+=> Multiple AWS accounts will share the same pieces of hardware even though they don’t interact with each other. 
+=> Shared tenancy model is also the cheapest option for running your EC2 instances.
+
+B) Dedicated Instance (dedicated):
+-------------------------------------------------
+=> Your instance runs on single-tenant hardware.
+
+=> You do not need to worry about the capacity of the hosts but you’re being charged a higher rate for the instances. This type of instance model is similar to the default model where you don’t worry about where the instances are, but it does ensure they’re kept separate.
+
+C) Dedicated Host (host):
+-----------------------------------
+=> Your instance runs on a physical server with EC2 instance capacity fully dedicated to your use, an isolated server with configurations that you can control.
+
+=> With a dedicated host, you purchase an entire physical host from AWS and that host is billed to you on an hourly basis.
+=> Once you’ve purchased that host, you’re allowed to spin up as many EC2 instances as that host will allow for no additional charges. 
+
+=> You may not mix EC2 instance types on the same dedicated host.
+=> For example you would purchase an m4.large host meaning that you could put as many m4.large instances on that host that you want up to the maximum (22 ) but you are not allowed to add m3.large or m4.xlarge for example. If you want to add m4.xlarge instances on dedicated hosts then you must purchase another dedicated host.
+
+=> You are responsible for waste 
+
+=====================
+14) EC2 Placement Groups
+=====================
+=> When you launch a new EC2 instance, the EC2 service attempts to place the instance in such a way that all of your instances are spread out across underlying hardware to minimize correlated failures.
+=> You can use placement groups to influence the placement of a group of interdependent instances to meet the needs of your workload.
+=> Depending on the type of workload, you can create a placement group using one of the following placement strategies:
+
+A) Cluster Placement Group
+B) Partition  Placement Group
+C) Spread Placement Group
+
+A) Cluster Placement Group
+----------------------------------------
+=> Cluster placement group is a logical grouping of instances within a single Availability Zone.
+=> Cluster placement group is recommended for applications that need Low network Latency, High network throughput, or both. 
+=> They are also recommended when the majority of the network traffic is between the instances in the group
+
+=> Only Certain Instance Types can be Launched into Cluster Placement Group
+
+B) Partition  Placement Group 
+------------------------------------------
+=> Partition placement groups help reduce the hardware failures for your application.
+=> When using partition placement groups, Amazon EC2 divides each group into logical segments called partitions.
+=> Amazon EC2 ensures that each partition within a placement group has its own set of racks. 
+=> Each rack has its own network and power source. 
+=> No two partitions within a placement group share the same racks, allowing you to isolate the impact of hardware failure within your application.
+
+=> When you launch instances into a partition placement group, Amazon EC2 tries to distribute the instances evenly across the number of partitions that you specify. 
+=> You can also launch instances into a specific partition to have more control over where the instances are placed.
+
+=> Partition placement group can have partitions in multiple Availability Zones in the same Region. 
+=> Partition placement group can have a maximum of seven partitions per Availability Zone.
+
+=> Partition placement groups can be used to deploy large distributed and replicated workloads, such as HDFS, HBase, and Cassandra, across distinct racks
+
+
+C) Spread Placement Group
+--------------------------------------
+=> Spread placement group is a group of instances that are each placed on distinct racks, with each rack having its own network and power source.
+
+=> Launching instances in a spread placement group reduces the risk of simultaneous failures that might occur when instances share the same racks. 
+
+=> Spread placement groups provide access to distinct racks, and are therefore suitable for mixing instance types or launching instances over time.
+
+=> Spread placement group can span multiple Availability Zones in the same Region. 
+=> You can have a maximum of seven running instances per Availability Zone per group.
+
+=> Spread placement groups are recommended for applications that have a small number of critical instances that should be kept separate from each other. 
+
+Note : There is no charge for creating a placement group.
+
+
+

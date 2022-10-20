@@ -1,0 +1,28 @@
+Q1)
+A customer has reached out to you stating a problem they frequently encounter, EC2 instance keeps on registering 80% CPU utilization which causes performance issues with organization. The customer wants to be notified via email when the CPU utilization in the EC2 instance stays above 80% for 5 minutes to monitor the logs during the time window. Which two AWS Services can help you achieve this?
+
+A) CloudTrail and SQS
+B) CloudTrail and SNS
+C) CloudWatch and SQS  
+D) CloudWatch and SNS   -- Right
+
+Q2)
+ As a cloud architect, the CIO of the organization has reached out to you, stating, one of the critical problems he is facing right now is the availability of one of the essential business applications. The business application is used in one country. The app has been facing issues in teams of hardware and network failure. Which key elements of AWS Global Infrastructure would you state while making a case for deploying the application on the cloud?
+
+A) Regions
+B) Availability Zone 
+C) Auto Scaling
+D) Amazon Virtual Private Cloud
+
+
+Q3) 
+A customer has reached out to you currently, they want to move into the online space by building a website for online ordering. They are ready to invest in building an application using a 3rd party. The customer currently has only two resources in their IT department, and they do not have any plans for investment in IT administration and management. Which cloud offering would be your recommendation in the above scenario?
+
+A)IaaS
+B) PaaS
+C) SaaS
+D) On-Premise
+
+
+
+

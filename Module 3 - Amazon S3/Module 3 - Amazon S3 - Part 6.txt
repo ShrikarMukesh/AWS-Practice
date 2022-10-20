@@ -1,0 +1,59 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+Part 3:
+======
+D) Versioning Objects in S3
+E) S3 Storage Classes
+
+Part 4:
+=====
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+
+Part 5:
+=====
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+
+Part 6:
+======
+J) Backup Data with S3 Replication
+
+Part 7:
+======
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+===========================
+J) Backup Data with S3 Replication
+===========================
+1) S3 Replication
+2) Demo : S3 Replication
+
+1) S3 Replication
+=============
+=> You can Replicate Objects from One Bucket to Another Bucket
+=> Versioning must be enabled on both Source Bucket and Destination Bucket
+
+=> Existing Objects in the Bucket will not be replicated automatically.
+=> When you turn-on Replication, All the Subsequent uploaded Objects will be replicated 
+
+=> Delete Markers will not be replicated by default. You have to configure explicitly to replicate the Delete Markers.
+
+2) Demo : Cross-Region S3 Replication
+==============================
+A) Create Source Bucket
+B) Create Destination Bucket
+C) Upload Files to Source Bucket => Will not be replicated
+D) Enable Replication by Creating Replication Rule  on Source Bucket
+E) Upload Files to Source Bucket => Will be replicated

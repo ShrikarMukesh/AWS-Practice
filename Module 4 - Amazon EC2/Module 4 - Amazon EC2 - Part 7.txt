@@ -1,0 +1,615 @@
+========================
+Module 4 : Amazon EC2 - Part 7
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Tenancy Models
+
+Part 6:
+======
+13) EC2 Tenancy Models
+14) EC2 Placement Groups
+
+Part 7:
+======
+15) Launch and Connect to Windows Instance
+16) Exam Tips
+Exam #4 - Amazon EC2
+
+=================================
+15) Launch and Connect to Windows Instance
+=================================
+Demo:
+1) Launch the EC2 instance 
+* AMI - Windows Server 2019 Base
+* Volume Size : 30
+* Security Group : RDP 
+
+2)Take Public IP  : 54.226.108.150
+
+3) Open RDC ( Remote Desktop Connection)
+Provide the Public IP and Click on Connect
+
+4) Provide Username and Password
+Username : Administrator
+Password: vYGsd2wBj?x$uXK*CvIn*m.)hnU&vrE)
+
+============
+16) Exam Tips
+============
+1) Introduction to EC2
+=================
+=> EC2 - Elastic Compute Cloud.
+=> EC2 is Secure and Re-Sizable Compute Capacity in the Cloud.
+=> EC2 is a Virtual Server hosted in the Cloud****
+=> Provides the Compute Capacity You want when You need.
+=> EC2 = Infrastructure as a Service(IaaS)
+
+*Game Changer
+----------------------
+=> EC2 Launched in 2006 and Complete Game Changer.It Literally changed the Entire Industry.
+=> AWS led a big Change in the Industry by Introducing EC2.
+
+*Pay only for what you use.
+---------------------------------------
+=> EC2 changed the Econamics of Computing
+
+*No Wasted Capacity
+----------------------------
+=> Select the Capacity you need right now.
+=> Grow and Shrink when you need.
+
+*Wait for Minutes , Not Months
+--------------------------------------------
+=> Need Minutes to Setup the Required Compute Capacity.
+
+
+=====================
+2) Launching EC2 Instances
+=====================
+A) About EC2:
+===========
+Q) Where will you deploy your application in the Cloud?
+Ans: Virtual Servers in the Cloud / EC2 Instances
+
+EC2 Instance => Virtual Servers in the Cloud
+
+B)EC2 Service
+===========
+a) Manage the Lifecycle of EC2 Instances
+Create , Start , Stop , Delete (Terminate)
+
+b)Add the Storage Capabilities(EBS - Elastic Block Store)
+c)Add the Network Capabilities(VPC - Virtual Private Cloud)
+d) Load Balancing Capabilities(ELB - Elastic Loab Balancer)
+e)Auto-Scaling Capabilities(ASG - Auto Scaling Group)
+etc
+
+C)EC2 Configuration
+================
+a) O.S => Linux, Windows, Mac
+b) CPU => Cores Required 
+c) RAM => RAM Required
+d) Storage => EBS (HardDisk)
+e) Network => VPC , Sub-Net Masks
+f) Firewalls => Security Groups
+g) Login Details => key-pair
+h) BootStrap Scripts => User Data
+etc
+
+=====================
+3) Amazon EC2 key pairs
+=====================
+*** All the Cloud Servers are Password less by deafult.***
+*** Password Authetication is disabled by deafult.***
+
+=> A Key-Pair, contains a Public key and a Private key
+=> A Key-Pair,  is a set of security credentials that you use to prove your identity when connecting to an Amazon EC2 instance.
+=> Amazon EC2 stores the public key on your instance
+=> You store the private key.
+
+===============
+4) Security Groups
+===============
+=> A Security Group acts as a virtual firewall for your EC2 instances to control incoming and outgoing traffic. 
+
+=> Inbound rules control the incoming traffic to your instance
+=> Outbound rules control the outgoing traffic from your instance. 
+
+=> One EC2 Instance can have one or more Security Groups
+=> One Security Group can be attached to Multiple EC2 Instances.
+
+=====================
+5) Connect to EC2 Instances
+=====================
+
+Connect to Linux Based EC2 Instances
+---------------------------------------------
+=> Use SSH to Connect to  Linux Based EC2 Instances
+=> From Mac, Linux ,Windows>=10  	---> Use SSH, Putty
+=> From Windows<10 		---> Use Putty
+=> From Any OS 			---> Use EC2 Connect
+
+Connect to Windows Based EC2 Instances
+---------------------------------------------
+=> From Any OS 			---> RDP/RDC
+
+===============
+6) Virtualization
+===============
+=> Virtualization is the foundation of cloud computing
+=> When You Deploy your applications in Physical Servers or dedicating  physical server to a specific application , then there is an excess capacity that is not being consumed, which leads to higher operating costs and IT costs.
+
+*What is Virtualization?
+-------------------
+=> Virtualization uses software (like Hyperviser) to create an abstraction layer over the physical hardware. 
+=> It creates a virtual compute system, known as virtual machines (VMs). 
+=> This allows you to run multiple virtual computers, operating systems, and applications on a single physical server — essentially partitioning it into multiple virtual servers. 
+
+*Advantages
+-------------------
+A) Utilizing Resources Efficiently.
+B) Reduce your  operating costs and IT costs.
+
+==================
+7) EC2 Instance Types
+==================
+A) General Purpose
+B) Compute Optimized
+C) Memory Optimized
+D) Storage Optimized
+E) Accelerated Computing
+
+A) General Purpose
+===================
+=> General purpose instances provide a balance of compute, memory and networking resources, and can be used for a variety of diverse workloads.
+
+B) Compute Optimized
+===================
+=> Compute Optimized instances are ideal for compute bound applications that benefit from high performance processors. 
+=> These Instances are well suited for compute intensive applications.
+
+C) Memory Optimized
+===================
+=> Memory optimized instances are designed to deliver fast performance for workloads that process large data sets in memory.
+
+D) Storage Optimized
+===================
+=> Storage optimized instances are designed for workloads that require high, sequential read and write access to very large data sets on local storage. 
+
+E) Accelerated Computing
+===================
+=> Machine learning, high performance computing, computational fluid dynamics, computational finance, seismic analysis, speech recognition, autonomous vehicles, and drug discovery.
+
+==================
+8) AWS Command Line
+==================
+=> You can access AWS Resources in two Ways
+
+1) Using Management Console
+2) Using AWS CLI or SDK
+
+1) Using Management Console
+------------------------------------------
+=>To Access AWS Resources from Management Console, You need Username and Password 
+
+2) Using AWS CLI or SDK
+--------------------------------------
+To Access AWS Resources from CLI or  SDK, you need two things
+
+1) Access Key ID
+2) Secrect Access Key
+
+==============
+9) Using IAM Roles
+===============
+=> IAM Role is Similar to IAM User
+=> IAM Role is an Identity with specific Permissions
+=> IAM Role is intended to be used by anyone who needs it.
+
+=> IAM Roles does not have any standard long-tem credentials like Password or Access Keys like User.
+=> Instead, When you assume a Role, It Provides you the Temporary credentials for your Role-Session.
+
+=> Roles can allow Cross-Account Access.
+ This means One AWS Account has the ability to interact with Resources in other AWS Account.
+
+==========================
+10) BootStrap Scripts with UserData
+==========================
+=> Script that Runs when the EC2 Instance FIRST Starts
+
+#!/bin/bash
+/bin/echo "Hello Guys!!!" >> /home/ubuntu/hello.txt
+
+=> Adding these tasks at Boottime increases the amount of time it takes to boot the Instance.
+=> However, It allows to automate the Installations of Required Softwares and Applications.
+
+=============
+11) EC2 MetaData 
+=============
+=> EC2 MetaData is simply Data about your EC2 Instance.
+=>  EC2 MetaData includes information such as
+Private IP
+Public IP
+hostname
+Security Groups
+etc
+
+=> You can fetch the EC2 MetaData  as follows
+curl http://169.254.169.254/latest/meta-data
+
+====================
+12) EC2 Pricing Options
+=====================
+1) On-Demand Instances
+2) Reserved Instances
+3) Spot Instances
+4) Decicated Instances
+
+1) On-Demand Instances
+===================
+=> Pay for the Hour or Second you use.
+=> Low Cost and Flexible without any upfront payments or Long-term commitments
+
+Use Cases
+========
+=> Suitable for Applications Short-term or Unpredictable workloads
+=> Suitable for Applications being developed or tested on EC2 for the first time.
+
+2) Reserved Instances
+===================
+=> You can purchase a Reserved Instance for a one-year or three-year commitment.
+=> Reserved Instances do not renew automatically; when they expire.
+=> You can continue using the EC2 instance without interruption, but you are charged On-Demand rates. 
+
+Use-cases:
+========
+=> Suitable for Applications with Steady State or Predictable workloads
+
+
+3) Spot Instances
+===================
+=> Purchase the Unused Capacity at discount upto 90% comapred to On-Demand Instances.
+
+Spot Price
+=========
+=> The hourly price for a Spot Instance is called a Spot price. 
+
+Spot Blocks
+=========
+=> You can use the Spot Block to stop your Instances being terminated  If the Spot Price goes above your max Spot Price.
+=> You can set the BlockDuration between 1 to 6 hours currently.
+
+Spot Fleet:
+========
+=> Spot Fleet is Collection of Spot Instances and (Optionally) On-Demand Instances
+=> Spot Fleet attempts to launch the number of Spot Instances and On-Demand Instances to meet the Target Capacity Specified in the Spot Fleet Request.
+
+Launch Pools:
+==========
+=> Spot Fleet will try and match the Target Capacity with your Price.
+=> Spot Fleet setup diffetent Launch Pools
+=> Spot Fleet will choose best way to implement depending on the Allocation Strategy you specified.
+
+Allocation strategies:
+----------------------------
+* Capacity optimized (recommended)
+* Lowest price
+* Diversified across instance pools in my fleet
+
+Use-cases:
+========
+=> Suitable for Applications that have flexible Start and End Time.
+=> You can not use Spot Instances for Web Servers.
+=> CI/ID and Testing 
+=> Hadoop Data Analytics
+=> Image Processing
+=> Batch Jobs
+=> Background Processing
+=> Optional tasks
+
+4) Decicated Instances
+===================
+=> Dedicated Instances are physical Servers  that are dedicated to a single customer. 
+
+=> Decicated Instances can be Purchased On-Demand( Hourly basis)
+=> Decicated Instances can be Purchased as Reservation for upto 70% off on the On-Demand Instances.
+
+Use Cases:
+========
+=> Regulatory Requirements that may not support Multi-Tenant Virtualization
+=> Great for Licensing that does not support Multi-Tenant Virtualization
+
+=====================
+EC2 Placement Groups
+=====================
+=> 3 Types of Placement Groups
+
+A) Cluster Placement Group
+B) Partition  Placement Group
+C) Spread Placement Group
+
+A) Cluster Placement Group
+----------------------------------------
+=> Instances will be Launched within a single Availability Zone.
+=> Low Network Latency, High Network Throughput, or both. 
+=> Only Certain Instance Types can be Launched into Cluster Placement Group
+
+B) Partition  Placement Group 
+------------------------------------------
+=> Helps to  reduce the hardware failures for your application.
+=> Instances will be Launched  in multiple Availability Zones in the same Region. 
+
+C) Spread Placement Group
+--------------------------------------
+=> Helps to  reduce the risk of simultaneous failures that might occur when instances share the same racks. 
+=>Instances will be Launched  on distinct racks, with each rack having its own network and power source.
+=> Can span multiple Availability Zones in the same Region. 
+
+For All Placement Groups:
+-----------------------------------
+=> You can not merge the Placements groups
+=> You can move an existing Instance into a Placement Group.Before You move the Instance, You must stop the Instance.
+=> You can move or remove an Instance using AWS CLI or SDK. But can not do it via Console currently.
+
+=================
+Tenancy Model
+=================
+1) Shared Instances
+2) Dedicated Instances
+3) Dedicated Hosts
+
+===================
+Exam #4 - Amazon EC2
+===================
+Q1)  What happens when your Spot instance is chosen by AWS for termination?
+
+A) You will get a 1-hour notification sent via Amazon SNS directly to your EC2 instance on port 65.
+
+B) While it is possible that your Spot Instance is interrupted before the warnings can be made, AWS makes a best effort to provide two-minute Spot Instance interruption notices to the metadata of your EC2 instance(s).
+
+C) Your will get no notification and your host will be terminated without warning.
+
+D) You will get a 10-minute notification sent to your specified email address.
+
+Ans: B
+
+Q2) What is the EC2 metadata URL?
+
+A) "http://127.0.0.2/latest/meta-data/"
+B) "http://255.255.255.254/latest/meta-data/"
+C) "http://255.169.255.169/latest/meta-data/"
+D) "http://169.254.169.254/latest/meta-data/"
+
+Ans: D
+
+Q3) True or False? IAM roles can only be used to allow EC2 instances to talk to other AWS services.
+
+A) True
+B) False
+
+Ans: B
+
+Q4) Which of the following is NOT a valid use case for IAM roles?
+
+A) Providing access to your AWS resources to users that are authenticated using an external identity provider.
+B) Allowing a user from another AWS account to assume a role in your account and interact with your AWS architecture.
+C) Using IAM groups to manage the same set of permissions for a set of IAM roles.
+D) Attaching a role to an EC2 instance to allow it to talk to other AWS resources.
+
+Ans: C
+
+Q5) True or False? If you reboot your EC2 instance, the user data will rerun automatically.
+
+A) False
+B) True
+
+Ans: A
+
+Q6) Which command uses your Access key ID, Secret access key, AWS Region, and Output format to setup your default profile in the AWS CLI?
+
+A) aws configure
+B) aws configure set
+C) aws s3 ls
+D) aws configure list
+
+Ans: A
+
+Q7) What is EC2 metadata commonly used for?
+
+A) To configure your Security Groups
+B) When an S3 bucket needs to see where an object was uploaded from.
+C) To determine how long an instance has been online, which AWS uses to calculate your bill
+D) When your code needs to learn something about the EC2 instances that it's running on
+
+Ans: D
+
+Q8) Why would you want to spin up an EC2 Dedicated Host?
+
+A) Because you have sensitive workloads that you don't want AWS to see
+B) Because your application has hardware-specific licensing requirements
+C) Because you need to create a cluster of EC2 instances
+D) Because your boss told you to
+
+Ans: B
+
+Q9) What is user data commonly used for?
+
+A) For deploying EC2 instances into an Auto Scaling group
+B) For updating the content of your S3 bucket
+C) For rotating your IAM passwords
+D) For bootstrapping an EC2 instance as it comes online
+
+Ans: D
+
+Q10) You have a small number of critical instances that should be kept separate from each other. You want to ensure that each instance is placed on distinct underlying hardware. What kind of placement group would you pick?
+
+A) Partition
+B) High Availability
+C) Spread
+D) Cluster
+
+Ans: C
+
+Q11) When would you need to create an EC2 Dedicated Instance?
+
+A) When you want to ensure that your instance will never fail
+B) When you have an auditing requirement to run your hosts on single-tenant hardware
+C) When you need to make sure that AWS support can assist you with a hardware failure
+
+Ans: B
+
+Q12) Which statement best defines an EC2 instance?
+
+A) It is a service that provides simple and easy to use messaging queues.
+B) It is a service that provides secure, resizable compute capacity in the cloud.
+C) It is a service that allows you to bridge the gap securely and easily between your physical data center and the AWS Cloud.
+D) It is a service that provides durable and reliable remote object-based storage.
+
+Ans: B
+
+Q13) What is the minimum time that AWS requires you to keep an EC2 instance online after you've turned it on?
+
+A) 1 hour
+B) 1 day
+C) None (no minimum run time)
+D) 15 minutes
+
+Ans: C
+
+Q14) When would you want to use a cluster placement group?
+
+A) When your application acts as a high-performance messaging queue
+B) When you need a HA database solution
+C) When you want to ensure a 100% uptime for your application
+D) When you want to reduce network latency in your application
+
+Ans:  D
+
+Q15) You are preparing to launch an application that will be hosted on a set of EC2 instances. This application needs some software installation and some OS packages need to be updated during the first launch. What is the best way to achieve this when you launch the EC2 instances?
+
+A) Connect to each EC2 Instance using SSH manually , Install required Software and Update your OS packages manually
+B)Write the Batch Script to  Install required Software and Update your OS packages abd give that to AWS Support Team. They will execute for you.
+C) Write the Batch Script to  Install required Software and Update your OS packages .and Specify the Script in EC2 User Data 
+
+Ans: C
+
+Q16) Which EC2 Instance Type should you choose for a critical application that uses an in-memory database?
+
+A) Compute Optimized
+B) Storage Optimized
+C) Memory Optimized
+D) General Purpose
+
+Ans: C
+
+Q17) You have an e-commerce application with an OLTP database hosted on-premises. This application has popularity which results in its database has thousands of requests per second. You want to migrate the database to an EC2 instance. Which EC2 Instance Type should you choose to handle this high-frequency OLTP database?
+
+A) Compute Optimized
+B) Storage Optimized
+C) Memory Optimized
+D) General Purpose
+
+
+Ans: B
+
+Q18) Security Groups can be attached to only one EC2 instance.
+
+A) True
+B) False
+
+Ans: B
+
+Q19) You're planning to migrate on-premises applications to AWS. Your company has strict compliance requirements that require your applications to run on dedicated servers. You also need to use your own server-bound software license to reduce costs. Which EC2 Purchasing Option is suitable for you?
+
+A) Convertible Reserved Instances
+B) Spot Instances
+C) Dedicated Hosts
+
+Ans: C
+
+Q20) You would like to deploy a database technology on an EC2 instance and the vendor license bills you based on the physical cores and underlying network socket visibility. Which EC2 Purchasing Option allows you to get visibility into them?
+
+A) On-Demand Instances
+B) Reserved Instances
+C) Spot Instances
+D) Dedicated Hosts
+
+Ans: D
+
+Q21) Which EC2 Purchasing Option can provide you the biggest discount, but it is not suitable for critical jobs or databases?
+
+A) Convertible Reserved Instances
+B) Dedicated Hosts
+C) Spot Instances
+
+Ans: C
+
+Q22) What should you use to control traffic in and out of EC2 instances?
+
+A) Network Access Control List
+B) Security Groups
+C) IAM Policies
+
+Ans: B
+
+Q23) How long can you reserve an EC2 Reserved Instance?
+
+A) 1 or 3 Years
+B) 2 or 4 Years
+C)  6 months or 1 Year
+D) Anytime between 1 and 3 Years
+
+Ans: A
+
+Q24) You would like to deploy a High-Performance Computing (HPC) application on EC2 instances. Which EC2 instance type should you choose?
+
+A) Compute Optimized
+B) Storage Optimized
+C) Memory Optimized
+D) General Purpose
+
+Ans: A
+
+Q25) Which EC2 Purchasing Option should you use for an application you plan to run on a server continuously for 1 year?
+
+A) On-Demand Instances
+B) Reserved Instances
+C) Spot Instances
+D) Dedicated Hosts
+
+Ans: B
+
+
+
+
+
+
+
+
+
+

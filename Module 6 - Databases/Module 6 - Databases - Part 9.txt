@@ -1,0 +1,309 @@
+========================
+Module 6 : Databases - Part 9
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+================
+Exam #6 - Databases
+=================
+
+Q1) True or False? DynamoDB supports the ability to back up and restore your data.
+
+A) True
+B) False
+
+Ans: A
+
+Q2) What should you do to scale out an RDS database that has a read-heavy workload?
+
+A) Scale RDS vertically.
+B) Add additional read replicas.
+C) Set up RDS automatic backups.
+D) Enable Multi-AZ.
+
+Ans: B
+
+Q3) Which of the following is NOT a supported RDS database engine?
+
+A) Oracle
+B) SQL Server
+C) IBM DB2
+D) MariaDB
+
+Ans: C
+
+Q4) True or False? DynamoDB lives in your VPC.
+
+A) True
+B) False
+
+Ans:  B
+
+Q5) Amazon Aurora is compatible with which of the following database engines? (Choose 2)
+
+A) Oracle
+B) MySQL
+C) Postgres
+D) MariaDB
+
+Ans: B,C 
+
+Q6) True or False? RDS Multi-AZ creates an exact copy of your database in all AZs in the selected Region.
+
+A) False
+B) True
+
+Ans: A
+
+Q7) True or False? Amazon VPC enables you to launch Amazon RDS DB instances into a virtual private cloud (VPC).
+
+A) False
+B) True
+
+Ans: B
+
+Q8) Choose three features Amazon Aurora supports from the options below (Choose 3).
+
+A) Aurora Serverless
+B) Multiple AZ data storage copies
+C) Up to 20 Read Replicas
+D) Automatic Backups
+
+Ans: A,B,D
+
+Q9) Which of the following are a benefits of using RDS Multi-AZ? (Choose 3).
+
+A) For a RDS Multi-AZ deployment with two readable standbys, in the event of a failure, both remaining standbys can takeover and serve the workload (writes) from the primary.
+
+B) If your primary database fails, you'll automatically fail over to the secondary copy.
+
+C) Backups are taken from the secondary copy of your data.
+
+D) All updates or maintenance changes are applied to the secondary database. You then cut over to that secondary copy of your data.
+
+Ans: B,C,D
+
+Q10) What type of read would you use with DynamoDB if you can't have stale data in your application?
+
+A) Strongly Consistent
+B) Sometimes Consistent
+C) Weakly Consistent
+D) Eventually Consistent
+
+Ans: A
+
+Q11) Fill in the blank: DynamoDB is a ____ database.
+
+A) Relational
+B) Non-Relational
+C) Relationship
+D) Graph
+
+Ans: B
+
+Q12) True or False? RDS read replicas have their own endpoints.
+
+A) True
+B) False
+
+Ans: A
+
+Q13) What is the longest you can store an automatic RDS backup?
+
+A) 35 Days
+B) 7 Days
+C) Forever
+D) 14 Days
+
+Ans: A
+
+Q14) True or False? Amazon RDS automates administrative tasks, such as performing backups and patching the software that powers your database.
+
+A) False
+B) True
+
+Ans: B 
+
+Q15)  True or False? You may use an Amazon RDS read replica for disaster recovery purposes in a different AWS Region from the source DB instance.
+
+A) True
+B) False
+
+Ans:  A
+
+Q16) You're planning for a new solution that requires a MySQL database that must be available even in case of a disaster in one of the Availability Zones. What should you use?
+
+A) Create Read Replica
+B) Enable Encryption
+C) Enable Multi-AZ
+
+Ans: C
+
+Q17) We have an RDS database that struggles to keep up with the demand of requests from our website. Our million users mostly read news, and we don't post news very often. Which solution is NOT adapted to this problem?
+
+A) ElastiCache Cluster
+B) RDS Multi-AZ
+C) RDS Read Replicas
+
+Ans: B
+
+Q18) You have set up read replicas on your RDS database, but users are complaining that upon updating their social media posts, they do not see their updated posts right away. What is a possible cause for this?
+
+A) There must be a Bug in the Code
+B) Read Replicas have Async Replication So Likely Users will only Read Eventualy Consistent.
+C) You should set Multi-AZ instead of Read Replica.
+
+Ans: B
+
+Q19) Which RDS (NOT Aurora) feature when used does not require you to change the SQL connection string?
+
+A) RDS Multi-AZ
+B) RDS Read Replicas
+
+Ans: A
+
+Q20) Your application running on a fleet of EC2 instances managed by an Auto Scaling Group behind an Application Load Balancer. Users have to constantly log back in and you don't want to enable Sticky Sessions on your ALB as you fear it will overload some EC2 instances. What should you do?
+
+A) Use your Custom Load Balancer instead of ALB
+B) Store Session Data in RDS
+C) Store Session Data in ElastiCache
+D) Store Session Data in Shared EBS Volume
+
+Ans: C
+
+Q21) An analytics application is currently performing its queries against your main production RDS database. These queries run at any time of the day and slow down the RDS database which impacts your users' experience. What should you do to improve the users' experience?
+
+A) Setup Read Replica
+B) Setup Multi-AZ
+C) Run analytical queries in the night time
+
+Ans: A
+
+Q22) You would like to ensure you have a replica of your database available in another AWS Region if a disaster happens to your main AWS Region. Which database do you recommend to implement this easily?
+
+A) RDS Read Replicas
+B) RDS Multi-AZ
+C) Aurora Read Replicas
+D) Aurora Global Database
+
+Ans: D
+
+Q23) Which of the following statement is true regarding replication in both RDS Read Replicas and Multi-AZ?
+
+A) Read Replicas uses Async Replication and Multi-AZ uses Async Replication
+B) Read Replicas uses Async Replication and Multi-AZ uses Sync Replication
+C) Read Replicas uses Sync Replication and Multi-AZ uses Async Replication
+D) Read Replicas uses Sync Replication and Multi-AZ uses Sync Replication
+
+Ans: B
+
+Q24) How do you Encrypt an Un-Encrypted RDS DB instance?
+
+A) Select RDS DB Instance , Select Actions => Encrypt using KMS
+B) Stop RDS Instance , Select RDS DB Instance , Select Actions => Encrypt using KMS
+C) Create a Snapshot of Un-Encrypted RDS instance, Copy the Snapshot and Select Encryption Option, Then restore RDS Instance from Encrypted 
+
+Ans: C
+
+Q25) How many Replicas can be created for RDS Instance?
+
+A) 3
+B) 5
+C) 7
+D) 15
+
+Ans: B
+
+Q26) How many Replicas can be created for Aurora Instance?
+
+A) 3
+B) 5
+C) 7
+D) 15
+
+Ans: D
+
+Q27) True or False? Aurora read replicas have their own endpoints.
+
+A) True
+B) False
+
+Ans: B
+
+Q28) You have an un-encrypted RDS DB instance and you want to create Read Replicas. Can you configure the RDS Read Replicas to be encrypted?
+
+A) No
+B) Yes
+
+Ans: A
+
+Q29) An application running in production is using an Aurora Cluster as its database. Your development team would like to run a version of the application in a scaled-down application with the ability to perform some heavy workload on a need-basis. Most of the time, the application will be unused. Your CIO has tasked you with helping the team to achieve this while minimizing costs. What do you suggest?
+
+A) Use Global Aurora Database
+B) Use RDS Database
+C) Use Aurora Serverless
+D) Use Aurora Database
+
+Ans: C
+
+Q30) Which database helps you store relational datasets, with SQL language compatibility and the capability of processing transactions such as insert, update, and delete?
+
+A) Amazon RedShift
+B) Amazon RDS
+C) Amazon ElastiCache
+D) Amazon DynamoDB
+
+Ans: B
+
+Q31) Which AWS service provides you with caching capability that is compatible with Redis API?
+
+A) Amazon ElastiCache
+B) Amazon RedShift
+C) Amazon Aurora
+D) Amazon RDS
+E) Amazon DynamoDB
+
+Ans: A
+
+Q32) You want to migrate an on-premises MongoDB NoSQL database to AWS. You don't want to manage any database servers, so you want to use a managed NoSQL database, preferably Serverless, that provides you with high availability, durability, and reliability. Which database should you choose?
+
+A) Amazon ElastiCache
+B) Amazon RedShift
+C) Amazon Aurora
+D) Amazon DynamoDB
+
+Ans: D
+
+Q33) You are looking to perform Online Transaction Processing (OLTP). You would like to use a database that has built-in auto-scaling capabilities and provides you with the maximum number of replicas for its underlying storage. What AWS service do you recommend?
+
+A) Amazon RedShift
+B) Amazon Aurora
+C) Amazon RDS
+D) Amazon DynamoDB
+
+Ans: B
+
+Q34) You have a set of files, 100MB each, that you want to store in a reliable and durable key-value store. Which AWS service do you recommend?
+
+A) Amazon Athena
+B) Amazon DynamoDB
+C) Amazon ElastiCache
+D) Amazon S3
+
+Ans: D
+
+Q35) True or False? We can setup Standby DB Instance for Aurora Database.
+
+A) True
+B) False
+
+Ans: B
+
+
+
+

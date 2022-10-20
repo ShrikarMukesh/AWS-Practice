@@ -1,0 +1,146 @@
+=============================
+Module 9 - Amazon Route 53 - Part 2
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+==========================
+*4) Exploring DNS Record Types
+==========================
+Following are Important DNS Record Types
+-----------------------------------------------------------
+1) A	=> Maps the Domain to IPv4 Address
+myjlc123.com	=> 1.2.3.4 ( Public IP of EC2/ELB)
+
+2) AAAA	=> Maps the Domain to IPv6 Address
+myjlc123.com	=> 123:456::789  ( Public IP of EC2 INstance)
+
+3) CNAME  => Maps the Domain to another Host name
+
+myjlc123.com	=>  http://myjlc-bucket-1.s3-website-us-east-1.amazonaws.com
+
+4) ALIAS   	=> Maps the Domain to another Host name
+
+myjlc123.com	=>  http://myjlc-bucket-1.s3-website-us-east-1.amazonaws.com
+
+
+Each DNS Record Contains the following
+===========================
+1) Record name
+2) Record type
+3) Value 
+4) TTL (seconds) 
+5) Routing policy 
+
+Demo : Creating First DNS Record
+----------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) You can see two records by default called NS and SOA 
+5) Click on Create Record
+6)  Provide the following details
+a) Record name 	: 	myjlc123.com
+
+b) Record type 	: 	A 
+c) Value 		: 	10.11.12.13
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Simple 
+
+7) After providing Above Details, Click on  Create Record.
+8) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+*** It has to show the IP : 10.11.12.13
+
+=========================
+4) Deploying the Application
+=========================
+1) Goto EC2 Dashboard
+
+2) Launch EC2 Instance in AP-SOUTH-1(Mumbai) Region with the following Details
+------------------------------------------------------------------
+a) Name 			:    jlc-mumbai-server
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    mumbai-key-pair
+e) Network settings
+    i) VPC - required		:    Default VPC
+    ii) Subnet 		:    ap-south-1a
+    iii) Auto-assign public IP	:    Enable
+    iv) Firewall (security groups):  mumbai-web-sg
+    v) Description		:   mumbai-web-sg for Mumbai Region
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) Click on Launc Instance
+
+3) Update the Security Group as per the requirement.
+
+4) Connect using EC2 Instance Connect
+
+5) Setup Nginx Server
+
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+systemctl status nginx
+
+6) Deploy ypu Web Application
+
+cd /var/www/html
+sudo mv index.nginx-debian.html index.html
+sudo vim index.html
+
+<h1> Hello Guys, Welcome <h1>
+<h2> I am from Mumbai Region </h2>
+
+7) Take the Public IP of EC2 Instance and Access the Web Application from browser
+http://43.205.103.200
+
+8) Now Web Application is Running in EC2 Successfully
+Update the A Record of myjlc123.com
+Value 	:	43.205.103.200
+
+9) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+

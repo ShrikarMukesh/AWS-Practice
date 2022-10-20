@@ -1,0 +1,452 @@
+Module 1: Introduction to AWS
+=======================
+1) OnPremise Data Centers
+2) Exploring Cloud Computing
+3) Cloud Computing Service Models
+4) Cloud Computing Deployment Models
+
+5) Introduction to AWS
+6) AWS History
+7) AWS Global Infrastructure
+8) AWS Regions and Availability Zones
+9) High Availability and Low Latency
+10) Service Comparision - AWS , Azure,GCP
+
+11) Creating an AWS Root Account
+12) Accessing AWS from Console
+13) Accessing AWS from CLI
+
+1) OnPremise Data Centers
+=====================
+What are required to setUp Data Center in my Premise?
+
+1) Data Center Physical Space
+2) Racks,Power Supply, Cooling System,Internet
+3) Networking 
+4) Storage 
+5) Servers
+6) Operating Systems
+7) Development Tools
+8) Applications(jlcbookstore)
+
+Team of People 
+
+***100 Capacity in Data Center
+***Increase to 250 Capacity  - 1 Month
+***Descrease to 100 Capacity
+
+Problems
+===========
+1) Cost
+2) Scaling 
+3) More Team for Managing DC.  
+
+
+2) Exploring Cloud Computing
+======================
+Cloud computing is the delivery of computing services—including servers, storage, databases, networking —over the Internet (“the cloud”) 
+
+You typically pay only for cloud services you use, helping lower your operating costs, run your infrastructure more efficiently and scale as your business needs change.
+
+Top benefits of cloud computing
+------------------------------------------
+1) Cost
+2) Global scale
+3) Performance
+4) Security
+5) Speed to Market
+6) Reliability
+
+3) Cloud Computing Service Models
+===========================
+There are 3 Cloud Computing Service Models
+A) Infrastructure as a Service (IaaS)
+B) Platform as a Service (PaaS)
+C) Software as a Service (SaaS)
+
+1) DC Physical Space
+2) Networking
+3) Storage 
+4) Servers
+5) Operating Systems
+6) Development Tools
+7) Applications
+
+A) Infrastructure as a Service (IaaS)
+----------------------------------------------
+With IaaS, you rent IT infrastructure—servers and virtual machines (VMs), storage, networks, operating systems—from a cloud provider on a pay-as-you-go basis.
+
+Ex:
+AWS ,Azure , GCP etc
+
+B) Platform as a Service (PaaS)
+----------------------------------------------
+=> PaaS refers to cloud computing services that supply an on-demand environment for developing, testing, delivering and managing software applications. 
+=> PaaS is designed to make it easier for developers to quickly create web or mobile apps, without worrying about setting up or managing the underlying infrastructure of servers, storage, network and databases needed for development.
+
+Ex:
+AWS ,Azure , GCP, Heroku, force.com etc
+
+C) Software as a Service (SaaS)
+----------------------------------------
+=> SaaS is a method for delivering software applications over the Internet, on demand and typically on a subscription basis. 
+=> With SaaS, cloud providers host and manage the software application and underlying infrastructure and handle any maintenance, like software upgrades and security patching. 
+=> Users connect to the application over the Internet, usually with a web browser on their phone, tablet or PC.
+
+Ex: 
+JLC LMS  , Zoom , Survey Monkey, mailChimp etc
+
+
+4) Cloud Computing Deployment Models
+=============================
+=> Not all clouds are the same and not one type of cloud computing is right for everyone. 
+=> Several different models have evolved to offer the right solution for your needs.
+
+A) Public Cloud
+B) Private Cloud
+C) Hybrid Cloud
+
+A) Public Cloud
+-------------------
+=> Public clouds are owned and operated by a third-party cloud service providers, which deliver their computing resources like Servers ,Storage and Databases etc over the Internet. 
+
+Ex:
+AWS , Azure , GCP , Alibaba , IBM , Oracle 
+
+=> With a public cloud, all hardware, software and other supporting infrastructure is owned and managed by the cloud provider. You access these services and manage your account using a web browser.
+
+B) Private Cloud
+----------------------
+=> Private Cloud refers to cloud computing resources used exclusively by a single business or organisation. 
+=> Private Cloud can be physically located on the company’s on-Premise Data Centers. or on third-party Data Centers.
+=> In Private Cloud, the services and infrastructure are always maintained on a private network and the hardware and software are dedicated solely to One organisation.
+
+Ex: AWS , Azure , HPE , VMware , Oracle , IBM / Red Hat OpenShift , Dell, Cisco
+
+
+C) Hybrid Cloud
+----------------------
+=> Hybrid clouds combine public and private clouds, bound together by technology that allows data and applications to be shared between them.
+
+=> By allowing data and applications to move between private and public clouds, a hybrid cloud gives your business greater flexibility, more deployment options and helps optimise your existing infrastructure, security and compliance.
+
+
+5) Introduction to AWS
+================
+=> AWS is the No.1 Cloud Provider Now.
+=> AWS  has 47% of Market share in 2019.(No.1)
+=> Azure  has 22% of Market share in 2019. (No.2)
+=> GCP  has 18% of Market share in 2019. (No.3)
+ 
+=> AWS offers build and deploy applications with
+*****High-Performence 
+*****High-Availability 
+*****Low-Latency 
+*****Highly Scalable 
+*****Highly Secured
+
+6) AWS History
+==========
+In 2002 - Launched Internally
+In 2006 - Launched Publicly - AWS began offering IT infrastructure services to businesses 
+
+7) AWS Global Infrastructure
+=====================
+AWS Regions
+Availability Zones
+AWS Local Zones
+AWS Edge Locations
+
+8) AWS Regions and Availability Zones
+-------------------------------------------------
+Region is a physical location around the world where data centers present. 
+
+Region is group of Availability Zones.
+
+Each AWS Region consists of multiple, isolated, and physically separate AZs within a geographic area. 
+
+An Availability Zone (AZ) is one or more discrete data centers with redundant power, networking, 
+
+AWS provides a more extensive global footprint to support its global footprint and ensure customers are served across the world
+
+Each AWS Local Zone location is an extension of an AWS Region where you can run your latency sensitive applications using AWS services such as Amazon Elastic Compute Cloud, Amazon Virtual Private Cloud, Amazon Elastic Block Store, Amazon File Storage, and Amazon Elastic Load Balancing in geographic proximity to end-users. 
+
+26 Launched Regions
+8 Announced Regions
+
+84 Availability Zones
+17 Local Zones
+
+245 Countries and Territories Served
+
+108 Direct Connect Locations
+410+ Edge Locations 
+
+List of Regions and Availability Zones.
+
+1) US East (N. Virginia)
+us-east-1
+
+Availability Zones.
+------------------------
+us-east-1a
+us-east-1b
+us-east-1c
+us-east-1d
+us-east-1e
+us-east-1f
+
+2) US East (Ohio)
+us-east-2
+
+Availability Zones.
+------------------------
+us-east-2a
+us-east-2b
+us-east-2c
+
+3) US West (N. California)
+us-west-1
+
+Availability Zones.
+------------------------
+us-west-1a
+us-west-1b
+
+4) US West (Oregon)
+us-west-2
+
+Availability Zones.
+------------------------
+us-west-2a
+us-west-2b
+us-west-2c
+
+5) Africa (Cape Town)
+af-south-1
+
+8) Asia Pacific (Mumbai)
+ap-south-1
+
+Availability Zones.
+------------------------
+ap-south-1a
+ap-south-1b
+
+6) Asia Pacific (Hong Kong)
+ap-east-1
+
+13) Asia Pacific (Tokyo)
+ap-northeast-1
+
+10) Asia Pacific (Seoul)
+ap-northeast-2
+
+9) Asia Pacific (Osaka)
+ap-northeast-3
+
+11) Asia Pacific (Singapore)
+ap-southeast-1
+
+12) Asia Pacific (Sydney)
+ap-southeast-2
+
+7) Asia Pacific (Jakarta)
+ap-southeast-3
+
+14) Canada (Central)
+ca-central-1
+
+15) Europe (Frankfurt)
+eu-central-1
+
+16) Europe (Ireland)
+eu-west-1
+
+17) Europe (London)
+eu-west-2
+
+18) Europe (Milan)
+eu-south-1
+
+19) Europe (Paris)
+eu-west-3
+
+20) Europe (Stockholm)
+eu-north-1
+
+21) Middle East (Bahrain)
+me-south-1
+
+22) South America (São Paulo)
+sa-east-1
+
+
+9) High Availability and Low Latency
+===========================
+
+
+
+10) Creating an AWS Account
+=======================
+
+11) Accessing AWS from Console
+=========================
+
+12) Accessing AWS from CLI
+=========================
+===========================
+A) IAM (Identity Access Management)
+===========================
+=> Allows to create and Manage the following
+1) IAM User Groups
+2) IAM Users
+3) Policies
+4) IAM Roles
+etc
+
+=> Logon to AWS Console with AWS Root Account.
+
+=> Create the IAM User with the name -  srinivasdande
+
+=> When you create User in AWS , You can give two types of Acesss.
+A) Access to Management Console
+B) Progrmatic Access
+
+=> When User is Created , AWS assigns least permissions to that user.
+
+=> You can assign the required permissions to that user.
+
+=====================================
+AdministratorPolicy looks as below
+=====================================
+{
+    "Version": "2012-10-17"
+    "Statement": [
+        {
+            "Action": "*",
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ],
+}
+
+
+=> What User can do will be decided by the permissions given to that user.
+
+=> Create the IAM User Group with the name -  myjlc-developers
+
+=> You can assign the required permissions to Group also so that same permissions will be applied to all the members of that group.
+
+=> You can assign the required group to user.
+
+***Steps to Create IAM User
+***Steps to Create IAM User Group.
+
+=> When user wants to access the AWS with Management Console then user needs the Username and Passoword.
+
+=> When user wants to access the AWS Progrmatically with Commandline or any other tools  then user needs Access key ID and Secret access key
+
+Keep the following belongs to the User
+==============================
+1) Username : srinivasdande
+2) Password : sdfghjkl
+3) Access key ID : sssss
+4) Secret access key : sssssssssssssssss
+5) Console login link : 
+https://323258995927.signin.aws.amazon.com/console
+
+How to Access AWS from Command Line
+=================================
+1) Download AWS CLI
+https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+https://awscli.amazonaws.com/AWSCLIV2.msi
+
+2) Install AWS CLI
+
+E:\Amazon\AWSCLIV2
+
+** aws file ***
+
+3) Configure the AWS CLI 
+
+aws configure
+AWS Access Key ID [None]: sssss
+AWS Secret Access Key [None]: ssssssssssssssssssss
+Default region name [None]: us-east-2
+Default output format [None]: json
+
+4) Create IAM User as follows.
+
+ aws iam create-user --user-name yashwant123
+
+{
+    "User": {
+        "Path": "/",
+        "UserName": "yashwant123",
+        "UserId": "AIDAUWQ542TL3CAWK4YCM",
+        "Arn": "arn:aws:iam::323258995927:user/yashwant123",
+        "CreateDate": "2022-04-10T13:19:01+00:00"
+    }
+}
+
+
+aws ec2 describe-regions
+ aws ec2 describe-availability-zones --region us-west-1
+aws s3 ls
+# s3 make bucket (create bucket)
+aws s3 mb s3://tgsbucket --region us-west-2
+
+# s3 remove bucket
+aws s3 rb s3://tgsbucket
+aws s3 rb s3://tgsbucket --force
+
+# s3 ls commands
+aws s3 ls
+aws s3 ls s3://tgsbucket
+aws s3 ls s3://tgsbucket --recursive
+
+aws ec2 describe-instances
+
+aws ec2 start-instances --instance-ids i-dddddd70
+
+aws ec2 stop-instances --instance-ids i-5c8282ed
+
+aws ec2 terminate-instances --dry-run --instance-ids i-dddddd70
+
+aws ec2 create-tags --resources i-dddddd70 --tags Key=Department,Value=Finance
+
+aws ec2 describe-volumes 
+
+aws ec2 attach-volume  --volume-id vol-1d5cc8cc --instance-id i-dddddd70 --device /dev/sdh
+
+aws ec2 run-instances --dry-run --image-id ami-08111162 --count 1 --instance-type t1.micro --key-name MyKeyPair --security-groups my-ami-security-group
+
+aws ec2 reboot-instances --instance-ids i-dddddd70 
+
+aws ec2 modify-instance-attribute --instance-id i-44a44ac3 --instance-type "{\"Value\": \"m1.small\"}"
+
+aws ec2 create-image --instance-id i-44a44ac3 --name "Dev AMI" --description "AMI for development server"
+
+aws ec2 describe-images --image-ids ami-2d574747
+
+aws ec2 deregister-image --image-id ami-2d574747 && aws ec2 delete-snapshot --snapshot-id snap-4e665454
+
+aws ec2 delete-snapshot --snapshot-id snap-4e665454
+
+aws ec2 modify-instance-attribute --instance-id i-44a44ac3 --disable-api-termination
+
+aws ec2 modify-instance-attribute --instance-id i-44a44ac3 --no-disable-api-termination
+
+aws ec2 get-console-output --instance-id i-44a44ac3
+
+aws ec2 monitor-instances --instance-ids i-44a44ac3
+
+aws ec2 unmonitor-instances --instance-ids i-44a44ac3
+
+aws ec2 describe-key-pairs
+
+aws ec2 create-key-pair --key-name dev-servers
+
+aws ec2 delete-key-pair --key-name dev-servers

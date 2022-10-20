@@ -1,0 +1,255 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+Part 3:
+======
+D) Versioning Objects in S3
+E) S3 Storage Classes*
+
+Part 4:
+=======
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+J) Backup Data with S3 Replication
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+=====================
+D) Versioning Objects in S3
+=====================
+1) What is Versioning?
+2) Advantages of Versioning
+3) Demo: Versioning S3 Objects
+4) Deleting and Restoring Objects
+
+1) What is Versioning?
+==================
+=> You can Enable Versioning in S3
+=> When You Enable Versioning, you can have multiple Versions of Same Object within S3.
+
+2) Advantages of Versioning
+=======================
+a) All Versions
+-------------------
+=> All Versions of Objects will be Stored in S3 including Deleted Objects
+
+b) Backup
+--------------
+=> Can be a Great Bakcup Tool
+
+c) Can not be disabled.
+-----------------------------
+=> Once Enabled , Versioning can not be Disabled.
+=> It can be Suspended.
+
+d) Lifecycle Rules
+------------------------
+=> S3 Can be Configured with Lifecycle Rules
+
+e) Supprts MFA
+--------------------
+=> Supports Multi-Factor Authetication
+
+3) Demo: Versioning S3 Objects
+========================
+Demo Steps:
+-------------
+
+https://myjlc-bucket-4.s3.amazonaws.com/hello.html    - Not There
+( Current Version)
+
+https://myjlc-bucket-4.s3.amazonaws.com/hello.html?versionId=t3s6onkrLtSXei.fazJDRzRWbR9SOoIG	
+https://myjlc-bucket-4.s3.amazonaws.com/hello.html?versionId=sD_q_P.Rxz99NNnI.Mon6nZXorJ2z8mJ
+https://myjlc-bucket-4.s3.amazonaws.com/hello.html?versionId=null
+
+4) Deleting and Restoring Objects
+========================
+a) Deleting Objects
+--------------------------
+=> When you Delete the Object , S3 Puts Delete Marker on that Object.
+
+b) Restoring Objects
+--------------------------
+=> To Restore the Object , Just Delete the Delete Marker on that Object.
+
+
+==================
+E) S3 Storage Classes
+==================
+1) S3 Standard
+2) S3 Standard-Infrequent Access
+3) S3 One Zone-Infrequent Access 
+4A) S3 Glacier Instant Access
+4B) S3 Glacier Flexible Access
+5) S3 Glacier Deep Archive
+6) S3 Intelligent-Tiering
+
+7) Storage Costs
+
+1) S3 Standard
+=============
+a) Designed for Frequent Access
+-------------------------------------------
+=> Perfect for frequently accessed data. 
+
+b) High Availability and Durability
+---------------------------------------------
+=> Data Stored Redundantly Accross Multiple Devices in Multiple facilities (>=3 AZs)
+=> Designed for of 99.999999999%  Durability  11 9's
+=> Designed for 99.99% Availability
+
+c) Use Cases
+-------------------
+=> S3 Standard is the Default Storage Class.
+=> S3 Standard is Suitable  for a wide variety of use cases, including 
+**Websites
+**Content Distribution
+**Mobile and Gaming applications
+**Big data analytics. 
+
+2) S3 Standard-Infrequent Access
+==========================
+*** S3 Standard-IA
+
+a) Designed for In-Frequent Access Data
+-------------------------------------------
+=> Suitable only for In-frequently accessed data. 
+
+b) High Availability and Durability
+---------------------------------------------
+=> Data Stored Redundantly Accross Multiple Devices in Multiple facilities (>=3 AZs)
+=> Designed for of 99.999999999%  Durability  
+=> Designed for 99.99% Availability
+
+c) Use Cases
+-----------------
+=> Great for Long-Term Storage , Backups 
+=> USe as a Data Store for Disaster Recovery.
+
+d) You pay to Access the Data
+---------------------------------------
+=> There is Low per-GB Storage Price
+=> There is Low per-GB Retrieval Price
+
+3) S3 One Zone-Infrequent Access 
+==========================
+*** S3  One Zone-IA
+
+a) Designed for In-Frequent Access Data
+-------------------------------------------
+=> Suitable only for In-frequently accessed data. 
+=> This is like S3 Standard-IA but Data is Stored Redundantly within Single AZ.
+
+b) High Availability and Durability
+---------------------------------------------
+=>  Data is Stored Redundantly within Single AZ.
+=> Designed for of 99.999999999%  Durability  
+=> Designed for 99.5% Availability
+
+c) Use Cases
+-----------------
+=> Great for Long-Lived , In-Frequently Accessed and Non-Creatical Data
+
+d) You pay to Access the Data
+---------------------------------------
+=> There is Low per-GB Storage Price
+=> There is Low per-GB Retrieval Price
+
+4) S3 Glacier
+==========
+=> Glacier is Cheap Storage
+=> Use only Archving Data
+
+a) Designed for In-Frequent Access Data
+-------------------------------------------
+=>Optimized for Archved  Data that is Very In-Frequently  Accessed 
+
+b) High Availability and Durability
+---------------------------------------------
+=> Data Stored Redundantly Accross Multiple Devices in Multiple facilities (>=3 AZs)
+=> Designed for of 99.999999999%  Durability  
+=> Designed for 99.99% Availability
+
+c) Use Cases
+-----------------
+=> Long-Term Data Archiving with Data Retrieval time that range from 1 Minute to 12 Hours
+=> Historical Data that only accessed a few times per Year.
+
+4A) S3 Glacier Instant Access - 1 Min
+4B) S3 Glacier Flexible Access -  12 Hours
+
+d)  You Pay eachtime when You access the Data.
+-----------------------------------------------------
+=> There is Low per-GB Storage Price
+=> There is Low per-GB Retrieval Price
+
+5) S3 Glacier Deep Archive
+===================
+=> Glacier is Cheap Storage
+=> Use only Archving Data
+
+a) Designed for In-Frequent Access Data
+-------------------------------------------
+=>Rarely Accessed Archved  Data 
+
+b) High Availability and Durability
+---------------------------------------------
+=> Data Stored Redundantly Accross Multiple Devices in Multiple facilities (>=3 AZs)
+=> Designed for of 99.999999999%  Durability  
+=> Designed for 99.99% Availability
+
+c) Use Cases
+-----------------
+=> Long-Term Data Archiving with Data Retrieval time of 12 Hours
+=> Historical Data that only accessed Once or Twice per Year.
+
+d)  You Pay eachtime when You access the Data.
+-----------------------------------------------------
+=> There is Low per-GB Storage Price
+=> There is Low per-GB Retrieval Price
+
+6) S3 Intelligent-Tiering
+===================
+=>
+
+=> Automatically Moves your data to Most Cost-Effective Tier based on How frequestly you access the data.
+=> It is Fully automated based on Machine Learning Algorithms
+=> It is Best Option for Saving Money.
+
+a) Designed for Unknown or changing access Patterns
+-------------------------------------------
+=>  Use this Unknown or changing access Patterns
+
+b) High Availability and Durability
+---------------------------------------------
+=> Data Stored Redundantly Accross Multiple Devices in Multiple facilities (>=3 AZs)
+=> Designed for of 99.999999999%  Durability  
+=> Designed for 99.9% Availability
+
+c) Use Cases
+-----------------
+=>Unknown or changing access Patterns
+
+
+https://aws.amazon.com/s3/storage-classes/
+
+
+7) Storage Costs
+==========
+
+https://aws.amazon.com/s3/pricing/
+
+
+

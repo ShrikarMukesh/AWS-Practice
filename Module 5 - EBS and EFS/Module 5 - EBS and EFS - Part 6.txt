@@ -1,0 +1,154 @@
+========================
+Module 5 : EBS and EFS - Part 6
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+========================
+6) EFS Fundamentals ( Contin...)
+========================
+Demo:
+======
+1) Create EFS File System
+
+2) Launch EC2 Instance 1
+  Access EFS from Instance 1
+  Write Some data to EFS from Instance 1
+
+3) Launch EC2 Instance 2
+  Read data from EFS in Instance 2
+
+
+================
+7) FSx Fundamentals
+================
+=> FSx- File System
+
+FSx Overview:
+============
+=> Amazon FSx makes it easy and cost effective to launch, run, and scale feature-rich, high-performance file systems in the cloud. 
+
+=> You can choose between four widely-used file systems: 
+	a) FSx for Windows File Server
+	b) FSx for Lustre
+	c) FSx for NetApp ONTAP
+	d) FSx for OpenZFS
+
+=> This choice is typically based on your familiarity with a given file system or by matching the file system's feature sets, performance profiles, and data management capabilities to the requirements of your workload.
+
+a) FSx for Windows File Server
+========================
+=> FSx for Windows File Server provides fully managed Microsoft Windows file servers, backed by a fully native Windows file system. 
+
+=> FSx for Windows File Server has the features, performance, and compatibility to easily lift and shift enterprise applications to the AWS Cloud.
+
+=> FSx has support for native Windows file system features and for the industry-standard Server Message Block (SMB) protocol to access file storage over a network. 
+
+=> With file storage on FSx, the code, applications, and tools that Windows developers and administrators use today can continue to work unchanged.
+
+Use Cases:
+----------
+* Windows applications
+* Home Directories
+* Web Serving
+*Content Management
+*Data Analytics
+etc
+
+b) FSx for Lustre
+==============
+About Lustre File System:
+----------------------------------
+=> Lustre File System is an Open-Source File System designed for applications that require fast storage—where you want your storage to keep up with your compute.
+
+=> Lustre was built to solve the problem of quickly and cheaply processing the world's ever-growing datasets. 
+=> It's a widely used file system designed for the fastest computers in the world. 
+
+=> It provides sub-millisecond latencies, up to hundreds of GBps of throughput, and up to millions of IOPS.
+
+FSx for Lustre:
+----------------------
+=>  FSx for Lustre is Fully Managed File System that is Optimized for High Compute-Intensive workloads.
+
+=> As a fully managed service, Amazon FSx makes it easier for you to use Lustre for workloads where storage speed matters.
+
+=> FSx for Lustre eliminates the traditional complexity of setting up and managing Lustre file systems, enabling you to spin up and run high-performance file system in minutes. 
+
+=> FSx for Lustre is POSIX-compliant, so you can use your current Linux-based applications without having to make any changes. 
+
+Use Cases:
+----------
+* High Performance Computing
+* Artificial Intelligence
+* Machine Learning
+* Video Processing
+* Financial Modeling
+etc
+
+===============
+8) AWS Backup
+===============
+=> AWS Backup is a fully managed service centralizing and automating the backup of data for AWS services such as EC2, EBS, EFS, RDS, DynamoDb, S3 etc in the cloud, and on premises. 
+
+=> Using AWS Backup, you can configure backup policies and monitor activity for your AWS resources in one centralized place. 
+
+=> AWS Backup is an ideal solution for implementing standard backup plans for your AWS resources across your AWS accounts and Regions. 
+
+=>  AWS Backup can be used with AWS Organizations to backup Multiple AWS Accounts in your Organization.
+
+=> It gives Centralized Control access to All AWS Services in  Multiple AWS Accounts in your Organization.
+
+Benefits of AWS Backup
+===================
+1) Control Management:
+------------------------------
+=> Use a Single. Control backup Console allowing you to centralize your backups accross Multiple AWS Services in  Multiple AWS Accounts in your Organization.
+=> Auditing is made easy due to consolidated view of backups accross many AWS Services.
+
+2) Automation:
+--------------------
+=> You can Create Automated Backup Schedules and Retention Policies.
+=>You can also Create Lifecycle Policies allowing you to expire the Un-Necessory backups after perios of time.
+
+3) Improved Compliance:
+-----------------------------------
+=> Backup Policies can be Enforced while backups can be Encrypted both at Rest and In Transit, Allowing alignment to regulatory compliance.
+
+
+
+
+
+

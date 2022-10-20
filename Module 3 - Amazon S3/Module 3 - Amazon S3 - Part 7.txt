@@ -1,0 +1,557 @@
+=======================================
+Module 3 : Simple Storage Service (S3)  - Eaxm Tips
+=======================================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+Part 3:
+======
+D) Versioning Objects in S3
+E) S3 Storage Classes
+
+Part 4:
+=====
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+
+Part 5:
+=====
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+
+Part 6:
+======
+J) Backup Data with S3 Replication
+
+Part 7:
+======
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+===================
+A) Exploring Amazon S3  
+===================
+Exam Tips
+=========
+a) Object Based
+-------------------
+=> S3 Stores the Files uploaded as Objects
+
+b) Files upto 5TB
+----------------------
+=> S3 objects can range in size from a minimum of 0 bytes to a maximum of 5 TB. 
+
+c) Unlimited Storage
+----------------------------
+=> Amount of Data you can store in S3 in Unlimited.
+=> Number of Objects you can store in S3 in Unlimited.
+
+d) Not for O.S or DB
+-------------------------
+=> Not Suitable to Install O.S
+=> Not Suitable to Run Databases.
+
+e)Each S3 Bucket name is globally Unique.
+
+Sample S3 URL's
+--------------------
+https://bucket-name.s3.region.amazonaws.com/key-name
+
+https://myjlc123.s3.us-east-1.amazonaws.com/hello.html
+https://myjlc123.s3.amazonaws.com/hello.html
+
+f) When the File upload to S3 is successful then you will receive HttpStatus code 200.
+
+g) Key :
+------------
+=> Name of the Object is the Key.
+ Ex: 
+    hello.jpg
+    index.html
+
+h) Value :
+------------
+=> Data itself which is made up of sequence of bytes.
+
+i) Version Id:
+---------------
+=> Objects wil be stored in Multiple versions
+
+j) MetaData
+----------------
+=> Data about the Data you are storing
+Ex:
+    content-type
+    last-modified
+
+
+==========================================
+B) Securing Your Buckets with S3 Block Public Access 
+==========================================
+Exam Tips
+=========
+a) Buckets are Private by default.
+---------------------------------------
+=> When you Create S3 Bucket, It is Private by default and All the Objects within bucket also private
+=> You have to allow Public Access on both Bucket and Its Objects inorder to make the Bucket public.
+
+b) Object ACL's
+--------------------
+=> Object ACL's work on Individual Object Level
+
+c) Bucket Policies
+-----------------------
+=> Bucket Policies work on Entire Bucket Level
+
+===========================
+C) Hosting Static Website using S3
+===========================
+Exam Tips
+========
+a) Static Content:
+------------------------
+=> Use S3 to host Static Content only, Not Dynamic
+
+b) Automatic Scaling
+------------------------
+=> S3 Scales Automatically to meet demand.
+
+c) Bucket Policies
+------------------------
+=> Makesure that Entire Bucket is Public using Bucket Policies.
+=> Following is Bucket Policy to make the Bucket Public
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::myjlc-courses-99/*"
+            ]
+        }
+    ]
+}
+
+=====================
+D) Versioning Objects in S3
+=====================
+Exam Tips
+========
+a) All Versions
+-------------------
+=> All Versions of Objects will be Stored in S3 including Deleted Objects
+
+b) Backup
+--------------
+=> Can be a Great Bakcup Tool
+
+c) Can not be disabled.
+-----------------------------
+=> Once Enabled , Versioning can not be Disabled.
+=> It can be Suspended.
+
+d) Lifecycle Rules
+------------------------
+=> S3 Can be Configured with Lifecycle Rules
+
+e) Supprts MFA
+--------------------
+=> Supports Multi-Factor Authetication
+
+==================
+E) S3 Storage Classes
+==================
+Exam Tips
+========
+1) S3 Standard
+=============
+=> Stores Data >=3 AZs
+=> 99.999999999%  Durability  
+=> 99.99% Availability
+
+=> Perfect for frequently accessed data. 
+=> S3 Standard is the Default Storage Class.
+=> S3 Standard is Suitable  for Most Workloads ncluding 
+**Websites
+**Content Distribution
+**Mobile and Gaming applications
+**Big data analytics. 
+
+2) S3 Standard-IA
+==============
+=> Stores Data >=3 AZs
+=> 99.999999999%  Durability  
+=> 99.9% Availability
+
+=> Long-Term ,In-Frequently Accessed and Creatical Data
+*** Backups
+*** Data Store for Disaster Recovery
+
+3) S3  One Zone-IA
+==========================
+=> Stores Data in One AZs
+=> 99.999999999%  Durability  
+=> 99.5% Availability
+
+=> Long-Term ,In-Frequently Accessed and Non-Creatical Data
+
+4) S3 Glacier
+==========
+=> Stores Data >=3 AZs
+=> 99.999999999%  Durability  
+=> 99.99% Availability
+
+=> Long-Term Data Archiving with Data Retrieval time that range from 1 Minute to 12 Hours
+
+5) S3 Glacier Deep Archive
+===================
+=> Stores Data >=3 AZs
+=> 99.999999999%  Durability  
+=> 99.99% Availability
+
+=> Long-Term Data Archiving with Data Retrieval time of 12 Hours
+
+6) S3 Intelligent-Tiering
+===================
+=> Stores Data >=3 AZs
+=> 99.999999999%  Durability  
+=> 99.99% Availability
+
+=>UnKnown or UnPredictable Access Patterns
+
+==========================
+F) Lifecycle Management with S3
+==========================
+Exam Tips
+========
+a) Automates Moving  Objects between different Storage Tiers
+b) Can be used along with Versioning
+c) Can be applied to Current Versions and Previous Versions
+
+================================
+G) S3 Bucket Lock and Glacier Vault Lock
+================================
+Exam Tips
+========
+a) Object Lock - Tips
+================
+=> You can use S3 Object Lock to store objects using WORM Model
+=> Object Lock can be used on Inidividual Objects or can applied accross the bucket as whole.
+=> S3 Object Lock comes in two modes
+
+*** Governance Mode
+*** Compliance Mode
+
+*** Governance Mode
+=================
+=> In governance mode, users can't overwrite or delete an object version or alter its lock settings unless they have special permissions. 
+
+*** Compliance Mode
+=================
+=> In compliance mode, a protected object version can't be overwritten or deleted by any user, including the root user in your AWS account. 
+
+b) Glacier Vault Lock - Tips
+=====================
+=>  S3 Glacier Vault Lock allows you to easily deploy and enforce compliance controls for individual S3 Glacier vaults with a vault lock policy.
+
+=>  You can specify controls such as “Write Once Read Many” (WORM) in a vault lock policy and lock the policy from future edits. 
+
+=>  Once locked, the policy can no longer be changed.
+
+===================
+H) Enrypting S3 Objects
+===================
+Exam Tips
+========
+1) Types of Encryption
+==================
+a) Encryption in Transit
+-----------------------------------
+=> HTTPS
+=> SSL/TSL
+
+b) Encryption at Rest : Server-Side Encryption
+----------------------------------------------------------------
+You have three Options
+
+1) SSE-S3 
+2) SSE-KMS
+3) SSE-C:
+
+c) Encryption at Rest : Client-Side Encryption
+----------------------------------------------------------------
+
+2) Enforcing Server-Side Encryption
+============================
+Two Ways to do it.
+
+a) Console
+b) Bucket Policy
+
+=======================
+I) Optimizing S3 Performance
+=======================
+Exam Tips
+========
+a) You can use prefixes to organize the data that you store in S3 buckets.
+
+jlc-lms/videos/aws/session1.mp4   => /videos/aws
+jlc-lms/videos/aws/session2.mp4   => /videos/aws
+
+b) You can achieve higher performance with Prefixes.
+
+ For example,
+	1 Prefix => 5500 Requests per Second Per Prefix
+	10 Prefixes  => 55000 Requests per Second Per Prefix
+
+c) If you are using SSE-KMS to Encrypt your S3 Objects then you must keep the KMS Limits in Mind.
+
+d) When you upload large files to S3, it's a best practice to use Multipart Uploads.
+
+e) When you Download large files from S3, it's a best practice to use Byte-Range Fetches
+
+===========================
+J) Backup Data with S3 Replication
+===========================
+Exam Tips
+========
+=> You can Replicate Objects from One Bucket to Another Bucket
+=> Versioning must be enabled on both Source Bucket and Destination Bucket
+=> Existing Objects in the Bucket will not be replicated automatically.
+=> When you turn-on Replication, All the Subsequent uploaded Objects will be replicated 
+=> Delete Markers will not be replicated by default.
+
+=============================
+Exam #3 - Simple Storage Service (S3) 
+=============================
+
+Q1) What is the smallest object you can store in S3?
+
+
+A) 1 KB
+B) 1 GB
+C) 0 bytes
+D) 1 MB
+
+Ans: C
+
+Q2) Versioning on your bucket was recently suspended and, after this, your boss deleted an object whose version ID is null and wants to restore it. What do you do?
+
+A) It's not possible since versioning was suspended. The object is gone.
+B) Re-enable versioning and remove the deletion marker to restore the object.
+C) Suspended or not, versioning doesn't protect against deletions. The object is gone forever.
+D) Look in the bucket named "s3-backups". The object will be in there and can be restored to the original bucket.
+
+Ans: A
+
+Q3) S3 allows you to host ____ websites directly from the bucket with no other tools needed.
+
+A) static
+B) dynamic
+
+Ans:  A
+
+Q4) True or False? Each Amazon S3 bucket name is globally unique.
+
+A) False
+B) True
+
+Ans:  B
+
+Q5) Since S3 is an object-based storage solution, which type of file should never be stored in it?
+
+A) Operating system's boot files
+B) photos
+C) Application logs
+D) HTML documents
+
+Ans: A
+
+Q6) If you have data that needs to be instantly retrievable, but it's not likely to be needed anytime soon, which S3 storage class would you select?
+
+
+A) S3 Standard
+B) S3 Glacier
+C) S3 Glacier Deep Archive
+D) S3 Standard-IA
+
+Ans: D
+
+Q7)  True or False? You can increase your Amazon S3 read or write performance by creating more prefixes in a bucket and parallelizing reads/writes.
+
+A) True
+B) False
+
+Ans:  A
+
+Q8) Why is versioning not enabled by default on new S3 buckets?
+
+A) It costs money, as you'll be paying for every additional copy of your objects that you upload.
+B) Amazon is mean and wants us to accidentally overwrite our data.
+C) It slows down the retrieval times in S3.
+D) It's a security risk, since versioning requires that your content is publicly available.
+
+Ans:  A
+
+Q9) What kind of data should be stored in S3 Standard?
+
+A) Data that is frequently used
+B) Data that is a secondary copy of a primary source
+C) Data that is rarely used
+D) Data that is infrequently used
+
+Ans: A
+
+Q10) True or False? S3 buckets are public by default.
+
+A) False
+B) True
+
+Ans: A
+
+Q11)  True or False? You can create an S3 lifecycle policy to migrate objects from Glacier to Standard-IA.
+
+A) False
+B) True
+
+Ans: A
+
+Q12) What is the retrieval time range for Amazon S3 Glacier?
+
+A) 1-12 hours
+B) 1 min to 12 hrs
+C) Instantaneous
+D) 2-5 hours
+
+Ans: B
+
+Q13)  What is the largest object you can store in S3?
+
+A) 1 TB
+B) 5 TB
+C) 50 GB
+D) Unlimited
+
+Ans: B
+
+Q14) How does availability and durability differ in S3?
+
+A) Durability refers to how many times your data can be overwritten, while availability is the ability to download the data after one of these overwrites.
+
+B) Availability is the ability to access your data, while durability is the ability of AWS to ensure your data is properly stored in S3.
+
+C) Availability is how much data you can download, while durability is how much local storage space your computer has available to receive those files.
+
+D) Availability and durability are the same thing; they both define how long AWS will store your data.
+
+Ans: B
+
+Q15) Your boss instructs you to make your company's S3 buckets public so employees can download content when they are at home. What do you do?
+
+A) Explain to your boss that this is a terrible idea and opens up huge security risks for your company.
+B) Open them up! They said it was ok, right?
+C) Tell your boss to bring a floppy disk to transport the files to and from the office, instead.
+D) S3 buckets are public by default, so you don't need to do anything to allow this.
+
+Ans: A
+
+Q16) You have a 25 GB file that you're trying to upload to S3 but you're getting errors. What is a possible cause for this?
+
+A) File Size limit in S3 is 5GB
+B) S3 Service in Request AWS Region is Down
+C) Use Multi-Part Upload When you upload file bigger than 100MB.
+
+Ans: C
+
+Q17) You're getting errors while trying to create a new S3 bucket named "myjlc". You're using a new AWS Account with no S3 buckets created before. What is a possible cause for this?
+
+A) You are missing IAM Permissions to Create S3 Bucket
+B) S3 Bucket name "myjlc" is already taken
+
+Ans: B
+
+Q18) You have enabled versioning in your S3 bucket which already contains a lot of files. Which version will the existing files have?
+
+A) 1
+B) 0
+C) -1
+D) null
+
+Ans:  D
+
+Q19) Your client wants to make sure that file encryption is happening in S3, but he wants to fully manage the encryption keys and never store them in AWS. Which one is recommend to use
+
+A) SSE - S3
+B) SSE - KMS
+C) SSE - C
+D) Client Side Encryption
+
+Ans: C
+ 
+Q20) A company you're working for wants their data stored in S3 to be encrypted. They don't mind the encryption keys stored and managed by AWS, but they want to maintain control over the rotation policy of the encryption keys. Which one is recommend to use
+
+A) SSE - S3
+B) SSE - KMS
+C) SSE - C
+D) Client Side Encryption
+
+Ans: B
+
+
+Q21) Your company does not trust AWS for the encryption process and wants it to happen on the application.Which one is recommend to use
+
+A) SSE - S3
+B) SSE - KMS
+C) SSE - C
+D) Client Side Encryption
+
+Ans: D
+
+Q22) You have updated an S3 bucket policy to allow IAM users to read/write files in the S3 bucket, but one of the users complain that he can't perform a PutObject API call. What is a possible cause for this?
+
+A) S3 Bucket Policy must be wrong
+B) User is Lacking Permissions
+C) User must have explicit Deny in the attached  IAM Policy
+
+Ans: C
+
+Q23) You have a website that loads files from an S3 bucket. When you try the URL of the files directly in your Chrome browser it works, but when the website you're visiting tries to load these files it doesn't. What's the problem?
+
+A) Bucket Policy is Wrong
+B) IAM Policy is Wrong
+C) CORS is Wrong
+D) Encryption is Wrong
+
+Ans: C
+
+Q24)  
+Q25)
+
+Explicit Allow Overrides the Explicit Deny => False
+Deny
+Allow
+
+
+Explicit Deny Overrides the Explicit Allow => True
+Allow
+Deny
+
+====================
+AWS CLI Commnads for S3
+
+aws s3 ls
+aws s3 mb url
+

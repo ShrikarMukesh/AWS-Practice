@@ -1,0 +1,195 @@
+==========================
+Module 11 - Auto Scaling - Part 4
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+=====
+4) Auto Scaling Policies
+
+Part 5:
+=====
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+=====
+7) Exam Tips
+Exam #10 - Auto Scaling
+
+====================
+4) Auto Scaling Policies
+====================
+=> AWS provides 3 types of Auto Scaling Policies
+
+a) Scheduled Scaling/Actions
+b) Predictive Scaling Policies
+c) Dynamic Scaling Policies
+
+
+
+a) Scheduled Scaling: 
+----------------------------
+=> Scheduled scaling helps you to set up your own scaling schedule according to predictable load changes. 
+
+Ex: 
+=> Let's say that every week the traffic to your application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday. 
+
+=> You can configure a schedule  to increase capacity on Wednesday and decrease capacity on Friday.
+
+Demo:  Scheduled Scaling
+-------------------------------------
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Gropus under Auto Scaling
+3) Select Your ASG (myjlc-ASG)
+4) Click on Automatic Scaling Tab
+5) Click on Create Scheduled Action Button
+6) Provide the following
+a) Name : myjlc-scheduled-scaling
+b) Desired Capacity : 3
+c) Min	: 3
+d) Max 	: 10
+e) Time zone  : etc/UTC
+f) Specific start time   : 15-Oct-2022    15:45
+7) Click on Create Button
+
+Note : You are resposible to Identify the Load changes of Your Application
+
+b) Predictive Scaling Policies:
+-----------------------------------------
+=> If you have regular patterns of traffic increases and decrease then you should consider using predictive Scaling. 
+
+=> Predictive Scaling uses Machine Learning to predict capacity requirements based on historical data from CloudWatch. 
+=> Machine Learning algorithm consumes the available historical data and calculates capacity that best fits the historical load pattern, 
+=>Machine Learning algorithm then continuously learns based on new data to make future forecasts more accurate.
+
+Ex:
+=> Consider an application that has high usage during business hours and low usage overnight. => At the start of each business day, predictive scaling can add capacity.
+=> At the end of each business day, predictive scaling can remove capacity.
+
+Demo: Predictive Scaling
+-------------------------------------
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Gropus under Auto Scaling
+3) Select Your ASG (myjlc-ASG)
+4) Click on Automatic Scaling Tab
+5) Click on Create predictive scaling policy Button
+6) Provide the following
+a) Name : myjlc-predictive-scaling
+b) Scale based on forecast - Check this
+c) Metrics : CPU Utilization
+d) Target utilization : 50 %
+e) Pre-launch instances  : 1 min
+
+7) Click on Create button.
+
+c) Dynamic Scaling Policies:
+-----------------------------------------
+=> Dynamic Scaling is also called as Reactive Scaling.
+=> Dynamic Scaling scales the capacity of your ASG as traffic changes occur.
+
+=> Following are 3 Types of Dynamic Scaling Policies:
+i) Target Tracking Scaling
+ii) Step Scaling
+iii) Simple Scaling
+
+i) Target Tracking Scaling:
+-------------------------------------
+=> Increase and decrease the current capacity of the group based on a CloudWatch metric and a target value. 
+*** Metric : CPU Utilization
+*** Target Value : 75%
+
+Demo: Target Tracking Scaling
+======================
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Gropus under Auto Scaling
+3) Select Your ASG (myjlc-ASG)
+4) Click on Automatic Scaling Tab
+5) Click on Create Dynamic scaling policy Button
+6) Provide the following
+a) Policy type  : Target Tracking Scaling
+b) Name : myjlc-target-scaling
+c) Metrics : CPU Utilization
+d) Target value : 50 %
+e) Instances need   : 500 secs warm up before including in metric
+
+7) Click on Create button.
+
+
+ii) Step Scaling:
+----------------------
+=> Increase and decrease the current capacity of the group based on a set of scaling adjustments, known as step adjustments, that vary based on the size of the alarm breach.
+
+
+Demo: Step Scaling
+================
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Gropus under Auto Scaling
+3) Select Your ASG (myjlc-ASG)
+4) Click on Automatic Scaling Tab
+5) Click on Create Dynamic scaling policy Button
+6) Provide the following
+a) Policy type  : Step Scaling
+b) Name : myjlc-step-scaling
+c) CloudWatch alarm : myjlc-cw-alaram-1
+d) Take the action :
+	add	2   Capacity Units
+	remove      2   Capacity Units
+
+7) Click on Create button.
+
+iii) Simple Scaling
+--------------------------
+=> Increase and decrease the current capacity of the group based on a single scaling adjustment, with a cooldown period between each scaling activity.
+
+Demo: Simple Scaling
+================
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Gropus under Auto Scaling
+3) Select Your ASG (myjlc-ASG)
+4) Click on Automatic Scaling Tab
+5) Click on Create Dynamic scaling policy Button
+6) Provide the following
+a) Policy type  : Simple Scaling
+b) Name : myjlc-simple-scaling
+c) CloudWatch alarm : myjlc-cw-alaram-2
+d) Take the action :
+	add	2   Capacity Units
+
+7) Click on Create button.
+
+
+Good Metrics to Scale On
+-----------------------------------
+a) CPU Utililization:
+---------------------------
+=> Average CPU Utilization across Your EC2 Instances
+
+b)RequestCountForTarget:
+-------------------------------------
+=> To Makesure that Number of Requests for EC2 Instance are Stable
+
+c) Average Network In
+-----------------------------------------
+=> If Your Application is Network bound
+
+d) Average Network Out:
+-----------------------------------------
+=> If Your Application is Network bound
+
+e) Any Custom Metric :
+--------------------------------
+=> You can push using CloudWatch
+
+

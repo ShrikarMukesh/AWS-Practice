@@ -1,0 +1,197 @@
+========================
+Module 6 : Databases - Part 1
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+
+==================
+1) Amazon RDS
+==================
+=> RDS - Relational Database Service
+=> RDS is Managed Service for Relational Database from AWS.
+
+About RDBMS :
+-------------------
+=> RDBMS - Relational Database Management Systems.
+=> Relational Databases have been there from many years and are heart of many applications.
+Ex: MySQL , Oracle, Microsoft SQL Server, PostgreSQL, MariaDB, Sybase, DB2 etc etc etc
+
+=> All Relational Databases store the Data in the form of Tables.
+=> All Relational Databases follows SQL.
+
+Database => Collection of Tables
+Table => Collection of Rows
+Row => Collection of Columns
+Column => Field in the Row which has data.
+
+*Consider the Customer table
+
+Q) When can I use Relational Databases?
+Ans: Relational Databases are generally used for OLTP Workloads.
+
+OLTP => OnLine Transaction Processing
+
+NO-SQL Databases:
+===============
+DynamoDB
+MongoDB
+Hbase 
+
+Key-value Pairs or Documents
+
+OLAP => OnLine Analitics Processing
+
+About Amazon RDS:
+-----------------------------
+=> Amazon RDS is Managed Database Service for DB Egines uses SQL
+=> RDS supports the following 6 Relational Databases Engines.
+1) MySQL
+2) Oracle
+3) Microsoft SQL Server
+4) PostgreSQL
+5) MariaDB
+6) Amazon Aurora ( Amazon's Own Relational Database)
+
+=> RDS Allows you to create the Databases on the cloud that are managed by AWS.
+
+Q) When can I use RDS?
+Ans: Whenever you need Relational Databases, the use RDS.
+
+==============
+*RDS Advantages
+==============
+=> Up and Running in Minutes
+=> Multi-AZ  1
+=> Automated Failover Capacity 1
+=> Automated Backups
+=> Snapshots
+=> Scaling Capacity
+=> Encryption
+=> Read Replicas
+=> Monitoring Dashboards
+=> Automated Provisioning of DB Pacthes , OS Pacthes 
+=> Maintainace Windows for Upgrades
+
+==============
+1) RDS Multi-AZ 
+==============
+=> With Multi-AZ , RDS Creates the Exact Copy of your Production database in another Availability Zone.
+
+*** Diagram 1 ***
+
+a) AWS Handles the Replication for you
+---------------------------------------------------
+=> When you write the Data to your production Primary database, that write will be Automatically Synchronized to Standby Database
+
+b) RDS will Automatically Failover to the Standby during Failure.
+---------------------------------------------------------------------------------------
+=> Database Operations can resume quickly without administrative intervention.
+
+c) Multi-AZ is for Disaster Recovery, Not for improving Performance
+-----------------------------------------------------------------------------------------------
+=> You can not connect to the Standby Database when the Primary database is Active.
+
+========================
+Demo 1: Creating RDS Instance
+========================
+1) Choose a database creation method
+-----------------------------------------------------
+=> Standard Create
+
+2) Engine options
+---------------------------
+=> Engine type : MySQL
+=> Edition : MySQL Community
+=> Version : 8.0.28
+
+3) Templates
+---------------------
+=> Free tier
+
+4) Availability and durability
+------------------------------------------
+=> Multi-AZ ( This Option is Disabled in Free tier).
+=> In Dev/Test or Production, You can choose one of the following.
+a) Single DB instance -  Creates a single DB instance with no standby DB instances.
+b) Multi-AZ DB instance - Creates a primary DB instance and a standby DB instance in a different AZ. 
+c) Multi-AZ DB Cluster - new - Creates a DB cluster with a primary DB instance and two readable standby DB instances, with each DB instance in a different Availability Zone (AZ). 
+
+
+5) Settings
+-----------------
+=> DB instance identifier : jlc-mysql-database
+
+Credentials Settings
+------------------------
+=> Master username : srinivas
+=> Master password : srinivas
+=> Confirm password : srinivas
+
+
+6) Instance configuration
+------------------------------------
+DB instance class
+
+Select Burstable classes (includes t classes)
+=> db.t2.micro
+Select Include previous generation classes
+
+7) Storage
+---------------
+=> Storage type : gp2 
+=> Allocated storage : 20GB
+
+=> Storage autoscaling : Enable
+=> Maximum storage threshold : 1000GB
+
+8) Connectivity
+--------------------------
+=> Virtual private cloud (VPC) : Default
+=> Subnet group  : Default
+=> Public access : Yes
+
+VPC security group : Create New 
+name : jlc-db-group
+
+Availability Zone : us-east-1a
+
+=> Additional configuration
+     Port : 3304
+
+9) Database authentication
+---------------------------------------
+=> Password Autntocation
+
+10) Additional configuration
+---------------------------------------
+a) Backup
+=> Check Enable automated backup 
+=> Backup retention period : 7 days
+=> Backup window : No Preferences
+
+c) Encryption ( Will not be shown in some Instances)
+
+d) Performance Insights  ( Will not be shown in some Instances)
+
+e) Monitoring  - Use Defaults
+f) Log exports - Use Defaults
+g) Maintenance : Use Defaults
+h) Deletion protection : Use Defaults
+
+11) Estimated monthly costs
+
+Following 4 are required To Connect to DB from Your Aplication
+==================================================
+host : jlc-mysql-database.cgafvjcfxazf.us-east-1.rds.amazonaws.com
+port : 3306
+username : srinivas
+password : 999999999
+
+jdbc:mysql://jlc-mysql-database.cgafvjcfxazf.us-east-1.rds.amazonaws.com:3306/mybookstoredb
+
+===========================================================================

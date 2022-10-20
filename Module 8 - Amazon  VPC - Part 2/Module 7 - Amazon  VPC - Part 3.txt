@@ -1,0 +1,209 @@
+==========================
+Module 7 - Amazon  VPC - Part 3
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+10) Exploring VPC Endpoints
+11) Exploring VPC Peering
+12) Exploring AWS PrivateLink
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+Demo 3: Edit Subnet Settings
+==========================
+a) Select the Subnet you want to edit.(Here Public Subnet)
+b) Select Actions => Edit Subnet Settings
+c) Select Enable auto-assign public IPv4 address
+d) Click on Save button.
+
+Demo 4: Launch EC2 Instances in Public Subnet and Test 
+===============================
+1) Launch the Instance with the Following Info
+------------------------------------------------------------------
+a) Name 			:    jlc-web-server
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    myjlc-kp
+e) Network settings
+    i) VPC - required		:    myjlc-vpc
+    ii) Subnet 		:    myjlc-public-subnet
+    iii) Auto-assign public IP	:    Enable
+    iv) Firewall (security groups):  myjlc-web-sg
+    v) Description		:    myjlc-web-sg for Web Servers
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) Click on Launc Instance
+
+2) Try to Connect using EC2 Instance Connect
+
+ssh ubuntu@3.137.184.13 -i myjlc-kp.pem
+*** We are Unable to Connect
+
+=========================
+6) Exploring Internet Gateways
+=========================
+=> Allow EC2 Instances in VPC to Connect to the Internet
+=> Internet Gateway Must be created separately
+=> One VPC can only be attached to One Internet Gateway and vice versa
+=> Internet Gateways can not allow internet access on their own.
+=> You much edit the Route Tables
+
+Demo 5 : Create the Internet Gateway 
+=============================
+1) Goto VPC Dashboard
+2) Click on Internet Gateways
+3) Click on Create internet gateway
+4) Provide the following Details
+
+i)Internet gateway settings
+---------------------
+a) Name tag		 : myjlc-igw
+
+ii) Tags 	
+----------
+-- Give Any Tags you want
+
+5) Click on  Create internet gateway button
+6) You can see Internetgateway will be Created and State will be Detached.
+7) Attach Your Internet Gateway to Your VPC
+a) Select Your Internet Gateway (myjlc-igw) 
+b) Select Actions => Attach to VPC
+c) Selct Your VPC( myjlc-vpc)
+d) Click on Attach Internet Gateway
+
+8) Try to Connect using EC2 Instance Connect
+
+ssh ubuntu@3.137.184.13 -i myjlc-kp.pem
+*** We are Unable to Connect
+
+=====================
+7) Exploring Route Tables
+=====================
+=> Route table contains a set of rules, called routes, that determine where network traffic from your subnet or gateway is directed.
+
+=> Key concepts for route tables.
+
+a) Main route table:
+----------------------------
+=> Route table that automatically comes with your VPC. 
+=> It controls the routing for all subnets that are not explicitly associated with any other route table.
+
+b) Custom route table:
+----------------------------
+=>Route table that you create for your VPC.
+=> You can associate the Subnets to Your Route Table
+
+c) Destination:
+-------------------
+=> Range of IP addresses where you want traffic to go (destination CIDR). 
+=> Ex: 
+*** External corporate network with the CIDR 10.0.0.0/20
+*** Any with the CIDR 0.0.0.0/0
+
+d) Target:
+-----------
+=> Gateway, network interface, or connection through which to send the destination traffic
+=>Ex:  
+*** Internet Gateway, 
+*** NAT Gateway
+
+e) Route table association:
+-----------------------------------
+=> Association between a route table and a subnet, internet gateway, or virtual private gateway.
+
+f) Local route: 
+-------------------
+=> Default route for communication within the VPC.
+
+Demo 6 : Create the Route Table ( for Public Subnet)
+==========================
+1) Goto VPC Dashboard
+2) Click on Route Tables
+3) Click on Create  Route Table
+4) Provide the following Details
+
+i) Route table settings
+------------------------------
+a) Name tag		 :  myjlc-public-route
+b) VPC			 :  myjlc-vpc
+
+ii) Tags 	
+----------
+-- Give Any Tags you want
+
+5) Click on  Create  Route Table button
+
+6) Update  Explicit Subnet associations as follows.
+a) Select Your  Route Table (myjlc-public-route) 
+b) Select  Subnet associations Tab
+c) Click on Subnet associations Button
+d) Select Your Public Subnet (myjlc-public-subnet) 
+e) Click on Save Associations
+
+7) Add the Route to talk to Internet Gateway as follows.
+a) Select Your  Route Table (myjlc-public-route) 
+b) Select  Routes Tab
+c) Click on Edit Routes Button
+d) Click on Add Route Button
+e) Provide the following
+	Destination :     0.0.0.0/0
+	Target	     : Your Internet Gateway
+f) Click on Save Changes
+
+8) Try to Connect using EC2 Instance Connect
+
+ssh ubuntu@3.137.184.13 -i myjlc-kp.pem
+*** We can Connect Successfully
+
+Demo 7 : Create the Route Table ( for Private Subnet)
+=======================================
+1) Goto VPC Dashboard
+2) Click on Route Tables
+3) Click on Create  Route Table
+4) Provide the following Details
+
+i) Route table settings
+------------------------------
+a) Name tag		 :  myjlc-private-route
+b) VPC			 :  myjlc-vpc
+
+ii) Tags 	
+----------
+-- Give Any Tags you want
+
+5) Click on  Create  Route Table button
+
+6) Update  Explicit Subnet associations as follows.
+a) Select Your  Route Table (myjlc-private-route) 
+b) Select  Subnet associations Tab
+c) Click on Subnet associations Button
+d) Select Your Public Subnet (myjlc-private-subnet) 
+e) Click on Save Associations
+

@@ -1,0 +1,189 @@
+==========================
+Module 7 - Amazon  VPC - Part 5
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+11) Exploring VPC Peering
+12) Exploring AWS PrivateLink
+
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+================================
+9) Exploring Security Groups and NACLs
+================================
+A) Security Groups
+===============
+=> A Security Group acts as a virtual firewall for your EC2 instances to control incoming and outgoing traffic. 
+
+=> Inbound rules control the incoming traffic to your instance
+=> Outbound rules control the outgoing traffic from your instance. 
+
+=> By Default, Everything is blocked.
+=> Let Everything In with 0.0.0.0/0
+=> In Order to communicate with EC2 via SSH or RDP or HTTP or Some other , You need to open up the correct ports.
+
+Important Ports
+============
+22 	SSH	Login to Linux Instances
+21	FTP	Upload Files
+22	SFTP	Upload Files with SSH
+80	HTTP	Access UnSecured Web Applications
+443	HTTPS	Access Secured Web Applications
+3389	RDP	Login to Windows Instances
+
+Security Groups are Stateful:
+----------------------------------------
+=> If you send the Request to EC2 Instance, Response Traffic for that Request is allowed to Flow-Out regardless of Outbound Rules.
+
+=> If you send the Request from EC2 Instance, Response Traffic for that Request is allowed to Flow-In regardless of Inbound Rules.
+
+
+
+B) Network ACLs
+===============
+*** ACLs --- Access Control List
+=>  Network ACL is First-Line of Defense.
+=> Network ACL is an Optional Layer of Security  for your VPC That Acts as Firewall for Controlling traffic IN and OUT of one or more Subnets in the VPC.
+
+=> You can setup the Network ACL with Rules similar to Security Groups in order to add another Layer of Security  for your VPC 
+
+Key Points about  Network ACLs
+---------------------------------------------
+1) Default Network ACLs:
+------------------------------------
+=> Your VPC automatically comes with  Default Network ACL.
+=> By Default, It allows all In-bound and Out-bound traffic.
+=> By Default, All the Subnets in the VPC will be Associated with Default Network ACL
+
+2) Custom Network ACLs:
+------------------------------------
+=> You can create Custom Network ACLs
+=> By Default, each Custom Network ACL denies all In-bound and Out-bound traffic until you add rules.
+
+3) Subnet Associations:
+------------------------------------
+=> Each Subnet in your VPC must be associated with Network ACL
+=> If you dont associate the subnet with Network ACL explicitly, then that Subnet will be associated automatically with Default Network ACL.
+=> You can associate One Network ACL with multiple Subnets; however One Subnet can be associated with Only One Network ACL at a time.
+
+4) Block IP Addresses:
+---------------------------------
+=> You can block required IP Addresses using Network ACL , not with Security Group.
+
+5) Numbered List of Rules:
+-------------------------------------
+=> Network ACL contains Numbered List of Rules that are Evaluated in Order starting with Lowest-Numbered Rule.
+
+6) Allow or Deny Traffic:
+----------------------------------
+=>  Network ACLs have Separate  In-bound and Out-bound Rules 
+=> Each Rule can either Allow or Deny Traffic.
+
+7) Network ACLs are Stateless:
+------------------------------------------
+=> Response to allowed In-bound traffic subject to the rules for Out-bound traffic
+=> Response to allowed out-bound traffic subject to the rules for In-bound traffic
+
+Diff between Security Groups and Network ACLs
+-------------------------------------------------------------------
+1)  Security Groups for EC2 Instances where as  Network ACLs for Subnets in your VPC
+2)  Security Group can be associated with One or More EC2 Instances where as Network ACLs are also can be associated with One or MoreSubnets in your VPC
+3)  EC2 Instrance can be associated with One or More One Security Group where as Subnet in your VPC   can be associated with One Network ACL only.
+4)  Security Groups are stateful where as  Network ACLs are Stateless
+5) Security Groups are Required where as  Network ACLs are Optional
+6) Use Network ACLs for Blocking Specific IPs , Not  Security Groups
+ 
+Demo 10: Network ACLs 
+--------------------------------
+A) Install nginx Web server on EC2 Instance( named as jlc-web-server)
+
+ssh ubuntu@3.139.72.253 -i myjlc-kp.pem
+
+sudo -i
+apt-get update
+apt-get install nginx -y
+
+systemctl start nginx
+systemctl enable nginx
+systemctl status nginx
+
+B) Open the Browser and hit the following
+
+http://3.139.72.253:80
+
+You Will not access Web Server.
+
+C) Update Security Group.(myjlc-web-sg)
+
+D) Open the Browser and hit the following
+
+http://3.139.72.253:80
+
+You Will access Web Server.
+
+E) Update index.html
+
+cd /var/www/html
+mv index.nginx-debian.html index.html
+cat index.html
+echo "<h1> Hello Guys, Welcome to JLC </h1>" > index.html
+
+F) Open the Browser and hit the following
+
+http://18.188.39.148:80
+
+G) Goto VPC bashboard and do the following
+
+1) Select Security => Network ACLs
+2) You can see 2  Network ACLs
+	*** One for Default VPC
+	*** One for Our Custom VPC
+3) See the In-bound and Out-bound Rules of Default Network ACLs
+	*** Allows All In-bound and Out-bound Traffic
+4) Create Network ACLs
+5)  See the In-bound and Out-bound Rules of Custom Network ACLs
+	*** Denies All In-bound and Out-bound Traffic
+6) Edit the Subnet Associations
+	** Associate Public subnet with Custom Network ACLs
+7) Try to Access the Web Server ( Problem)
+8) Add the In-bound Rules required
+9) Try to Access the Web Server ( Problem)
+10) Add the Out-bound Rules required
+11) Try to Access the Web Server(OK)
+
+
+
+
+
+

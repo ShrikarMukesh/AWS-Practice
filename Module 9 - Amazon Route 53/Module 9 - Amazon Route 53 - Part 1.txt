@@ -1,0 +1,246 @@
+=============================
+Module 9 - Amazon Route 53 - Part 1
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+==================
+1) DNS Fundamentals
+==================
+***  DNS - Domain Name System
+
+=> DNS  translates human readable domain names  to machine readable IP addresses
+Ex:
+          www.myjlc123.com 	  10.11.12.13 ( Public IP)
+
+=> IP addresses can be used in IPv4 or IPv6 Formats.
+
+=> DNS Uses Hirarchical Naming Structure
+Ex:
+    	  .com
+            myjlc.com
+www.myjlc.com
+   lms.myjlc.com
+
+Important Terms:
+----------------------
+1) Domain Registrar
+2) DNS Records
+3) Zone Files
+4) Name Server
+5) Domain Name
+6) Top-Level-Domain(TLD)
+7) Second-Level-Domain(SLD)
+8) Sub Domain
+9) FQDN 
+
+1) Domain Registrar:
+-------------------------------
+=> Domain Registrar is an Authority that can assign domain names directly under one or more Top Level Domains
+=> These domains are registered with InterNIC - Service of ICANN - which enforces the uniqueness of the domain names accross the internet.
+=> Each domain name is registered in central database called WHOIS database
+
+=> Popular Domain Registrar:
+* domain.com
+* Godaddy
+* AWS Route 53 - 
+* NameCheap
+* Hoover
+etc
+
+2) DNS Records:
+------------------------
+=> DNS record is a database record used to map a URL to an IP address/host-name.
+        myjlc123.com 		=>   10.11.12.13 ( Public IP)
+        lms.myjlc123.com 	=>   10.55.66.77 ( Public IP)
+
+=> DNS records are stored in DNS servers 
+Ex:
+	A , AAAA , CNAME , ALIAS , NS , MX, SOA etc
+
+3) Zone Files:
+-------------------
+=> Zone file is a text based file with a format defined in RFC 1035 and 1034 
+=> Zone Files are stored on a DNS server (Name Server). 
+=> Zone files contain DNS Records
+
+4) Name Server:
+----------------------
+=> Resolves the DNS Queries
+
+5) Domain Name:
+------------------------
+Ex:
+	myjlc123.com
+	google.com
+
+6) Top-Level-Domain(TLD):
+--------------------------------------
+Ex:
+	.com   .in   .us    .net   .online   .org   .edu   .gov
+
+7) Second-Level-Domain(SLD):
+---------------------------------------------
+Ex:
+	google in google.com
+	myjlc123 in myjlc123.com
+	
+8) Sub Domain:
+--------------------------
+Ex:  
+	lms in  lms.myjlc123.com
+	mycourses in  mycourses.myjlc123.com
+
+9) FQDN:
+------------
+=> Fully Qualified Domain Name
+Ex:
+	http://www.myjlc123.com
+	http://lms.myjlc123.com
+
+
+DNS Flow:
+--------------
+*** Diagram ***
+
+======================
+2) Route 53 Fundamentals
+======================
+=>  Route 53 is Highly Available , Scalable , Fully Managed and Authoritative DNS Service 
+    * Authoritative DNS - You can update the DNS Records
+=> Route 53 is also Domain Registrar
+=> You can check the Health of the Resources 
+=> The Only AWS Service which provides 100% Availability SLA.
+=> 53 is a Traditional DNS Port so Route 53 is used by AWS
+
+Route 53 - DNS Records
+--------------------------------
+=> Tells how you want to Route the Traffic for your domain.
+=> Each Record contains the following
+
+a) Domain/Subdomain Name
+b) Record Type
+c) Value
+d) Routing Policy
+e) TTL
+
+a) Domain/Subdomain Name:
+----------------------------------------
+=> Domains like myjlc.com, google.com etc
+=> Sub Domains like lms.myjlc.com ,mail.google.com
+
+b) Record Type:
+---------------------
+=> DNS Record Types like A, AAAA, CNAME , NS, ALIAS etc
+
+c) Value:
+-------------
+=> IP or Host Name
+
+d) Routing Policy:
+--------------------------
+=> How the Route 53 Responds to DNS queries
+
+e) TTL:
+----------
+=> Amount of Time the Record cached at DNS Resolver
+
+Route 53 - Hosted Zones
+---------------------------------
+=> Hosted Zone contains the DNS Records that defines how to Route the Traffic  to your domain and its sub-domains
+
+=> Two Types of Hosted Zones
+a) Public Hosted Zones
+b) Private Hosted Zones
+
+a) Public Hosted Zones:
+------------------------------------
+=> Contains the Records that defines  how to Route the Traffic  on the Internet.
+Ex:
+	lms.myjlc.com
+
+b) Private Hosted Zones:
+------------------------------------
+=> Contains the Records that defines  how to Route the Traffic  within One or More VPCs
+Ex:
+	lms.myjlc.internal
+
+
+=====================
+3) Registering Domain
+=====================
+=> You can Register the Domain with Amazon Route 53 Service.
+
+Steps:
+====
+1) Goto Route 53 Dashboard 
+(Services => Networking and Content Delivery => Route 53)
+
+2) Select Registered Domains under Domains
+
+3)Click on Regsiter Domain button
+
+4) Enter the domain name you want to register and Click on Check button
+
+5) If Available then Click on Add to Cart button
+
+6) Click on Continue button.
+
+7)  Do the Following 
+  a) Enter Your Contact Details 
+  b) Enable Privacy Protection 
+and Click on Continue button.
+
+8)  Do the Following 
+  a) Enable / Disable Auto-Renew 
+  b) Accept the Terms and Conditions
+and Click on Complete Order button
+
+9) Select Pending Requests under Domains
+You will see One Pending Request for Your Domain registration Order.
+
+10) Now Goto Billings and Make the Payment.
+
+11) Wait for sometime until you see the Domain Registration is completed.
+***  Once Domain Registration is completed then you will see the Domain under Registered Domains of Domains section.***
+
+12) Now Your domain is Ready to Play in Route 53.
+
+

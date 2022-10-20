@@ -1,0 +1,103 @@
+=======================
+Module 2: AWS IAM - Part 2
+=======================
+3) IAM Building Blocks
+4) IAM Users
+5) IAM Groups 
+6) IAM Roles
+7) Best Practices
+8) Identity Providers
+9) IAM Audit Tools
+10) Account Settings
+
+====================
+3) Building Blocks of IAM
+====================
+IAM Users 
+IAM Groups 
+IAM Roles 
+
+=========
+4) IAM Users 
+=========
+=> User is a Physical Person
+=> Create One User Account for One Physical User.
+
+=> When you create the User first time then that user has no permissions
+=> When you create the User first time with Password Reset Option then that user will have One permission called  IAMUserChangePassword
+
+=> Dont Attach permissions to User Directly.
+
+5) IAM Groups 
+------------
+=> Group is like Job Function 
+=> Group contains Users
+=> Group does not contain another Group.
+
+=> Grant permissions to Group Directly.
+
+============
+6) IAM Roles 
+============
+=> Internal Usage within AWS
+=> Role is Permission to Access One AWS Resource from Another  AWS Resource
+=> Role for AWS Internal Resource , Not for User.
+
+==============
+7) Best Practices
+=============
+1) Allow Users to Inherit Permissions from Groups
+----------------------------------------------------------------
+=> Always Assign the Policies to Groups 
+=> Dont Assign the Policies to Users directly
+
+2) User and Person Best Practice
+-----------------------------------------
+One User = One Physical Person
+
+=> Always work on the Principle One User equals to  One Physical Person.
+=> Never share User Accounts accross multiple People.
+
+3) Principle of Least Privilege
+--------------------------------------
+=> Only Assign the Minimum of Privileges to User what the User need to do the Job.
+
+Console Demos
+
+=================
+8) Identity Providers
+=================
+=> If you already manage user identities outside of AWS, you can use IAM Identity Providers instead of creating IAM users in your AWS account.
+
+=> Identity Provider (IdP) gives these external user identities permissions to use AWS resources in your account. 
+
+=> This is useful if your organization already has its own identity system like Active Directory. 
+
+=>To use an IdP, you create an IAM identity provider entity to establish a trust relationship between your AWS account and the IdP. 
+
+=> IAM supports IdPs that are compatible with the following two Plicies.
+    1) SAML 2.0 (Security Assertion Markup Language )   - Active Directory
+    2) OIDC  (OpenID Connect) 
+
+=============================
+9) IAM Audit Tools/IAM Security Tools
+=============================
+1)IAM Credential Report  
+--------------------------------
+=> Credential Report  is an Account Level Report
+=> Credential Report Contains the List of Users and Status of User Credentials
+
+2) IAM Access Advisor
+-----------------------------
+=> Access Advisor is User Level
+=> Access Advisor shows the Permissions granted to User and When those Services are last accessed.
+=> You can use this Information to revise the User Policies.
+ 
+10) Account Settings
+===============
+=> Change Password Policy
+
+
+
+
+

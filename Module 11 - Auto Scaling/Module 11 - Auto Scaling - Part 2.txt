@@ -1,0 +1,155 @@
+==========================
+Module 11 - Auto Scaling - Part 2
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+======
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+======
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+======
+4) Auto Scaling Policies
+
+Part 5:
+======
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+======
+7) Exam Tips
+Exam #11 - Auto Scaling
+
+=======================
+3) Auto Scaling Groups(ASG)
+=======================
+=> Load on your application can be changed time to time
+=> You need to Increase or decrease the EC2 Instances as per the load of the application
+=> Auto Scaling Group(ASG) helps us to Scale Out or Scale In the Capacity automatically.
+
+=> Size of an Auto Scaling Group depends on the number of instances that you set as the desired capacity. 
+=> You can adjust its size to meet demand, either manually or by using automatic scaling.
+
+
+Goals of Auto Scaling Group:
+--------------------------------------
+1) Scale Out ( Increase the EC2 Instances) when traffic is increasing
+2) Scale In ( Decrease the EC2 Instances) when traffic is decreasing
+3) Automatically register new EC2 Instances to Load Balancer.
+4) Re-Create EC2 Instance in case EC2 Instance is Terminated / Un-Healthy.
+
+Setting Capacity Limits:
+---------------------------------
+=> You need to specify the Auto-Scaling Restrictions to stop from Scaling too much.
+
+1) Minimum Capacity:
+-------------------------------
+=> Lowest No. of EC2 Instances you will run Online
+=> You wont dip below this.
+
+2) Maximum Capacity:
+-------------------------------
+=> Highest No. of EC2 Instances you will run Provision
+=> You wont go above this.
+
+3) Desired Capacity:
+-------------------------------
+=> How many Instances do you want right now?
+
+Auto-Scaling Steps:
+----------------------------
+Step 1: Define Your Launch Template:
+-----------------------------------------------------
+=> Pick the Required Launch Template
+
+Step 2: Networking and Purchasing :
+-----------------------------------------------------
+=> Pick the Required Networking Space and Purchasing Options
+=> Use Multiple AZs to get High Availability
+
+Step 3: ELB Configuration:
+-------------------------------------
+=> EC2 Instances can be registered with Load Balancer
+=> ASG can be set to respect the Load Balancer Health Checks.
+
+Step 4: Set Scaling Policies
+-------------------------------------
+=> Set Min, Max , Desired Capacity so that you dont have too many Instances or too few Instances.
+
+Step 5: Notifications
+----------------------------
+=> SNS can act as a Notification Tool which allows you to let someone know when scaling event occurs.
+
+
+Demo 3 :  Creating Auto Scaling Group
+=============================
+1) Goto EC2 Dashboard
+2) Select Auto Scaling Groups under Auto Scaling (Left Menu)
+3) Click on Create Auto Scaling group Buttom
+4) Provide the Following  details in 
+
+Step 1: Choose launch template or configuration
+-----------------------------------------------------------------
+a) Auto Scaling group name  : myjlc-ASG
+b) Launch template 	                 : myjlc-launch-temp
+c) Click on Next Button
+
+Step 2: Choose instance launch options
+-------------------------------------------------------
+d) VPC		: 	default VPC
+e) Subnets	: 	us-east-1a , us-east-1b , us-east-1c 
+f) Instance type requirements	: Use Defaults
+g) Click on Next Button
+
+Step 3: Configure advanced options
+--------------------------------------------------
+h) Load balancing 			:	No Load balancer
+i)Health checks 			:	Use Defaults 
+j) Remaining Fields			:	Use Defaults 
+k) Click on Next Button
+
+Step 4: Configure group size and scaling policies
+---------------------------------------------------------------------
+l) Desired capacity			:	3
+m) Minimum capacity		:	2
+n)Maximum capacity		:	10
+o) Scaling policies 			:	None
+p) Instance scale-in protection	:	Use Default Option
+q) Click on Next Button
+
+Step 5: Add notifications
+--------------------------------------
+Nothing to Do here Now.
+r) Click on Next Button
+
+Step 6: Add tags
+------------------------
+If You want, You can add Tags here
+Name	- 	MyASG
+
+u) Click on Next Button
+
+Step 7: Review
+---------------------
+Review All the Provided in Previous 6 Steps.
+
+5) Click on Create Auto Scaling Group Button
+
+6) Now Update the ASG as follows
+---------------------------------------------
+a) Select the ASG ( myjlc-ASG )
+b) Click On Edit
+c) Provide 
+	Desired Capacity : 1
+	Min Capacity          :  1
+d) Click on Update
+
+

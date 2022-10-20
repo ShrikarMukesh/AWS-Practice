@@ -1,0 +1,140 @@
+==========================
+Module 7 - Amazon  VPC - Part 9
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring Site-to-Site VPN Connection
+14) Exploring VPN CloudHub
+
+Part 9:
+=====
+15) Exploring AWS DirectConnect
+16) Exploring Transit Gateway
+
+Part 10:
+=====
+17) Understanding IPv6 for VPC
+
+18) Exam Tips
+Exam #7 - VPC
+
+
+==============================
+15) Exploring AWS DirectConnect(DX)
+============================== 
+=>AWS DirectConnect is a Cloud Service Solution that makes it easy to establish dedicated Netwrok Connection from Your Premises to AWS Cloud.
+
+=>Using AWS DirectConnect, You can establish Private Connectivity between AWS Cloud and Your Data Center.
+
+=> Dedicated Connection must be setup between your DC and AWS Direct Connect Locations
+( There are 115 Direct Connect Locations accross the globe)
+
+=> You need to setup Virtual Private Gateway on your VPC.
+
+=> Using AWS DirectConnect Connection , You can access AWS Services like S3,EC2 etc
+
+Benefits of DirectConnect:
+-----------------------------------
+1) You can reduce the Network Costs
+2) Increase the Bandwidth throughput.
+3) Provides most consistent Network Connection than Internet-based Connection.
+
+	*****   Diagram   *****
+
+Types of DirectConnect(DX) Connections
+--------------------------------------------------
+=> There are Two Types of DirectConnect Connections
+1) Dedicated Connection
+2) Hosted Connection
+
+1) Dedicated Connection:
+-----------------------------------
+=> 1Gbps , 10Gbps, 100 Gbps Capacity
+=> A physical Ethernet fiber-optic cable Connection associated with single customer.
+=> Customer can request a dedicated connection through AWS DirectConnect console or CLI or API
+
+2) Hosted Connection:
+--------------------------------
+=> 50Mbps, 500Mbps, to 10Gbps Capacity 
+=> Capacity can be added or removed on demand.
+=> A physical Ethernet fiber-optic cable Connection that is provisioned by DirectConnect partners.
+=> Customer can request Hosted Connection by contacting  DirectConnect partners.
+
+Note: It takes around 1 month to establish the new Connection.
+
+Direct Connection - Encryption
+---------------------------------------------
+=> Data in Transit is not Encrypted but is Private.
+=> AWS Direct Connect + VPN 
+	** provides an IPsec-encrypted private Connection.
+	** Good for Extra Level of Security but more complex to setup.
+
+Q) Diff Between VPN Connections and DirectConnect Connections?
+
+==========================
+16) Exploring Transit Gateway
+==========================
+=> AWS Transit Gateway connects VPCs and On-Premises Networks through Central Hub.
+=> This simplifies your network and puts an end to complex Peering Relationships.
+=> It acts as a Cloud Router - Each new Connection is made only once.
+
+	*****   Diagram   *****
+
+Imp Points:
+----------------
+=> Works on Hub-and-Spoke(Star) Model
+=> Works on Regional basis, But you can have it accross multiple regions.
+=> You can use it accross multiple AWS Accounts using RAM ( Resource Access Manager)
+=> Allows you to have Transitive Peering between thousands of VPCs and On-premises Data Centers.
+=> Works with Direct Connect Gateway and VPN Connections
+=> Supports IP Multicast ( Not supported by any other AWS Service).
+
+Transit Gateway: Site-to-Site VPN ECMP
+------------------------------------------------------
+=> ECMP - Equal-Cost Multi Path Routing
+=> This Routing Strategy allows you to forward the packet over multiple best paths.
+
+ Use Case:
+------------
+=> Create Multiple Site-to-Site VPN Connections to Increase the Bandwidth of your connection to AWS.
+
+
+
+
+
+
+
+

@@ -1,0 +1,153 @@
+==========================
+Module 7 - Amazon  VPC - Part 4
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+10) Exploring VPC Endpoints
+11) Exploring VPC Peering
+12) Exploring AWS PrivateLink
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+
+Demo 8: Launch EC2 Instances in Private Subnet and Test
+===============================
+1) Launch the Instance with the Following Info
+------------------------------------------------------------------
+a) Name 			:    jlc-db-server
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    myjlc-kp
+e) Network settings
+    i) VPC - required		:    myjlc-vpc
+    ii) Subnet 		:    myjlc-private-subnet
+    iii) Auto-assign public IP	:    Disable
+    iv) Firewall (security groups):  myjlc-db-sg
+    v) Description		:    myjlc-db-sg for DB Servers
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) Click on Launc Instance
+
+2) Try to Connect using EC2 Instance Connect
+***Directly we can not Connect to jlc-db-server ( EC2 Instance in Private Subnet)
+
+a) Connect to Web Server ( EC2 Instance in Public Subnet)
+ssh ubuntu@3.137.184.13 -i myjlc-kp.pem
+
+b) Test the Internet Connection at web server
+ping google.com
+sudo apt-get update
+
+c) Create myjlc-kp.pem in web server Instance
+
+d) Connect to DB Server ( EC2 Instance in Private Subnet)
+chmod 0400 myjlc-kp.pem
+ssh ubuntu@10.0.2.27  -i myjlc-kp.pem
+
+e) Test the Internet Connection at DB server
+ping google.com
+sudo apt-get update
+
+Q) My DB Server needs the Internet? How
+EC2 Instance in Private Subnet needs the Internet? How can I get this?
+
+========================
+8) Exploring NAT Gateways
+========================
+NAT - Network Address Translation
+
+=> NAT Gateways allows the Instances in the Private Subnet to connect to the Internet.
+=>  NAT Gateway is basically collection of One or More EC2 Instances amazon handles it for you behind the scenes
+=> Provision the NAT Gateway in the Public Subet.
+=> NAT Gateway should be in the Same AZ where the Public Subnet is there.
+=> Can not used by the EC2 Instances in the Same Subnet( Only from Other Subnets).
+
+Key Points:
+=============
+=> You can not connect to NAT Gateway.
+=> Starts with 5 Gbps and scales currently upto 45 Gbps.
+=> Not Associated with any Security Groups.
+=> Requires Internet Gateway ( Private Subnet => NATGW => IGW)
+=> NAT Gateway uses Elastic IP ( Static IP)
+
+NAT Gateway High Availability:
+-------------------------------------
+=> NAT Gateway is Resilient within a Single AZ
+=> You must Create multiple NAT Gateways in  multiple  AZs for Fault-Tolerance.
+
+Demo 9 : Create the NAT Gateway 
+==========================
+1) Goto VPC Dashboard
+2) Click on NAT Gateways
+3) Click on Create  NAT Gateway
+4) Provide the following Details
+
+i) NAT gateway settings
+--------------------------------
+a) Name tag		 :  myjlc-nat-gw
+b) Subnet			 :  myjlc-public-subnet
+c) Connectivity type		 :  Public
+d) Elastic IP		 :  Select or Allocate
+
+ii) Tags 	
+----------
+-- Give Any Tags you want
+
+5) Click on  Create  NAT Gateway button
+
+6) Add the Route in Private Subnet to connect to NAT Gateway as follows.
+
+a) Select Your  Route Table (myjlc-private-route) 
+b) Select  Routes Tab
+c) Click on Edit Routes Button
+d) Click on Add Route Button
+e) Provide the following
+	Destination :     0.0.0.0/0
+	Target	     : Your NAT Gateway
+f) Click on Save Changes
+
+7) Try to Connect using EC2 Instance Connect
+
+a) Connect to Web Server ( EC2 Instance in Public Subnet)
+ssh ubuntu@3.137.184.13 -i myjlc-kp.pem
+
+b) Test the Internet Connection at web server
+ping google.com
+sudo apt-get update
+
+c) Create myjlc-kp.pem in web server Instance
+
+d) Connect to DB Server ( EC2 Instance in Private Subnet)
+
+ssh ubuntu@10.0.2.27  -i myjlc-kp.pem
+
+e) Test the Internet Connection at DB server
+ping google.com
+sudo apt-get update

@@ -1,0 +1,93 @@
+========================
+Module 5 : EBS and EFS - Part 3
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+==============================
+2) Volumes and SnapShots - ( Contin...)
+==============================
+
+Demo 4:
+=========
+1) Launch the EC2 Instance
+2) Install Your Apps , Software , Data etc ( myjlc folder, hello.txt)
+3) Create the Snapshot from Volume
+4) Create Image from Snapshot ( MyJLC-AMI)
+5) Launch the EC2 Instance from Your AMI
+6) Test Your Data .( myjlc folder, hello.txt)
+
+This process can be used to auto launch instance in case of 
+=> Instance crash 
+=> Autoscaling
+
+
+=======================
+3) Encrypting EBS Volumes
+=======================
+=> EBS Encrypts your Data with Data Key using Industry-Standard AES-256 Algorithm
+=> You aren't required to build, maintain, and secure your own key management infrastructure
+=> EBS encryption uses AWS KMS keys when Encrpting the Volumes and Snapshots.
+=> You can attach both encrypted and unencrypted volumes to an instance simultaneously.
+
+What happens When you Encrypt the EBS Volumes:
+-------------------------------------------------------------------------
+=> All Data at Rest will be Encrypted inside the Volume.
+=> All Data in the Flight between the Instance and Volume will be Encrypted.
+=> All the Snapshots created from Encrypted Volumes will be Encrypted automatically.
+=> All the Volumes Created from Encrypted Snapshots  will be Encrypted automatically.
+
+=>Encryption and Decryption are handled transperently. You noo need to do anything.
+=>Encryption has minimal Impact on the Latency.
+=> You can encrypt the Root device Volumes upon Creation.
+
+
+Demo 1:
+
+How to Encrypt the Existing Volumes
+=============================
+1) Create the Snapshot of Unencrypted root device volume
+2) Create the Copy of the Snapshot and Select the Encryption option
+3) Create the AMI from Encrypted Snapshot 
+4) Use the AMI to Launch new Encrypted Instance.
+
+Demo 2:
+
+How to Encrypt the New Volumes
+=============================
+
+
+

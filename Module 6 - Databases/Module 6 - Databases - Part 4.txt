@@ -1,0 +1,309 @@
+========================
+Module 6 : Databases - Part 4
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+==================
+2) Amazon Aurora
+==================
+=> Aurora is Amazon's Propriority Relational Database built for the cloud with full MySQL and PostgreSQL compatibility.
+=> Aurora combines the speed and availability of high-end commercial databases with the simplicity and cost-effectiveness of open-source databases.
+=> Aurora is not an Open-Source database.
+
+MySQL Self management***
+MySQL on RDS 
+Aurora MySQL 
+
+==============
+Aurora Key Points
+==============
+a) High Performance
+b) Low-Latency Read Replicas
+c) Multi-AZ Deployments with Aurora Replicas
+d) Custom Database Endpoints***
+e) Storage Auto-Scaling
+
+f) Push-Button Compute Scaling***
+g) Fault-Tolerant and Self-Healing Storage**
+h) Automatic, Continuous, Incremental Backups and Point-in-Time Restore
+i) Snapshots
+j) Encryption
+k) Backtrack for Aurora MySQL***
+l) Automated Provisioning of DB Pacthes , OS Pacthes 
+m) Maintainace Windows for Upgrades
+n) Monitoring Dashboards
+
+=============================
+Demo 4: Creating Aurora DB Instance
+==============================
+1) Choose a database creation method
+-----------------------------------------------------
+=> Standard Create
+
+2) Engine options
+---------------------------
+a) Engine type : Amazon Aurora
+b) Edition : Amazon Aurora MySQL-Compatible Edition
+c) Replication features: Single Master
+d) Version : Aurora( MySQL 5.7) 2.10.2
+
+3) Templates
+---------------------
+=> Production or Dev/test  ( No Free Tier)
+Select Production 
+
+4) Settings
+-----------------
+=> DB Cluster identifier : jlc-aurora-mysql
+
+Credentials Settings
+------------------------
+=> Master username : srinivas
+=> Master password : srinivas
+=> Confirm password : srinivas
+
+5) Instance configuration
+------------------------------------
+DB instance class
+
+a) Select Burstable classes (includes t classes)
+b) => db.t3.medium
+c) Select Include previous generation classes
+
+6) Availability & durability
+------------------------------------
+a) Multi-AZ deployment
+
+Don't create an Aurora Replica
+Create an Aurora Replica or Reader node in a different AZ  ( Select this)
+
+7) Connectivity
+--------------------------
+=> Virtual private cloud (VPC) : Default
+=> Subnet group  : Default
+=> Public access : Yes
+
+VPC security group : 
+Existing VPC security groups  : jlc-db-group
+
+****Availability Zone : us-east-1a
+
+=> Additional configuration
+     Port : 3306
+
+8) Database authentication
+---------------------------------------
+=> Password Autntocation
+
+9) Additional configuration
+---------------------------------------
+a) Database options
+Intital database : mybookstoredb
+
+b) Backup (Use Defaults)
+=> Backup retention period : 1 days
+
+c) Encryption 
+=> Select Enable Encryption
+
+d) Backtrack
+=> Select Enable Backtrack
+
+e) Monitoring  - 
+=> Use Defaults
+
+f) Log exports 
+=> Use Defaults
+
+g) Maintenance 
+=> Use Defaults
+
+h) Deletion protection 
+Uncheck Enable deletion protection
+
+
+======================
+Testing Aurora DB Instance
+======================
+=> Following 4 are required To Connect to DB from Your Aplication
+---------------------------------------------------------------------------------------
+Master
+======
+host : jlc-aurora-mysql.cluster-cgafvjcfxazf.us-east-1.rds.amazonaws.com
+port : 3306
+username : srinivas
+password : srinivas
+
+mybookstoredb
+
+
+create table mycustomers(
+cid int primary key,
+cname char(15),
+email char(15),
+phone int
+);
+
+select * from mycustomers;
+
+insert into mycustomers values(101,'sri','sri@jlc.com',111);
+
+insert into mycustomers values(102,'vas','vas@jlc.com',222);
+
+select * from mycustomers;
+
+Reader 
+======
+host : jlc-aurora-mysql.cluster-ro-cgafvjcfxazf.us-east-1.rds.amazonaws.com
+port : 3306
+username : srinivas
+password : srinivas
+
+mybookstoredb
+
+
+select * from mycustomers;
+insert into mycustomers values(103,'vas','vas@jlc.com',222);
+
+===========================================================================
+
+a) High Performance
+--------------------------------
+=> Aurora Performance is 5X better than MySQL on RDS and 3X better than PostgreSQL on RDS
+
+b) Low-Latency Read Replicas
+-----------------------------------------
+=> You can create up to 15 Aurora Replicas.
+
+=> These Read-Replicas can be In-Zone , Cross-Zone or Cross-Region.
+
+=> Aurora Replicas share the same underlying storage as the source instance, lowering costs and avoiding the need to perform writes at the replica nodes. This frees up more processing power to serve read requests and reduces the replica lag time—often down to single-digit milliseconds. 
+
+=> Aurora provides a Reader Endpoint so the application can connect to Reader Endpoint without having to keep track of replicas as they are added and removed.
+
+=>  It also supports auto-scaling, automatically adding and removing replicas in response to changes in performance metrics that you specify.
+
+
+c) Multi-AZ Deployments with Aurora Replicas
+---------------------------------------------------------------
+=> On Instance failure, Automatically failover to one of up to 15 Aurora Replicas you have created in any of three Availability Zones. 
+=> If no Aurora Replicas have been provisioned, in the case of a failure, RDS will attempt to create a new Aurora DB instance for you automatically. 
+
+d) Custom Database Endpoints
+---------------------------------------------
+=> Custom endpoints allow you to distribute and load balance workloads across different sets of database instances. 
+
+e) Storage Auto-Scaling
+--------------------------------
+=> Aurora automatically increases the size of your database volume.
+=> Start with 10GB. Scales in 10GB increments up to a maximum of 128 TB. 
+=> You don't need to provision excess storage for your database to handle future growth.
+
+f) Push-Button Compute Scaling
+---------------------------------------------
+=> You can scale provisioned instances up or down. 
+=>  You can scale the Compute Resources upto 
+	** 96 vCPUs and 768GB of RAM. ( r5 Classes)
+	** 64 vCPUs and 1024GB of RAM. (X2g Classes)
+=> Compute scaling operations typically complete in a few minutes.
+
+
+g) Fault-Tolerant and Self-Healing Storage
+------------------------------------------------------------
+=> 2 Copies of Your Data is contained in each AZ , with minimum of 3 AZ's  -- So 6 Copies of your data.
+=> Aurora storage is transparently handling the loss of up to two copies of data without affecting database write availability and up to three copies without affecting read availability. 
+=> Aurora storage is also self-healing; data blocks and disks are continuously scanned for errors and replaced automatically.
+
+
+h) Automatic, Continuous, Incremental Backups and Point-in-Time Restore
+--------------------------------------------------------------------------------------------------------
+=> Aurora's backup capability enables point-in-time recovery for your instance. 
+=> This allows you to restore your database to any second during your retention period, up to the last five minutes. 
+=> Your automatic backup retention period can be configured up to thirty-five days. 
+=> Automated backups are stored in Amazon Simple Storage Service (Amazon S3), which is designed for 99.999999999% durability. 
+=> Aurora backups are automatic, incremental, and continuous and have no impact on database performance.
+
+i) Snapshots
+---------------
+=> You can creates a Snapshot of your Aurora DB manually. 
+=> Snapshots are stored in Amazon S3.
+=> Manual snapshots are retained forever until you delete them.
+=> You can create a new DB instance by restoring from a DB snapshot. 
+=> You can copy snapshots 
+
+j) Encryption
+-----------------
+a) Encryption in Transit
+----------------------------------
+=> Aurora Uses SSL (AES-256)  Certificates to Encrypt the data in Transit
+
+b) Encryption at Rest
+-------------------------------
+=> You can Encrypt Aurora Database and Its Read-Replicas with KMS - AES 256 Encryption Alogorithm.
+=> Encryption has to be defined at Aurora Database Instance Creation time.
+=> If the  Aurora Master Database is Encrypted then 
+	*** all of its automated backups will be Encrypted automatically.
+	*** all of its snapshots will be Encrypted automatically.
+	*** all of its replicas  will be Encrypted automatically.
+
+
+k) Backtrack for Aurora MySQL
+---------------------------------------
+=> Backtrack allows you to move a database to a prior point in time without restoring data from a backup. 
+=> This lets you quickly recover from user errors, such as dropping the wrong table or deleting the wrong row. 
+=> Backtrack completes in seconds, even for large databases, because no data records need to be copied. 
+=> You can go backwards and forwards to find the point just before the error occurred.
+
+=> When you enable Backtrack, Aurora will retain data records for the specified Backtrack duration. 
+Ex:
+=> you could set up Backtrack to allow you to move your database up to 72 hours back. 
+
+
+=================
+Aurora Multi-Master
+=================
+=> In a multi-master cluster, all DB instances can perform write operations. 
+
+=> The notions of a single read/write primary instance and multiple read-only Aurora Replicas don't apply. 
+=> There isn't any failover when a writer DB instance becomes unavailable, because another writer DB instance is immediately available to take over the work of the failed instance.
+
+=================
+Aurora Global
+=================
+a) Aurora Cross-Region Read Replicas
+b) Aurora Global Database
+	=> One Primary Region for Read-Write
+	=> Upto 5 Secondary Regions for Read-Only
+	=> Upto 16 Read Replicas per Secondary Region
+
+c) Helps for Decreasing Latency
+d) Helps for DR.
+
+
+==============
+Aurora Serverless
+==============
+=> Aurora Serverless  is an on-demand autoscaling configuration for Amazon Aurora. 
+
+=> Aurora Serverless DB cluster is a DB cluster that scales compute capacity up and down based on your application's needs. 
+
+=> Aurora Serverless provides a relatively simple, cost-effective option for infrequent, intermittent, or unpredictable workloads. 
+
+=> It is cost-effective because it automatically starts up, scales compute capacity to match your application's usage, and shuts down when it's not in use.
+
+=====================
+Aurora Machine Learning
+=====================
+=> Aurora supports Machine Learning
+=> Enables to add ML-based Predctions to Your applications via SQL
+=> Provides Simple and Optimized Integration between Aurora and AWS ML-based Services.
+=> Supported AWS ML-based Services
+	a) Amazon SageMaker
+	b) Amazon Comprehed
+
+

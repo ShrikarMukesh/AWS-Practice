@@ -1,0 +1,214 @@
+==========================
+Module 11 - Auto Scaling - Part 3
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+=====
+4) Auto Scaling Policies
+
+Part 5:
+=====
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+=====
+7) Exam Tips
+Exam #10 - Auto Scaling
+
+=======================
+3) Auto Scaling Groups(ASG)
+=======================
+
+Demo : Complete Demo on ASG
+=============================
+1) Goto EC2 Dashboard 
+2) Creating Launch Template as follows
+--------------------------------------------------------------
+i) Select Launch Templates under Instances ( Left Menu)
+ii) Click on Create Launch Template button
+iii) Provide the following details
+a) Launch template name 		- myjlc-launch-temp
+b) Template version description	- myjlc-launch-temp
+c) Select Checkbox for Auto Scaling guidance
+d) AMI 				- Ubuntu Server - 22.04 LTS
+e) Instance type			- t2.micro
+f) key-pair (login)			- virginia-key-pair
+
+Network settings:
+g) Subnet				- Dont Select Now
+h) Security Group			- virginia-web-sg
+i) Storage 				- Use Defaults
+j)Resource tags			- Use Defaults
+k) Advanced details			- Use Defaults (Except User Data )
+l) User Data 
+
+#!/bin/bash
+/bin/apt-get update
+/bin/apt-get install nginx -y
+/bin/systemctl start nginx
+/bin/systemctl enable nginx
+cd /var/www/html
+sudo rm index.nginx-debian.html
+sudo touch index.html
+/bin/echo "<h1> Hello Guys, Welcome to JLC !!! </h1>" >> index.html
+/bin/echo "<h1> I am from $(hostname -f)  </h1>" >> index.html
+/bin/echo "<h1> I am from $(hostname -f)  </h1>" >> index.html
+
+iv) Click on Create Launch Template button
+v) Click on View Launch Templates button
+
+*3) Launch Instance from Launch Template  as follows
+-----------------------------------------------------------------------
+i) Select Launch Templates under Instances ( Left Menu)
+ii) Select the Launch Template ( myjlc-launch-temp )
+iii) Select ACtions => Launch Instance from Template option
+iv) Provide the following details
+a) Subnet				- us-east-1a
+b) Number of Instances 		- 1
+( Keep all remaining same as Launch Template)
+
+v) Click on Launch Instance button
+vi) Check EC2 Instance Launched.
+vii) Try to Access the App using public IP as follows.
+http://44.199.215.142
+
+
+4) Create the Target Group as follows
+-----------------------------------------------------
+i) Click  Target Groups under  Load Balancing Option ( Left Menu)
+ii) Click on Create Target Group button
+iii) Privide the Following Details
+a) Choose Target Type :	Instances
+b) Target Group Name :	jlc-target-group
+c) Protocal 	    :	http 
+d) Port 	    	    :	80
+e) VPC		    : 	default VPC
+f) Protocal Version	    :  	HTTP1
+g) Health Checks
+   Health Check Protocal	: 	http
+   Health Check Path		: 	/
+
+h) Health Checks Settings
+  Port 			: 	Traffic Port
+  Healthy Threshold		:	3	
+  UnHealthy Threshold	:	3	
+  Timeout			:   	3
+   Interval			:	5
+   Success Code		:	200
+
+iv) Click on Next Button
+v) Select the Required Instances from the List Displayed 
+vi) Click on Include as Pending Now
+vii) Click on Create Target Group.
+
+5) Create Application Load Balancer as follows
+--------------------------------------------------------------------
+i) Click on Load Balancers under Load Balancing Option ( Left Menu)
+ii) Click on Create Load Balancer Button
+iii) Seelct Application Load Balancer and Click On Create Button
+iv) Provide the following details
+Basic Information:
+-----------------------
+a) Load Balancer Name 	:	jlc-app-LB  
+b) Scheme		: 	Internet-facing
+c) IP Address Type		: 	IPv4
+
+Network Mappings
+------------------------
+d)  VPC			: Default VPC
+e) Mappings 		: Select 3 AZs ( us-east-1a , us-east-1b , us-east-1c )
+f) Security Groups		: virginia-web-sg
+
+Listerners and Routing
+-------------------------------
+Listener 
+g)  Protocal		: HTTP 
+h) Port			: 80
+i) Default Action		: Select target Group (jlc-target-group)
+
+v) Click on Create Load Balancer button
+vi) Click on View Load Balancer button
+vii) Take Load Balancer DNS and CHeck the Application.
+
+jlc-app-LB-1549595427.us-east-1.elb.amazonaws.com
+
+6) Creating Auto Scaling Group as follows
+----------------------------------------------------------
+i) Select Auto Scaling Groups under Auto Scaling (Left Menu)
+ii) Click on Create Auto Scaling group Buttom
+iii) Provide the Following  details.
+
+Step 1: Choose launch template or configuration
+-----------------------------------------------------------------
+a) Auto Scaling group name  : myjlc-ASG
+b) Launch template 	                 : myjlc-launch-temp
+c) Click on Next Button
+
+Step 2: Choose instance launch options
+-------------------------------------------------------
+d) VPC		: 	default VPC
+e) Subnets	: 	us-east-1a , us-east-1b , us-east-1c 
+f) Instance type requirements	: Use Defaults
+g) Click on Next Button
+
+Step 3: Configure advanced options
+--------------------------------------------------
+h) Load balancing 			:	
+			Attach to an existing load balancer
+i) Attach to an existing load balancer	: 
+			Choose from your load balancer target groups
+j) Existing load balancer target groups	:	
+			jlc-target-group
+k)Health checks 			:	Use Defaults 
+l) Remaining Fields			:	Use Defaults 
+m) Click on Next Button
+
+Step 4: Configure group size and scaling policies
+---------------------------------------------------------------------
+n) Desired capacity		:	3
+o) Minimum capacity	:	2
+p)Maximum capacity	:	10
+q) Scaling policies 		:	None
+r) Instance scale-in protection	:	Use Default Option
+s) Click on Next Button
+
+Step 5: Add notifications
+--------------------------------------
+Nothing to Do here Now.
+t) Click on Next Button
+
+Step 6: Add tags
+------------------------
+If You want, You can add Tags here
+Name	- 	MyASG
+
+u) Click on Next Button
+
+Step 7: Review
+---------------------
+Review All the Provided in Previous 6 Steps.
+v) Click on Create Auto Scaling Group Button
+
+7) Now Update the ASG as follows
+---------------------------------------------
+a) Select the ASG ( myjlc-ASG )
+b) Click On Edit
+c) Provide 
+	Desired Capacity : 1
+	Min Capacity          :  1
+d) Click on Update
+
+

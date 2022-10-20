@@ -1,0 +1,222 @@
+========================
+Module 5 : EBS and EFS - Part 4
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+=======================
+3) Encrypting EBS Volumes
+=======================
+=> EBS Encrypts your Data with Data Key using Industry-Standard AES-256 Algorithm
+=> You aren't required to build, maintain, and secure your own key management infrastructure
+=> EBS encryption uses AWS KMS keys when Encrpting the Volumes and Snapshots.
+=> You can attach both encrypted and unencrypted volumes to an instance simultaneously.
+
+What happens When you Encrypt the EBS Volumes:
+-------------------------------------------------------------------------
+=> All Data at Rest will be Encrypted inside the Volume.
+=> All Data in the Flight between the Instance and Volume will be Encrypted.
+=> All the Snapshots created from Encrypted Volumes will be Encrypted automatically.
+=> All the Volumes Created from Encrypted Snapshots  will be Encrypted automatically.
+
+=>Encryption and Decryption are handled transperently. You noo need to do anything.
+=>Encryption has minimal Impact on the Latency.
+=> You can encrypt the Root device Volumes upon Creation.
+
+
+Demo 1:
+
+How to Encrypt the Existing Volumes
+=============================
+1) Install Required Software
+---------------------------------------
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+sudo -i
+systemctl enable nginx
+systemctl status nginx
+
+cd /var/www/html
+mv index.nginx-debian.html index.html
+echo "<h1> Hello Guys, Welcome to JLC !!! </h1>" > index.html
+
+http://3.239.62.154
+
+
+2) Create the Snapshot of Unencrypted root device volume
+-----------------------------------------------------------------------------------
+Select Volume => Actions => Create SnapShot.
+
+3) Create the Copy of the Snapshot and Select the Encryption option
+---------------------------------------------------------------------------
+Select UnEncrypted SnapShot => Actions => Copy  Snapshot
+
+4) Create the AMI from Encrypted Snapshot 
+------------------------------------------------------------------
+Select Encrypted SnapShot => Actions =>Create Image from Snapshot
+
+5) Use the AMI to Launch new Encrypted Instance.
+------------------------------------------------------------------
+54.205.119.34
+
+Demo 2:
+
+How to Encrypt the New Volumes
+=============================
+Create a New Volume  by Selecting the Encryption option
+
+====================
+4) EBS Vs Instance Store
+====================
+a) What is AMI
+b) 5 Things about AMI
+c) Instance Store Volumes
+d) EBS Volumes
+e) Demo
+
+a) What is AMI
+---------------------
+=> AMI  = Amazon Machine Image 
+=> AMI Provides the Information Required to Launch the EC2 Instance.
+=> You must specify the AMI when you Launch the EC2 Instance.
+=> You can launch multiple instances from a single AMI when you require multiple instances with the same configuration
+
+b) 5 Things about AMI
+-------------------------------
+1) Region
+2) Operating System
+3) Architecture(32 bit or 64bit)
+4) Launch Permissions
+5) Root Device Volume for Storage
+
+*** All the AMI's are supported by either EBS or Instance Store***
+
+There are two types of Volumes supported by EC2 Instance
+=> EBS Volumes
+=> Instance Store Volumes
+
+c) Instance Store Volumes
+-------------------------------
+=> Instance Store provides temporary block-level storage for your instance. 
+=> This storage is located on disks that are physically attached to the host computer. 
+=> Instance Store-backed EC2 Instances can not be stopped.
+=> If the Underlying Host fails, You will lose your data in Instance Store.
+=> If You delete/terminate the Instance, You will lose your data in Instance Store.
+=> You can reboot the Instance without losing the Data.
+
+=> Instance store is ideal for temporary storage of information that changes frequently, such as buffers, caches, scratch data, and other temporary content, 
+
+d) EBS Volumes
+-----------------------
+=> EBS-backed Volumes can be stopped.
+=> You will not lose the data on this Instance If you stop the Instance.
+=> You can reboot the Instance and No Lose of Data.
+=> By Default, Root Device Volume will be deleted on Termination.
+=> However , You can tell to AWS to keep the Root device Volume.
+
+e) Demo
+------------
+Community AMI
+
+OS - Ubuntu
+Architecture - 64-bit (x86)
+Storage Type: Instance Store
+
+
+===============
+5) EC2 Hibernation
+===============
+a) EBS Behavior
+b) What is EC2 Hibernation?
+
+a) EBS Behavior:
+-----------------------
+We have learned so far 
+i) We can stop and Terninate EBS-backed EC2 Instances
+ii) When you stop the Instance, Data is Kept on the Disk(EBS) and will remain on the Disk until EC2 Instance is Started.
+iii) When we Terminate the Instance, Then by default, Root Device Volume will be deleted.
+iv) However , You can tell to AWS to keep the Root device Volume.
+
+When You Start the EC2 INstance, Following Things will happen Internally.
+i) Operating System will Boot
+ii) BootStrap Scripts will run(First Time)
+iii)Your Applications will Start.
+
+When You Stop the EC2 INstance, Following Things will happen Internally.
+i) Everything down
+
+b) What is EC2 Hibernation?
+---------------------------------------
+=>When you hibernate EC2 Instance, You are telling to O.S that Perform Hibernation(Suspend-to-Disk).
+
+=> Hibernation saves the contents from the instance memory (RAM) to EBS root volume. 
+=> EC2 persists the instance's EBS root volume and any attached EBS data volumes.
+
+ When you start your instance:
+
+=> EBS root volume is restored to its previous state
+=> RAM contents are reloaded
+=> Processes that were previously running on the instance are resumed
+=> Previously attached data volumes are reattached 
+=> Finally Instance retains its instance ID
+
+IMP Points:
+----------------
+=> With EC2 Hibernation, Instance boots faster.
+=> O.S does not need to re-boot because  IN-Memory State(RAM) is Preserved.
+=> Hibernation is Userfull for
+	*** Long-Running Processes
+	*** Services that take time to Initialize
+=> To use hibernation, the root volume must be encrypted
+
+=> Instance RAM size Must be less than 150 GB.
+=> Root volume type Must be an EBS volume, not an instance store volume.
+=> EBS root volume size  Must be large enough to store the RAM contents and accommodate your expected usage, for example, OS or applications. If you enable hibernation, space is allocated on the root volume at launch to store the RAM.
+
+100GB               => EBS Size -- 150GB (50GB for you + 100GB for RAM Content)
+
+
+
+To see the available instance types that support hibernation in a specific Region
+---------------------------------------------------------------------------------------------------------------
+
+aws ec2 describe-instance-types --filters Name=hibernation-supported,Values=true --query "InstanceTypes[*].[InstanceType]" --output text | sort
+
+Demo:
+---------
+
+

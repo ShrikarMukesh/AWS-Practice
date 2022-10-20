@@ -1,0 +1,105 @@
+=======================
+Module 2: AWS IAM  - Part 1
+=======================
+1) Understanding IAM
+2) IAM Policies
+
+=====================
+1) Understanding IAM
+=====================
+IAM - Identity and Access Management
+
+=> IAM allows to Manage Users and their Permissions.
+=> IAM is a Global Service
+=> IAM does not require Region Selection
+
+=> Using IAM , You can do the following
+  1) Creating Users
+  2) Creating Groups
+  3) Adding Users to Groups
+  4) Granting Permissions
+  5) Creating Roles
+
+=> IAM starts with Root Account.
+=> Root Account is an Account created when you Sign-Up the AWS first time.
+=> Root Account has full Administative Access to AWS Resources.
+=> So You need to Secure the Root Account.
+
+How to Secure Root Account?
+---------------------------------------
+A) Dont Use Root Account to Login for Day to Day activities.
+=> Create Admin User
+=> Create Admin Group 
+=> Add Admin User to Admin Group
+=> Use this Admin user for doing anything.
+
+B) Dont Use Access Keys of Root Account.
+
+C) Provide the Strict Password Policy  for Root Account.
+=> Click on Acount Settings
+=> Click Change Password Policy
+=> Select the required Rules
+=> Click on Save Changes Button.
+
+D) Enable Multi-Factor Authentication (MFA) for Root Account.
+-------------------------------------------------------------------------
+=> Click on Security Credentials ( Right Top Menu)
+=> You will see the following
+a) Password
+b) Multi-factor authentication (MFA)
+c) Access keys (access key ID and secret access key)
+
+=> Select Multi-factor authentication (MFA)
+=> Click on Activate MFA
+=> Select Virtual MFA device and Click on Continue 
+=> Install a compatible app on your mobile device or computer
+
+***Google Authenticator 
+***MicroSoft Authenticator 
+***Authy Authenticator  
+
+=> 
+============
+2) IAM Policies
+============
+=> You can assign the Permissions  using Policy Documents
+=> Policy Documents are written in JSON ( Java Script Object Notation)
+
+=> Check the List of Policies provided by AWS
+
+Ex 1: AdminAccess
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*"
+        }
+    ]
+}
+
+Ex 2: S3FullAccess
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*",
+                "s3-object-lambda:*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+
+=> Creating Custom Policies
+
+
+
+
+
+
+

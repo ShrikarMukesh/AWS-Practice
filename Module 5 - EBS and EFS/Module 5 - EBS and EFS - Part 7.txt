@@ -1,0 +1,381 @@
+========================
+Module 5 : EBS and EFS - Part 7
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+================
+9) Exam Tips
+================
+
+1) EBS Volumes Fundamentals
+=======================
+=> EBS  - Elastic Block Storage
+=> EBS Volume - Virtual Hard Disk in the Cloud.
+=> EBS Volumes are Storage Volumes you can attach to Your EC2 Instances
+=> Use these EBS Volumes the same way you use any system Hard Disk.
+	* Run Operating System
+	* Run Database
+	* Create File System
+	* Store Data
+	* Install Applications
+	
+
+=> EBS Volumes will be in the Same AZ where EC2 Instance is present.
+=>You can Resize the EBS Volumes on the Fly without ReStrating.
+=> You can change the Volume Types on the Fly without ReStrating.
+
+EBS Volume Types
+==============
+1) General Purpose SSD (gp2)
+2) General Purpose SSD (gp3)
+
+3) Provisioned IOPS SSD (io1)
+4) Provisioned IOPS SSD (io2)
+**5) Provisioned IOPS SSD (io2 Block Express)
+
+6) Throughput Optimized HDD (st1)
+7) Cold HDD (sc1)
+
+IOPS Vs Throughput
+================
+IOPS
+====
+=> Measures the Number of Read and Write Operations per Second.
+=> Important Metric for Low-Latency Applications and Transactional Workloads.
+=> Ability to perform Read and Writes Very Quickly.
+=> Choose Provisoned SSD (gp1,gp2,io1, io2, io2 Block Express)
+
+Throughput
+==========
+=> Measures the Number of Bits Read or Written per Second (MB/S).
+=> Important Metric for Large Data Sets, Complex Queries.
+=> Ability to deal with Large Data Sets.
+=> Choose Throughput Optimized HDD(st1) , For Low cost use Cold HDD(sc1)
+
+
+2) Volumes and SnapShots
+=====================
+=> Volums exist on EBS where as Snapshots exists on S3.
+=> Snapshots are point-in-time copies of Volumes and Incremental In nature.
+=> First Snapshot will take some time to Create as there is not Previous point-in-time copy.
+=> You can Share Snapshots between AWS Regions as well as AWS Accounts but First You need to Copy the Snapshot to target Region.
+
+3) Encrypting EBS Volumes
+=====================
+=> EBS Encrypts your Data with Data Key using Industry-Standard AES-256 Algorithm
+=> All Data at Rest will be Encrypted inside the Volume.
+=> All Data in the Flight between the Instance and Volume will be Encrypted.
+=> All the Snapshots created from Encrypted Volumes will be Encrypted automatically.
+=> All the Volumes Created from Encrypted Snapshots  will be Encrypted automatically.
+=>Encryption and Decryption are handled transperently. You noo need to do anything.
+
+How to Encrypt the Existing Volumes
+------------------------------------------------
+a) Create the Snapshot of Unencrypted root device volume
+b) Create the Copy of the Snapshot and Select the Encryption option
+c) Create the AMI from Encrypted Snapshot 
+d) Use the AMI to Launch new Encrypted Instance.
+
+4) Instance Store Volumes
+===================
+=> Instance Store Volumes are called as Ephemeral/Temporary Storage.
+=> This storage is located on disks that are physically attached to the host computer. 
+
+=> Instance Store-backed EC2 Instances can not be stopped.
+       If the Underlying Host fails, You will lose your data in Instance Store.
+
+=> EBS-backed EC2 Instances can be stopped.
+      You will not lose the data on this Instance If you stop the Instance.
+
+=> You can reboot both EBS-backed and Instance Store-Backed Instance and You will not lose your Data.
+
+=> By Default, Both the Volumes will be deleted on Termination.
+      However , You can tell to AWS to keep the EBS Root device Volume.
+
+
+5) EC2 Hibernation
+================
+=> EC2 Hibernation saves the contents from the instance memory (RAM) to EBS root volume. 
+=> Much faster to Bootup because do not need to re-load the O.S,Applications etc.
+=> Instance RAM size Must be less than 150 GB.
+=> Supported instance families
+	Xen: C3, C4, I3, M3, M4, R3, R4, T2
+	Nitro: C5, C5d, M5, M5a, M5ad, M5d, R5, R5a, R5ad, R5d, T3, T3a
+
+=> Instances can not be Hibernated more than 60 Days.
+=> Available for Windows, Amazon Linix and Ubuntu.
+=> Available for On-Demand Instances and Reserved Instances.
+
+
+6) EFS Fundamentals
+=================
+=> EFS is a Shared Storage that can be mounted on many EC2 Instances
+=> Supports Network File System V4(NFSv4) protocal.
+=> Only Pay for the Storage you use ( No Pre-Provisioning Required).
+=> Can Scale Upto Peta Bytes
+
+=> Can Support Thousands of Concurrent NFS Connections
+=> Data is Stored accross multiple AZ's within given Region.
+=> Read-After-Write Consistency.
+=> EFS supports Encryption in transit and Encryption at rest
+
+=> Supports the following Storage Tiers
+a) EFS Standard
+b) EFS Standard-IA
+c) EFS One Zone 
+d) EFS One Zone-IA
+
+=> Supports EFS Lifecycle Management:
+
+
+
+7) FSx Fundamentals
+=================
+a) Amazon FSx for Windows:
+-----------------------------------------
+=> When you need Centralized Storage for Windows based Applications such as Share Point, MicroSoft SQL Server, IIS Web Server or Any other native Microsoft Applications.
+
+b) Amazon FSx for Lustre: 
+-----------------------------------------
+=> When you need High-Speed, High Capacity Storage.
+=> Suitable for Applications that do High Performance Computing(HPC), BigData, A.I and ML
+=> Remember that FSx for Lustre can Store Data Directly on S3 and Can Access Data from S3.
+
+8) AWS Backup
+============
+a) Consolidation : 
+-------------------------
+Use AWS Backup to backup the data for AWS services such as EC2, EBS, EFS, RDS, DynamoDb, S3 etc in the cloud, and on premises. 
+
+b) Oraganizations: 
+--------------------------
+You can use AWS Organizations with AWS Backup to backup  your Multiple AWS Services in  Multiple AWS Accounts in your Organization.
+
+c)Benefits:
+---------------
+=> AWS Backup gives Centralized Control access letting you to Automate the Backups and define Lifecycle Policies for your Data.
+=> You get better Compliance.
+=> You can enforce the backup Policies.
+
+
+==================
+Exam #5 - EBS and EFS
+==================
+
+Q1) True or False? Amazon FSx for Lustre can't store data on Amazon S3.
+
+A) True
+B) False
+
+Ans: B
+
+Q2) You've been tasked with creating a file system for a Linux workload that should support concurrent access to the same file or directory from thousands of compute instances and handle massive datasets, up to hundreds of gigabytes per second. What AWS service would you use?
+
+A) Amazon FSx
+B) Amazon EBS Provisioned IOPS
+C) Amazon FSx for Lustre
+D) Amazon EFS High Performance
+
+Ans:  C
+
+Q3) You just took a snapshot of an EBS volume. Where is it stored?
+
+A) EFS
+B) S3
+C) Data Backup Service
+D) EC2
+
+Ans: B
+
+Q4) How do you add more storage to EFS?
+
+A) Create a new, larger EBS volume and designate it as shared EFS storage in the configuration page.
+B) Execute the 'expand_efs_size' API call and specify your new storage size.
+C) No action is needed, as AWS will automatically size EFS based on your usage.
+D) Create a new, larger EFS volume to swap with your smaller one.
+
+Ans: C
+
+Q5) True or False? Amazon Machine Images are Region specific. To use one in another Region, it needs to be explicitly copied there.
+
+A) True
+B) False
+
+Ans: A
+
+Q6) What is the purpose of an Amazon Machine Image (AMI)?
+
+A) It's a type of EC2 instance that you'll select during creation of an instance.
+B) It's a type of database structure that can be deployed to RDS.
+C) It's a template to create a new EC2 instance from.
+D) It provides you with an always-up-to-date OS for your EC2 instance.
+
+Ans: C
+
+Q7) You're trying to mount an EBS volume in Availability Zone (AZ) A to an EC2 instance in AZ B. Why isn't it working?
+
+A) You need to migrate your data to EFS to resolve your block-level storage issues.
+B) The EBS service is having a problem and your data can't be read.
+C) EC2 instances must be in the same AZ as the EBS volumes.
+D) You didn't enable cross-AZ for your EBS volume.
+
+Ans: C
+
+Q8) True or False? Only certain types of EC2 instances support hibernation.
+
+A) True
+B) False
+
+Ans: A
+
+Q9) True or False? You can create an unencrypted EBS volume from an encrypted snapshot by unselecting the "encryption" check box when restoring it.
+
+A) True
+B) False
+
+Ans: B 
+
+Q10) True or False? EBS volumes are encrypted by default.
+
+A) True
+B) False
+
+Ans: B
+
+Q11) What is the best way to ensure the security of both data-at-rest and data-in-transit between an instance and its attached EBS storage?
+
+A) Copy your EBS volumes to the AWS Secure Region.
+B) Revoke IAM credentials that would allow users to read the data using the EBS service.
+C) Encrypt the EBS volume.
+D) Do nothing. EBS volumes are protected by default.
+
+Ans: C
+
+Q12)  Why would you consider hibernating an EC2 instance over stopping and starting it?
+
+A) You have an application that takes a long time to load. Hibernating the instance prevents you from having to reload it.
+
+B) You're trying to save money. Hibernating an instance is more cost efficient than stopping an instance.
+
+C) AWS Support recommends hibernating all instances to decrease memory utilization upon reboot.
+
+D) Your OS is Windows-based and needs to update. This can only be done by hibernating the instance.
+
+Ans: A
+
+Q13) What type of storage does EFS offer?
+
+A) File
+B) Object
+C) System
+D) Block
+
+Ans: A
+
+Q14) You have just terminated an EC2 instance in us-east-1a, and its attached EBS volume is now available. Your teammate tries to attach it to an EC2 instance in us-east-1b but he can't. What is a possible cause for this?
+
+A) Some IAM Permissions are missing
+B) EBS Volumes are specific to AWS Region
+C) EBS Volumes are specific to AWS AZ. 
+
+Ans: C
+
+Q15)  You have launched an EC2 instance with two EBS volumes, Root volume type and the other EBS volume type to store the data. A month later you are planning to terminate the EC2 instance. What's the default behavior that will happen to each EBS volume?
+
+A) Both Root Volume and Other Volume will be deleted.
+B) Root Volume will be deleted and Other Volume will not be deleted.
+C) Root Volume will not be deleted and Other Volume will be deleted.
+B) Both Root Volume and Other Volume will not be deleted.
+
+Ans: B
+
+Q16) You can use an AMI in ap-south-1(Mumbai) to launch an EC2 instance in any AWS Region.
+
+A) True
+B) False
+
+Ans: B
+
+Q17) Which of the following EBS volume types can be used as boot volumes when you create EC2 instances?
+
+A) gp1, gp2, sc1,st1
+B) gp1, gp2, io1,io2
+C) io1,io2, sc1,st1
+
+Ans:  B
+
+Q18) What is EBS Multi-Attach?
+
+A) Attach the Same EBS Volume to multiple EC2 Instances in multiple AZ's
+B) Attach the multiple EBS Volumes to Same EC2 Instances in Same AZ.
+C) Attach the Same EBS Volume to multiple EC2 Instances in Same AZ
+D) Attach the multiple EBS Volume to Same EC2 Instances in multiple AZ's
+
+Ans: C
+
+Q19) You would like to Encrypt an Un-Encrypted EBS volume attached to your EC2 instance. What should you do?
+
+A) Create EBS Snapshot of Volume , Copy the Snapshot with Encryption Option , Create the AMI and Launch Inew Instance from AMI.
+
+B) Seelct the EBS Volume and Select the Encryption Option with KMS 
+
+C) Create New Encrypted EBS Volume and Copy the Data from Un-Encrypted EBS volume to New Encrypted EBS volume
+
+D) Submit the Request to AWS Support Team
+
+Ans: A
+
+Q20) You have a fleet of EC2 instances distributes across AZs that process a large data set. What do you recommend to make the same data to be accessible as an NFS drive to all of your EC2 instances?
+
+A) EBS
+B) EFS
+C) Instance Store
+
+Ans: B
+
+Q21) You would like to have a high-performance local cache for your application hosted on an EC2 instance. You don't mind losing the cache upon the termination of your EC2 instance. Which storage mechanism do you recommend ?
+
+A) EBS
+B) EFS
+C) Instance Store
+
+Ans:  C
+
+
+Morning only on Next Sat and Sun - 8.00A.M  to 10.00A.M. (16-July and 17-July)
+
+
+

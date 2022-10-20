@@ -1,0 +1,194 @@
+==========================
+Module 7 - Amazon  VPC - Part 10
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring Site-to-Site VPN Connection
+14) Exploring VPN CloudHub
+
+Part 9:
+=====
+15) Exploring AWS DirectConnect
+16) Exploring Transit Gateway
+
+Part 10:
+=======
+17) Understanding IPv6 for VPC
+18) Egress-Only Internet Gateway
+19) VPC Flow Logs
+
+Part 11:
+=======
+20) Exam Tips
+Exam #7 - VPC
+
+
+==========================
+17) Understanding IPv6 for VPC
+==========================
+=> IPv4 is designed to provide 4.3 Billion IP Addresses. ( This number will be exhausted soon)
+=> IPv6 is successor of IPv4.
+=> IPv6 is designed to provide 3.4 x 10 ^ 38 Unique IP Addresses. 
+=> Every IPv6 Address is Public and Internet-Routable
+=> No Private IP Range in  IPv6 Addresses
+
+Note : In IPv4 , We have Private IPs and Public IPs
+
+
+Format:
+----------
+X:X:X:X:X:X:X:X
+
+=> X is Hexa-Decimal Digits ranging from 0000 to FFFF
+=> IPv6 address consists of 8 groups/Segments (separated with colons) 
+=> In each colons, there are 4 digits. 
+=> Each digit can be creatd with 4 bits. 
+=> So, with these numbers, the address become 8 x 4 x 4 bit = 128 bits.
+
+IPv6 Ex:
+-----
+1234:1234:1234:1234:1234:1234:1234:1234
+
+Groups - 8 
+Digits    - 8 * 4 => 32
+Bits        - 4 * 32 => 128 
+
+1234:1234:1234:1234:1234:1234:0000:0000/120    => 2 ^ 128-120
+1234:1234:1234:1234:1234:1234:0000:0000/110    => 2 ^ 128-110
+
+IPv4 Ex:
+-----
+X.X.X.X
+
+Groups - 4
+Bits        - 4 * 8 => 32
+
+
+CIDR Block = 10.0.0.0/30  => 2 ^ 32-30
+CIDR Block = 10.0.0.0/29  => 2 ^ 32-29
+
+Ex:
+
+2345:0425:2CA1:0000:0000:0567:5673:23b5 
+
+2345:425:2CA1:0000:0000:567:5673:23b5
+
+2345:0425:2CA1:0:0:0567:5673:23b5
+
+Double Colon For Continuous Zeros
+----------------------------------------------
+   ::		=> All 8 Groups are Zeros
+2345:0425::	=> Last 6 Groups are Zeros
+::2345:0425	=> First 6 Groups are Zeros
+2345:0425::5673:23b5 => Middle 4 Groups are Zeros
+
+
+
+IPv6 and CIDR
+----------------------
+2345:425:2CA1:0000:0000:567:5673:23b5/64   => 2 ^ 128-64 => 2 ^ 64
+
+IPv4 for All IPs =>  0.0.0.0/0
+IPv6 for All IPs =>    ::/0
+
+IPv6 in VPC
+----------------
+=> IPv4 can not be disabled for your VPC and Subnets
+=> You can enable IPv6 to Operate in dual-stack mode.
+=> Your EC2 Instance will get the following dual-stack mode
+	Private IPv4 
+	Public   IPv4
+	Public   IPv6
+
+=> EC2 Instances Communicate using either IPv4 or IPv6 to the Internet through Internet Gateway.
+
+2600:1f16:8f1:4100::/56	
+IPv6 for our Hai Instance : 2600:1f16:8f1:4100:4f9:ebfe:e8e:da2a
+
+ssh ubuntu@18.117.76.17  -i hai-key-pair.pem
+ssh ubuntu@2600:1f16:8f1:4100:4f9:ebfe:e8e:da2a -i hai-key-pair.pem
+
+https://ipv6-test.com/
+
+==========================
+18) Egress-Only Internet Gateway
+==========================
+=> Egress-Only Internet Gateway is used for IPv6 only.
+=> This is Similar to NAT Gateway
+	NAT Gateway 		- IPv4
+	Egress-Only Internet Gateway - IPv6
+
+=> Allow EC2 Instances in the Private Subnet to Access the Internet.
+=> You must update the Route Tables
+
+	*** Diagram ***
+
+Route Table for Public Subnet
+--------------------------------------
+Destination		Target
+10.0.0.0/16		local
+2345:0425::5673:23b5	local
+0.0.0.0/0			igw-id
+::/0			igw-id
+
+Route Table for Private Subnet
+--------------------------------------
+Destination		Target
+10.0.0.0/16		local
+2345:0425::5673:23b5	local
+0.0.0.0/0			nat-gw-id
+::/0			egress-igw-id
+
+===============
+19) VPC Flow Logs
+===============
+=> Flow Logs are used to Capture the Information about IP Traffic going into your interfaces.
+=> 3 Types of Flow Logs
+	a) VPC Flow Logs
+	b) Subnet Flow Logs
+	c) ENI Flow Logs
+=> Helps to Monitor and troubleshoot connectivity issues
+
+=> It also capture the Information from AWS Managed Services like ELB, RDS, ElastiCache , NAT Gateway, Transit Gateway etc
+
+=> Flow Logs data can go to S3 or Cloud Watch Logs
+=> For Analysis,
+	S3 + Athena 
+	 Cloud Watch Logs Insights
+
+2 123456789010 eni-1235b8ca123456789 172.31.16.139 172.31.16.21 20641 22 6 20 4249 1418530010 1418530070 ACCEPT OK
+
+

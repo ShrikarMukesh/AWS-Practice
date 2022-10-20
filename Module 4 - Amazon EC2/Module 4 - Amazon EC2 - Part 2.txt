@@ -1,0 +1,150 @@
+========================
+Module 4 : Amazon EC2 - Part 2
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Placement Groups
+14) EC2 Tenancy Models
+
+Part 6:
+======
+15) Exam Tips
+Exam #4 - Amazon EC2
+
+
+===============
+4) Security Groups
+===============
+=> A Security Group acts as a virtual firewall for your EC2 instances to control incoming and outgoing traffic. 
+
+=> Inbound rules control the incoming traffic to your instance
+=> Outbound rules control the outgoing traffic from your instance. 
+
+=> One EC2 Instance can have one or more Security Groups
+=> One Security Group can be attached to Multiple EC2 Instances.
+
+=> If you don't specify a Security Group, Amazon EC2 uses the default Security Group. 
+=> Security Groups are limit to Region or VPC
+
+=> You can add rules to each security group that allow traffic to or from its associated instances. 
+=> You can modify the rules for a security group at any time.
+=>  New and modified rules are automatically applied to all instances that are associated with the security group. 
+
+=> Security Group Contains Rules + Security Group.
+
+Important Ports
+============
+22 	SSH	Login to Linux Instances
+21	FTP	Upload Files
+22	SFTP	Upload Files with SSH
+80	HTTP	Access UnSecured Web Applications
+443	HTTPS	Access Secured Web Applications
+3389	RDP	Login to Windows Instances
+
+=====================
+5) Connect to EC2 Instances
+=====================
+
+Connect to Linux Based EC2 Instances
+---------------------------------------------
+=> Use SSH to Connect to  Linux Based EC2 Instances
+=> From Mac, Linux ,Windows>=10  	---> Use SSH
+=> From Windows<10 		---> Use Putty
+=> From Any OS 			---> Use EC2 Connect
+
+1) Makesure  that You have the key-pair ( myapp-key-pair.pem )
+2) Makesure that You have Security Group Configured Correctly.
+
+a) Using SSH to Connect from Your Linux or Mac or  Windows>=10
+===================================================
+1) Goto Command Prompt and Be in the folder where .pem file is there.
+
+F:\AWS\mykeypairs> 
+
+2) Run the follwing command
+F:\AWS\mykeypairs> ssh -i myapp-key-pair.pem ubuntu@44.204.77.46
+
+3) If problem related to Permissions then Change the Permissions
+	chmod 0400 myapp-key-pair.pem ( linux or Mac)
+	Windows Style 
+
+4) Now Run the follwing command
+	ssh -i myapp-key-pair.pem ubuntu@44.204.77.46
+
+b) Using Putty to Connect from Your Windows<10
+================================
+1) Download and INstall Putty
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+You will see Putty and Putty Gen
+
+2) Convert pem file to .ppk file using Putty Gen tool
+
+3) Open Putty 
+
+
+c) Using EC2 Instance Connect to Connect from Any OS
+==================================
+
+
+d) Set Password to Cloud Servers
+=========================
+*** All the Cloud Servers are Password less by deafult.***
+*** Password Authetication is disabled by deafult.***
+
+Set Password
+Enable Password Authentication
+
+Setup Password for VM Instances
+------------------------------------------------
+1)Instance is Running
+2)Connect with SSH with any method learnrd above
+
+3)Goto Root User
+
+sudo bash/ sudo -i / sudo su
+
+4) Set the password for user - ubuntu
+passwd ubuntu
+
+5)Edit this file...  /etc/ssh/sshd_config
+
+cat /etc/ssh/sshd_config
+
+vim /etc/ssh/sshd_config
+
+PermitRootLogin yes
+
+PasswordAuthentication yes
+
+6)re-start the SSHD service
+
+service ssh restart
+
+ssh  ubuntu@44.204.77.46
+======================
+ssh ubuntu@44.204.77.46
+=====================

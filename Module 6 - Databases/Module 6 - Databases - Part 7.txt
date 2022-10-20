@@ -1,0 +1,221 @@
+========================
+Module 6 : Databases - Part 7
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+==================
+4) DynamoDB
+==================
+Topics:
+-----------
+a) DynamoDB Fundamentals
+b) DynamoDB Demos
+c) DynamoDB Streams
+d) DynamoDB Global Tables
+e) DynamoDB Accelerator (DAX)
+
+a) DynamoDB Fundamentals
+======================
+=> DynamoDB is a Distributed No-SQL Database from Amazon.
+
+=> DynamoDB is a Fast and Flexible No-SQL Database Service for all types of Applications that need 
+Consistent , Single Digit milli-second Lateny at any Scale.
+
+=> DynamoDB is a fully-managed Database from AWS and supports 
+	*** Document Model ( JSON Docs)
+	*** Key-value Data Model
+
+=> Its Flexible Data Model and Reliable Performance make it a great fit for
+	*** Mobile Applications
+	*** Web Applications
+	*** Gaming Applications
+	*** IOT Applications
+	etc
+ 
+==========
+Key Points:
+==========
+1) Fully Managed Service
+2) Highly-Scalable
+3) High Availability and Data Durability
+4) On-Demand Backups
+5) Point-In-Time Recovery
+6) Encryption at Rest
+7) Supports Transactions 
+8) Read Consistency
+
+1) Fully Managed Service
+------------------------------------
+=> You don't have to worry about hardware provisioning, setup and configuration, replication, software patching, or cluster scaling. 
+
+=> As a Fully Managed Service , DynamoDB offers all these to you.
+
+2) Highly-Scalable
+-------------------------
+=> With DynamoDB, You can create database tables that can store and retrieve any amount of data and serve any level of request traffic. 
+
+=> DynamoDB automatically spreads the data and traffic for your tables over a sufficient number of servers to handle your throughput and storage requirements, 
+
+=> You can scale up or scale down your tables' throughput capacity without downtime or performance degradation. 
+
+3) High Availability and Data Durability
+-------------------------------------------------------
+=> All of your data is stored on solid-state disks (SSDs) and is automatically replicated across multiple Availability Zones in an AWS Region, providing built-in high availability and data durability. 
+
+=> You can use Global Tables to keep DynamoDB tables in sync across AWS Regions
+
+4) On-Demand Backups
+---------------------------------
+=> Full Backups at any time  for long-term Retention.
+=> Zero Impact on Table Performance or Table Availability when you take the backup.
+
+5) Point-In-Time Recovery
+------------------------------------
+=> Protects against Accidental Writes or Deletes
+=> Restore to any point in the last 35 Days
+=> Incremental Backups
+=> Not Enabled By Default.
+
+6) Encryption at Rest
+-----------------------------
+=> DynamoDB offers Encryption at Rest
+
+When creating a new table, you can choose one of the following AWS KMS keys to encrypt your table:
+
+a) AWS owned key – *********
+=> Default encryption type. The key is owned by DynamoDB (No additional charge).
+
+b) AWS managed key – 
+=> The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
+
+c) Customer managed key – 
+=> The key is stored in your account and is created, owned, and managed by you. You have full control over the KMS key (AWS KMS charges apply).
+
+
+7) Supports Transactions 
+-----------------------------------
+=> With DynamoDB transactions, you can group multiple DB Operations together and submit them as a single all-or-nothing Criteria.
+
+=> When All the Operations are successful , Then Transaction is Successful and need to commit it.
+=> When Any One Operation is failed , Then Transaction is failed and need to Rollback it.
+
+Ex:
+FundsTransfer (Yaswant to mani)
+a) Withdraw from Yashwant 
+b) Deposit to Mani
+
+=> DynamoDB Supports ACID Properties.
+A - Atomacity
+C - Consistemcy
+I   - Isolation
+D - Durability
+
+8) Read Consistency****
+----------------------------
+=> Supports Two Types of Read Consistency
+i) Eventualy Consistent Reads
+ii) Strongly Consistent Reads
+
+i) Eventualy Consistent Reads
+----------------------------------------
+=> Consistency accross all copies of data is reached within second.
+=> Repeating the Read after short-time should return the updated data. (Specific to Item)
+
+ii) Strongly Consistent Reads
+----------------------------------------
+=> Strongly Consistent Read returns the Result that Reflects all the successful writes before to the read.(Multi-Items)
+
+
+=====================
+b) DynamoDB Demos
+=====================
+
+Demo1: Create a table
+Demo2: Write the Data
+Demo3: Read the Data
+Demo4: Update the Data
+Demo5: Query the Data
+
+{
+  "StudentID": {"N": "504" },   
+ "StudentName": {"S": "vas" }, 
+ "Email": {"S": "vas@jlc" }
+}
+
+====================
+c) DynamoDB Global Tables
+====================
+=> Provide a fully managed solution for deploying a multi-Region
+
+=> You can specify the AWS Regions where you want the tables to be available and DynamoDB will propagate ongoing data changes to all of them.
+
+=> Great choice for massively scaled applications with globally Distributed users
+
+=> Multi-Region Redundancy for Disaster Recovery or High Availability
+
+=> Replication Latency under 1 second
+
+=> Based on Dynamodb Streams
+
+Endpoints of DynamoDB
+-----------------------------------
+dynamodb.us-east-1.amazonaws.com
+
+dynamodb.ap-south-1.amazonaws.com
+
+
+====================
+d) DynamoDB Streams
+====================
+=> DynamoDB Streams is  Time-Ordered Sequence of Item-Level Changes in the Table
+
+=> Stores this information in a log for up to 24 hours. 
+
+=> Applications can access this log and view the data items as they appeared before and after they were modified.( Using Lambda Functions)
+
+=> When you enable a stream on a table, DynamoDB captures information about every modification to data items in the table.
+
+=> Whenever an application creates, updates, or deletes items in the table, DynamoDB Streams writes a stream record with the primary key attributes of the items that are modified. 
+
+=> Encryption at rest encrypts the data in DynamoDB streams.
+
+Endpoints for DynamoDB Streams
+--------------------------------------------------
+=> AWS maintains separate endpoints for DynamoDB and DynamoDB Streams. 
+
+=> Naming convention for DynamoDB Streams endpoints is streams.dynamodb.<region>.amazonaws.com.
+
+Ex: 
+DynamoDB endpoint 	-  dynamodb.us-east-1.amazonaws.com
+DynamoDB Stream endpoint 	- streams.dynamodb.us-east-1.amazonaws.com
+
+Reading and processing a stream
+---------------------------------------------
+=> To read and process a stream, your application must connect to a DynamoDB Streams endpoint and send  API requests.
+
+=> A stream consists of stream records. 
+=> Each stream record represents a single data modification in the DynamoDB table 
+=> Each stream record is assigned a sequence number, reflecting the order in which the record was published to the stream.
+=> Each stream record appears exactly once in the stream.
+
+=> Stream records are organized into groups, or shards. 
+=> Each shard acts as a container for multiple stream records, and contains information required for accessing and iterating through these records. 
+=> The stream records within a shard are removed automatically after 24 hours.
+
+=> Shards are ephemeral: They are created and deleted automatically, as needed. 
+
+
+==========================
+e) DynamoDB Accelerator (DAX)
+==========================
+=> Fully Managed and Highly Available In-Memory Cache for DynamoDB Database.
+=> 10X Performance Imporovement
+=> Reduces the Response time from milli-seconds to micro-seconds even with high loads.
+=> No need for the Developers to manage the caching logic.
+
+

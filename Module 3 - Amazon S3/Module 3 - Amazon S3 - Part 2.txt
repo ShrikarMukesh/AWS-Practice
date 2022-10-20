@@ -1,0 +1,99 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+D) Versioning Objects in S3
+E) S3 Storage Classes*
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+J) Backup Data with S3 Replication
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+==========================================
+B) Securing Your Buckets with S3 Block Public Access
+==========================================
+1) Object ACL's Vs Bucket Policies
+2) Demo : Creating S3 Bucket
+
+1) Object ACL's Vs Bucket Policies
+==========================
+=> Object ACL's work on Individual Object Level
+=> Bucket Policies work on Entire Bucket Level
+
+2) Demo : Creating S3 Bucket
+======================
+Demo Steps:
+---------------
+1) Create the Bucket  -( Public is Private)
+2) Upload Some Objects ( Object are Private)
+3) Try to Access the Objects   It will not be accessable
+4) Try to make the Object Public - It will fail.
+5) Try to make the Bucket Public
+6) Try to make the Object Public - It will Success
+7)  Try to Access the Object - It will be accessable
+
+*** Be Default, Bucket is Private.
+*** When Bucket is Private then All the Objects in that Bucket are also Private
+*** If you want to Make the S3 Object as Public then S3 Bucket must be Public.
+
+Can I have Public Objects with Private Bucket?  Yes
+Can I have Private Objects with Public Bucket?  Yes
+Can I have Public Objects with Public Bucket?  Yes
+Can I have Private Objects with Private Bucket?  Yes
+
+
+===========================
+C) Hosting Static Website using S3
+===========================
+1) Static WebSites on S3
+2)Automatic Scaling
+3) Demo : Hosting Static WebSites
+
+1) Static WebSites on S3
+===================
+=> You can host Static Websites on S3 such as .html files
+=> Dynamic Websites that need Database connections can not be hosted on S3
+
+2) Automatic Scaling
+================
+=> S3 Scales Automatically to meet demand.
+=> Many Companies will pit Static Websites on S3 when they think they will get large number of requests.
+
+3) Demo : Hosting Static WebSites
+===========================
+Demo Steps
+----------------
+1) Create the Public Bucket
+2) Enable Static Web stite Hosting
+3) Apply Bucket Policy
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::myjlc-courses-99/*"
+            ]
+        }
+    ]
+}
+4) Upload you wesite Files.
+
+

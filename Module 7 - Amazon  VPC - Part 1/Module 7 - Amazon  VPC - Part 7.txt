@@ -1,0 +1,170 @@
+==========================
+Module 7 - Amazon  VPC - Part 7
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+=====================
+11) Exploring VPC Peering
+=====================
+
+Multiple VPCs:
+--------------------
+=> Sometimes you may need to have Multiple VPCs for the different Environments
+=> It may be necessary to connect these VPCs to each other.
+
+Ex:
+Front-end apps in One VPC 
+back-end Apps in Another VPC
+
+*** I need to Connect One VPC to Another VPC
+
+VPC Peering:
+------------------
+=> VPC Peering allows to connect One VPC to another VPC via Direct Network Route using private IP Address.
+
+=> Instances behave as they are on the Same Private Network
+
+=> Multiple VPCs must not have Overlapping CIDRs
+
+=> You can peer VPC with other VPC in the same AWS Account as well as with other VPC in the different AWS Account
+
+=> You can peer between regions.
+
+=> Peering is done in Star Configuration
+	( 1 Control VPC peers with  4 other VPCs)
+=> Transitive Peering is not supported with VPCs.
+
+***  Diagram ***
+
+=> We can not allow VPC2 to talk to VPC3 via VPC1
+=> We have to establish direct connection between VPC2 and VPC3
+
+=> You must update Route Tables in each VPC subnets to ensure EC2 Instances can communicate each other.
+
+Demo 12: VPC Peering
+==================
+A) Launch EC2 Instance in myjlc-vpc with name : myjlc-server
+( No need to launch new one)
+
+B) Launch EC2 Instance in default-vpc with name : default-server
+
+C) Connect to myjlc-server in myjlc-vpc using SSH
+
+ssh ubuntu@3.145.55.219  -i myjlc-kp.pem
+
+D) Connect to default-server in default-vpc using SSH
+
+ssh ubuntu@3.137.41.221  -i myjlc-kp.pem
+
+E) Try to Connect from  default-server to myjlc-server
+
+ping 10.0.1.246    ( Problem )
+
+F) Try to Connect from   myjlc-server to default-server
+
+ping 172.31.12.64   ( Problem )
+
+G) Now Create the VPC Peering Connection
+1) Goto VPC Home
+2) Select Peering Connections (Left Side Menu)
+3) Click on Create peering connection
+4) Provide the following
+a)  Name : myjlc-default-peering
+b)  Select a local VPC to peer with
+
+CPC ID (Requester) :  myjlc-vpc
+
+c) Select another VPC to peer with
+Account : My account
+Region: 	This Region (us-east-2)
+VPC ID (Accepter) : default-vpc
+
+d) Tags
+
+and Click on Create peering connection button
+
+5) You can see "Pending acceptance"
+You accept the request as follows
+i) Select Actions => Accept Request
+ii) Click on Accept Request
+
+6) Update the myjlc-public-route of myjlc-vpc 
+i) Click on Route Tables
+ii) Select myjlc-public-route
+iii) Click on Edit Routes
+iv) Click on Add Route
+v) Provide Destination : 172.31.0.0/16	  target : Peering Connection
+vi) Click On Save Changes
+
+7) Update the  default-public-routeA  of default-vpc 
+i) Click on Route Tables
+ii) Select default-main-route
+iii) Click on Edit Routes
+iv) Click on Add Route
+v) Provide Destination : 10.0.0.0/20	  target : Peering Connection
+vi) Click On Save Changes
+
+H) Try to Connect from  default-server to myjlc-server
+
+ping 10.0.1.246   ( OK) 
+
+I) Try to Connect from   myjlc-server to default-server
+
+ping 172.31.12.64
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

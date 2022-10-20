@@ -1,0 +1,463 @@
+==========================
+Module 11 - Auto Scaling - Part 6
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+=====
+4) Auto Scaling Policies
+
+Part 5:
+=====
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+=====
+7) Exam Tips
+Exam #10 - Auto Scaling
+
+============
+7) Exam Tips
+============
+
+1) Scalability and High Availability 
+============================
+Scalability:
+----------------
+=> There are two types of Scalability 
+	a) Vertical Scaling
+	b) Horizontal Scaling
+
+a) Vertical Scaling:
+--------------------------
+=> Vertical Scaling means Increasing the Size of the Instance
+=> There is a Hardware limit in the Vertical Scaling
+
+b) Horizontal Scaling:
+------------------------------
+=> Horizontal Scaling means Increasing the number of Instances for your Appliation.
+
+High Availability:
+-----------------------
+=> Goal of High Availability is to survive from Data Center Crash.
+=> High Availability means Running the Application in at least in Two Data Centers/AZs
+=> Horizontal Scaling increases High Availability
+
+
+2) Launch Templates
+=================
+=> Launch Templates contain all the required Settings to build the EC2 Instances.
+=> Launch Template is collection of the Settings you configure  so that  You dont have to walk through the EC2 Wizard over and over.
+=> ASG uses Launch Templates to launch the EC2 Instances when required.
+
+=> Launch Template contains the following details
+a) AMI
+b) Instance Type
+c) Key Pair
+d) Security Groups
+e) Storage (EBS Volumes)
+f) EC2 User Data ( Software and App Installation)
+g) IAM Roles
+h) Network VPC ( Dont Include this)
+i) Subnets
+etc
+
+
+3) Auto Scaling Groups(ASG)
+=======================
+=> Auto Scaling group helps us to Scale Out or Scale In the Capacity automatically.
+
+=> Size of an Auto Scaling group depends on the number of instances that you set as the desired capacity. 
+
+Goals of Auto Scaling Group:
+--------------------------------------
+1) Scale Out ( Increase the EC2 Instances) when traffic is increasing
+2) Scale In ( Decrease the EC2 Instances) when traffic is decreasing
+3) Automatically register new EC2 Instances to Load Balancer.
+4) Re-Create EC2 Instance in case EC2 Instance is Terminated / Un-Healthy.
+
+Setting Capacity Limits:
+---------------------------------
+=> You need to specify the Auto-Scaling Restrictions to stop from Scaling too much.
+
+1) Minimum Capacity:
+-------------------------------
+=> Lowest No. of EC2 Instances you will run Online
+=> You wont dip below this.
+
+2) Maximum Capacity:
+-------------------------------
+=> Highest No. of EC2 Instances you will run Provision
+=> You wont go above this.
+
+3) Desired Capacity:
+-------------------------------
+=> How many Instances do you want right now?
+
+
+4) Auto Scaling Policies
+====================
+=> AWS provides 3 types of Auto Scaling Policies
+
+a) Scheduled Scaling/Actions
+b) Predictive Scaling Policies
+c) Dynamic Scaling Policies
+
+a) Scheduled Scaling: 
+----------------------------
+=> Scheduled scaling helps you to set up your own scaling schedule according to predictable load changes. 
+
+Ex: 
+=> Let's say that every week the traffic to your application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday. 
+
+=> You can configure a schedule  to increase capacity on Wednesday and decrease capacity on Friday.
+
+
+b) Predictive Scaling Policies:
+-----------------------------------------
+=> If you have regular patterns of traffic increases and decrease then you should consider using predictive Scaling. 
+
+=> Predictive Scaling uses Machine Learning to predict capacity requirements based on historical data from CloudWatch. 
+=> Machine Learning algorithm consumes the available historical data and calculates capacity that best fits the historical load pattern, 
+=>Machine Learning algorithm then continuously learns based on new data to make future forecasts more accurate.
+
+Ex:
+=> Consider an application that has high usage during business hours and low usage overnight. => At the start of each business day, predictive scaling can add capacity.
+=> At the end of each business day, predictive scaling can remove capacity.
+
+c) Dynamic Scaling Policies:
+-----------------------------------------
+=> Dynamic Scaling is also called as Reactive Scaling.
+=> Dynamic Scaling scales the capacity of your ASG as traffic changes occur.
+
+=> Following are 3 Types of Dynamic Scaling Policies:
+i) Target Tracking Scaling
+ii) Step Scaling
+iii) Simple Scaling
+
+i) Target Tracking Scaling:
+-------------------------------------
+=> Increase and decrease the current capacity of the group based on a CloudWatch metric and a target value. 
+*** Metric : CPU Utilization
+*** Target Value : 75%
+
+ii) Step Scaling:
+----------------------
+=> Increase and decrease the current capacity of the group based on a set of scaling adjustments, known as step adjustments, that vary based on the size of the alarm breach.
+
+
+iii) Simple Scaling
+--------------------------
+=> Increase and decrease the current capacity of the group based on a single scaling adjustment, with a cooldown period between each scaling activity.
+
+
+Good Metrics to Scale On
+-----------------------------------
+a) CPU Utililization:
+---------------------------
+=> Average CPU Utilization across Your EC2 Instances
+
+b) RequestCountForTarget:
+-------------------------------------
+=> To Makesure that Number of Requests for EC2 Instance are Stable
+
+c) Average Network In
+-----------------------------------------
+=> If Your Application is Network bound
+
+d) Average Network Out:
+-----------------------------------------
+=> If Your Application is Network bound
+
+e) Any Custom Metric:
+--------------------------------
+=> You can push using CloudWatch
+
+
+
+5) Scaling Relational Databases
+=========================
+=> There are 4 Ways to Scal Relational Databases
+
+a) Vertical Scaling
+b) Scaling Storage
+c) Read Replicas
+d) Aurora Serverless
+
+a) Vertical Scaling
+--------------------------
+=> Resizing the Database from one size to another can create greater Performance
+Ex:
+	t2.micro  => t3.large	
+
+b) Scaling Storage
+--------------------------
+=> Storage can be Re-sized, but it is able to go up , not down.
+
+Ex:
+	10GB  => 	25GB
+
+c) Read Replicas
+--------------------------
+=> Creating Read-Only Copies of your Data can help spread out the Workload
+
+d) Aurora Serverless
+--------------------------
+=> We can offload the Scaling work to AWS
+=> Excels with Un-Predictable Workloads
+
+6) Scaling Non-Relational Databases
+=============================
+=> Non-Relatinal Database or NoSQL Database in AWS is DynamoDB
+
+=> DynamoDB is Fully Managed AWS Service.
+
+=> Scaling is Simplified with DynamoDB because AWS will do everything.
+
+=> There are Two Scaling Options for DynamoDB
+i) Provisioned
+ii) On-Demand
+
+i) Provisioned:
+----------------------
+=> Generally Predictable Workloads
+=> Most Cost-Effective
+
+ii) On-Demand
+----------------------
+=> Sporadic or Un-Predictable Workloads
+=> Pay small amount of money per Read and Write
+=> Less Cost-Effective
+
+
+====================
+Exam #10 - Auto Scaling
+====================
+
+Q1) Which setting has limitations that could potentially prevent a Launch Template from being used with Amazon EC2 Auto Scaling?
+
+A) Not including user data
+
+B) Requiring an ELB load balancer
+
+C) Defining EC2 instance size
+
+D) Changing the default network interface
+
+Ans: D
+
+
+Q2) If you need to change the AMI included in a Launch Template, what should you do?
+
+A) File an AWS support ticket to update all AMIs.
+
+B) Create a new version of the Launch Template with the updated AMI.
+
+C) Migrate to launch configurations.
+
+D) Terminate existing EC2 instances.
+
+Ans: B
+
+
+Q3) What RDS database engine offers a serverless scaling option?
+
+A) MySQL
+
+B) MariaDB
+
+C) SQL Server
+
+D) Aurora
+
+Ans: D
+
+
+Q4) What AWS resource defines the configuration of instances created by EC2 Auto Scaling?
+
+A) Launch settings
+
+B) Instance wizard
+
+C) Launch templates
+
+D) Saved configurations
+
+Ans: C
+
+
+Q5) What setting in your EC2 Auto Scaling group determines how many instances you need online right now?
+
+A) Maximum capacity
+
+B) Average capacity
+
+C) Minimum capacity
+
+D) Desired capacity
+
+Ans: D
+
+
+Q6) Which of the following can be used with a predictable workload for a DynamoDB table?
+
+A) On-Demand
+
+B) Scalable
+
+C) Provisioned
+
+D) Dynamic 
+
+Ans: C
+
+
+Q7) How can you create a highly available application using EC2 Auto Scaling?
+
+A) Check the "do not fail" box in the configuration page.
+
+B) Define multiple regions in your Auto Scaling group.
+
+C) Do nothing, as Auto Scaling is highly available by default.
+
+D) Define multiple AZs in your Auto Scaling group.
+
+Ans: D
+
+
+Q8) How can you automatically register EC2 instances with an ELB load balancer when they are launched?
+
+A) Attaching the load balancer to an Auto Scaling group
+
+B) Using a launch configuration
+
+C) Using the ELB settings page
+
+D) Using Instance metadata
+
+Ans: A
+
+
+Q9) Which of the AWS Service used to trigger a scaling event in an EC2 Auto Scaling group.?
+
+A) SNS
+
+B) EC2
+
+C) S3
+
+D) CloudWatch
+
+Ans: D
+
+
+Q10) What type of capacity should be selected for a DynamoDB table with a sporadic workload?
+
+A) On-Demand
+
+B) Spot
+
+C) Reserved
+
+D) Provisioned
+
+Ans: A
+
+
+Q11) What tool can be used to notify you of scaling events?
+
+A) SQS
+
+B) SNS
+
+C) CloudWatch
+
+D) E-mail
+
+Ans: B
+
+
+Q12) What is the easiest way to reduce the time it takes for your EC2 instance to be ready to take production traffic?
+
+A) Lower the Auto Scaling group cooldown period.
+
+B) There is nothing you can do to reduce the time it takes.
+
+C) Bake all your dependencies into the AMI.
+
+D) Enable "Fast Boot" in the console.
+
+Ans: C
+
+
+Q13) You have an application hosted on a set of EC2 instances managed by an Auto Scaling Group that you configured both desired and maximum capacity to 3. Also, you have created a CloudWatch Alarm that is configured to scale out your ASG when CPU Utilization reaches 60%. Your application suddenly received huge traffic and is now running at 80% CPU Utilization. What will happen?
+
+A) Nothing
+
+B) Desired Capacity goes up to 4 and Max Capacity remains 3
+
+C) Desired Capacity goes up to 4 and Max Capacity goes up to 4 
+
+Ans: A
+
+
+Q14) You have an Auto Scaling Group fronted by an Application Load Balancer. You have configured the ASG to use ALB Health Checks, then one EC2 instance has just been reported unhealthy. What will happen to the EC2 instance?
+
+A) ASG keeps the EC2 Instance running and Re-Start the Application
+
+B) ASG detach the EC2 Instance and Keep running 
+
+C)  ASG will terminate the EC2 Instance 
+
+Ans: C
+
+Q15) You have been asked to scale your Auto Scaling Group based on the number of requests per minute your application makes to your database. What should you do?
+
+A) Create CloudWatch Custom Metric and then Create CloudWatch Alarm to scale your ASG
+
+B) Tell No Metric like this
+
+C)  Enable Detailed Monitoring  to Create CloudWatch Alarm to scale your ASG
+
+Ans: A
+
+Q16) An application is deployed with an Application Load Balancer and an Auto Scaling Group. Currently, you manually scale the ASG and you would like to define a Scaling Policy that will ensure the average number of connections to your EC2 instances is around 1000. Which Scaling Policy should you use?
+
+A) Step Scaling Policy
+
+B) Simple Scaling Policy
+
+C) Target Tracking Scaling Policy
+
+D) Scheduled Scaling Policy
+
+Ans: C
+
+
+Q17) Which of the following policy is NOT a Reactive Scaling Policy?
+
+A) Step Scaling Policy
+
+B) Simple Scaling Policy
+
+C) Target Tracking Scaling Policy
+
+D) Scheduled Scaling Policy
+
+Ans: D
+
+
+
+

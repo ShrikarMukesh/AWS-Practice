@@ -1,0 +1,169 @@
+=============================
+Module 9 - Amazon Route 53 - Part 3
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+1) London - 
+IP 		:	3.10.212.17
+DNS / Hostname 	:	ec2-3-10-212-17.eu-west-2.compute.amazonaws.com
+
+2) N.Virginia
+IP		:	3.236.160.39
+DNS / Hostname 	:	ec2-3-236-160-39.compute-1.amazonaws.com
+
+3) Mumbai:
+IP		:	43.205.127.94
+DNS / Hostname 	:	ec2-43-205-127-94.ap-south-1.compute.amazonaws.com
+
+
+======================
+11) Latency Routing Policy
+======================
+=> Allows you to route your traffic based on the lowest network latency for your end user.
+(i.e, the region which will give the fastest response time)
+
+Latency Resource Record Set:
+-----------------------------------------
+=> To use latency based routing,You need to create latency resource record set for the EC2 instances (or ELB) in each region that holds your website.
+=> When route 53 receives query for your site, It selects the latency resource record set for the region which gives the lowest latency for the user.
+=> Route 53 then responds with the value associated with that resource record set.
+
+*** Diagram ***
+
+Demo: Using Latency Routing Policy
+---------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) Click on Create Record
+5)  Provide the following details
+a) Record name 	: 	myjlc123.com  (Root domain)
+b) Record type 	: 	A 
+c) Value 		: 	 mumbai-IP
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Latency
+f) Region		: 	Mumbai
+g) Health Check	: 	mumbai-HC
+h) Health Record	: 	mumbai-Record
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+Note : Create 3 Records for 3 Regions
+
+======================
+12) Failover Routing Policy
+======================
+=> FailOver routing policies are used when you want to create an active\passive setup.
+
+Ex:
+
+=> You want your primary site to be in us-east-1 and secondary DR site in eu-west-2.
+=> Route 53 will monitor the health of your primary site using a health check.
+=> If Primary Healtk is Ok then Routes always to Primary 
+=> If Primary Healtk is Not Ok then Only Routes always to Secondary 
+
+*** Diagram ***
+
+Demo: Using Failover Routing Policy
+---------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) Click on Create Record
+5)  Provide the following details
+a) Record name 	: 	myjlc123.com  (Root domain)
+b) Record type 	: 	A 
+c) Value 		: 	 N.Virginia-IP
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Failover 
+f) Failover Record Type: 	Primary
+g) Health Check	: 	Virginia-HC
+h) Health Record	: 	Virginia-Record
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+Note : Create 2 Records for 2 Regions ( US - Primary and UK- Secondary)
+
+===========================
+13) Geo-Proximity Routing Policy
+===========================
+
+Route 53 Traffic Flow:
+-------------------------------
+=> You can use Route53 traffic flow to build your custom routing system that uses the combination of various Routing Policies like  Geographic location , Latency etc 
+from your users to your cloud.
+
+* You can build your own traffic routing policy from scratch
+ or   you can pick template from library and then customize it.
+
+Geo-Proximity Routing
+--------------------------------
+=> Geo-proximity routing lets Route53 to route trafic to your Resource based on geographic location of your users and geographic location of your Resources.
+
+=>You can also optionally choose to route more or less traffic to a given Resource by specifying a value called bias.
+
+=>Bias expands or shrinks the size of the geographic region from which traffic is routed to a Resource.
+
+Demo: Using Route 53 Traffic Flow
+---------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Traffic Policies under Traffic flow (Left Menu)
+3) Click on Create Traffic Policy 
+4)  Provide the following details
+a) Policy Name : myjlc-traffic-system
+b) Version  : 1
+c) Version description :  myjlc-traffic-system
+and Click Next
+5) See the Video and Have the Idea
+
+

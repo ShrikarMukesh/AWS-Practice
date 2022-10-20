@@ -1,0 +1,19 @@
+=======================
+Module 2 : AWS IAM 
+=======================
+1) Understanding IAM
+2) IAM Policies
+3) IAM Building Blocks
+4) IAM Users
+5) IAM Groups 
+6) IAM Roles
+7) Best Practices
+8) Identity Providers
+9) IAM Audit Tools
+10) Account Settings
+11) Exam Tips
+12) Exam #2 - AWS IAM
+
+
+
+

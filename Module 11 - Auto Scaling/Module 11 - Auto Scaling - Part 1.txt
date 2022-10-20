@@ -1,0 +1,119 @@
+==========================
+Module 11 - Auto Scaling - Part 1
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+======
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+======
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+======
+4) Auto Scaling Policies
+
+Part 5:
+======
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+======
+7) Exam Tips
+Exam #11 - Auto Scaling
+
+============================
+1) Scalability and High Availability 
+============================
+Scalability:
+----------------
+=> Scalability means Ability of Application  to handle the large amount of Load.
+=> There are two types of Scalability 
+	a) Vertical Scaling
+	b) Horizontal Scaling
+
+a) Vertical Scaling:
+--------------------------
+=> Vertical Scaling means Increasing the Size of the Instance
+=> There is a Hardware limit in the Vertical Scaling
+
+Ex:
+=> Consider your application is running on t2.micro 
+=> You can Scale it to Vertically by changing the Instance to t2.large.
+
+
+b) Horizontal Scaling:
+------------------------------
+=> Horizontal Scaling means Increasing the number of Instances for your Appliation.
+Ex:
+=> Consider your application is running on 15 Instances.
+=> You can Scale it to Horizontally by Increasing the number of Instances to 45.
+
+High Availability:
+-----------------------
+=> Goal of High Availability is to survive from Data Center Crash.
+=> High Availability means Running the Application in at least in Two Data Centers/AZs
+=> Horizontal Scaling increases High Availability
+
+=================
+2) Launch Templates
+=================
+=> Launch Templates contain all the required Settings to build the EC2 Instances.
+=> Launch Template is collection of the Settings you configure  so that  You dont have to walk through the EC2 Wizard over and over.
+
+=> Launch Template contains the following details
+a) AMI
+b) Instance Type
+c) Key Pair
+d) Security Groups
+e) Storage (EBS Volumes)
+f) EC2 User Data
+g) IAM Roles
+h) Network VPC
+i) Subnets
+etc
+
+Demo1 : Creating Launch Template
+=============================
+1) Goto EC2 Dashboard
+2) Select Launch Templates under Instances ( Left Menu)
+3) Click on Create Launch Template button
+4) Provide the following details
+a) Launch template name 		- myjlc-temp-1
+b) Template version description	- myjlc-temp-1
+c) Select Checkbox for Auto Scaling guidance
+d) AMI 				- Ubuntu Server - 22.04 LTS
+e) Instance type			- t2.micro
+f) key-pair (login)			- virginia-key-pair
+
+Network settings:
+g) Subnet				- Dont Select Now
+h) Security Group			- virginia-web-sg
+i) Storage 				- Use Defaults
+j)Resource tags			- Use Defaults
+k) Advanced details			- Use Defaults 
+  ( You may update User Data )
+
+5) Click on Create Launch Template button
+
+Demo2 : Launch Instance from Launch Template
+======================================
+1) Goto EC2 Dashboard
+2) Select Launch Templates under Instances ( Left Menu)
+3) Select the Launch Template ( myjlc-temp-1)
+4) Select ACtions => Launch Instance from Template option
+4) Provide the following details
+a) Subnet				- us-east-1a
+b) Number of Instances 		- 2
+( Keep all remaining same as Launch Template)
+
+5) Click on Launch Instance button
+
+
+

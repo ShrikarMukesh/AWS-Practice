@@ -1,0 +1,128 @@
+=============================
+Module 9 - Amazon Route 53 - Part 6
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+========================
+14) CNAME Vs ALIAS Records
+========================
+=> AWS Resources like EC2, Load Balancers, S3 Buckets, CloudFront etc will expose AWS Host Names.
+=> You can map this hostname with your domains using CNAME  and ALIAS 
+
+a) CNAME Record
+-------------------------
+*** CNAME - Canonocal Name
+
+=> CNAME can be used to map the domain name with another Hostname.
+Ex:
+	lms.myjlc123.com	=> Some LB-host-name
+
+=> CNAME can not be used for Root Domains.
+Ex:
+	myjlc123.com	=> Some LB-host-name   // Not OK
+
+=> CNAME can be used only for Non-Root Domains.
+Ex:
+	mycourses.myjlc123.com	=> Some LB-host-name //OK
+
+b) ALIAS Record
+-----------------------
+=> ALIAS can be used to map the domain name with AWS Resources
+=> ALIAS can be used for both Root Domains and Non-Root Domains.
+
+Ex:
+	myjlc123.com		=> Some LB-host-name   // OK
+	mycourses.myjlc123.com	=> Some LB-host-name //OK
+
+=> ALIAS Record is always type of A or AAAA for AWS Resources.
+=> Automatically recoznizes the Changes in the Resource IP Addresses
+=> You can not set TTL Seconds
+
+Demo:
+======
+1) Create the S3 Bucket  - myjlc-web
+2) make the Bucket Public
+3) Enable Static Website Hosting
+
+You will see the following hostname for the static website.
+http://myjlc-web.s3-website-us-east-1.amazonaws.com
+
+4) Upload index.html
+5) Change Permissions
+6) Access the following URL
+
+http://myjlc-web.s3-website-us-east-1.amazonaws.com
+
+7) Map the domain with S3 bucket hostname
+Just Create CNAME Record as follows
+
+i) Goto Route 53 Dashboard
+ii) Click on Hosted zones (Left Menu)
+iii) Select Your Domain( In my case - myjlc123.com) 
+iv) Click on Create Record
+v)  Provide the following details
+a) Record name 	: 	courses.myjlc123.com  (Non-Root domain)
+b) Record type 	: 	CNAME
+c) Value 		: 	 http://myjlc-web.s3-website-us-east-1.amazonaws.com
+d) TTL (seconds) 	: 	60
+e) Routing policy 	: 	Simple Routing
+
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 60 Seconds (TTL) , try with nslookup
+
+nslookup courses.myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com  
+http://courses.myjlc123.com
+
+
+==============================
+15) Creating Records with Godaddy
+==============================
+****Refrer the Video for Instructions
+
+dandesacademy.com => London Server
+lms.dandesacademy.com  => S3 Bucket
+
+
+

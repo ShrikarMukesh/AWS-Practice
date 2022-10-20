@@ -1,0 +1,232 @@
+==========================
+Module 11 - Auto Scaling - Part 5
+==========================
+Part 1:
+=====
+1) Scalability and High Availability 
+2) Launch Templates
+
+Part 2:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 3:
+=====
+3) Auto Scaling Groups(ASG)
+
+Part 4:
+=====
+4) Auto Scaling Policies
+
+Part 5:
+=====
+5) Scaling Relational Databases
+6) Scaling Non-Relational Databases
+
+Part 6:
+=====
+7) Exam Tips
+Exam #10 - Auto Scaling
+
+=========================
+5) Scaling Relational Databases
+=========================
+=> There are 4 Ways to Scal Relational Databases
+
+a) Vertical Scaling
+b) Scaling Storage
+c) Read Replicas
+d) Aurora Serverless
+
+a) Vertical Scaling
+--------------------------
+=> Resizing the Database from one size to another can create greater Performance
+Ex:
+	db.t2.micro  => db.t3.2xlarge	
+
+b) Scaling Storage
+--------------------------
+=> Storage can be Re-sized, but it is able to go up , not down.
+
+Ex:
+	10GB  => 	25GB
+
+c) Read Replicas
+--------------------------
+=> Creating Read-Only Copies of your Data can help spread out the Workload
+
+d) Aurora Serverless
+--------------------------
+=> We can offload the Scaling work to AWS
+=> Excels with Un-Predictable Workloads
+
+Demo: Scaling Relational Databases
+=============================
+1) Goto RDS Dashborad
+2) Create Aurora MySQL database as follows.
+
+A) Choose a database creation method
+-----------------------------------------------------
+=> Standard Create
+
+B) Engine options
+---------------------------
+a) Engine type : Amazon Aurora
+b) Edition : Amazon Aurora MySQL-Compatible Edition
+c) Replication features: Single Master
+d) Version : Aurora( MySQL 5.7) 2.10.2
+
+C) Templates
+---------------------
+=> Production or Dev/test  ( No Free Tier)
+Select Production 
+
+D) Settings
+-----------------
+=> DB Cluster identifier : jlc-aurora-mysql
+
+Credentials Settings
+------------------------
+=> Master username : srinivas
+=> Master password : srinivas
+=> Confirm password : srinivas
+
+E) Instance configuration
+------------------------------------
+DB instance class
+
+a) Select Burstable classes (includes t classes)
+b) => db.t3.medium
+c) Select Include previous generation classes
+
+F) Availability & durability
+------------------------------------
+a) Multi-AZ deployment
+
+Don't create an Aurora Replica
+Create an Aurora Replica or Reader node in a different AZ  ( Select this)
+
+G) Connectivity
+--------------------------
+=> Virtual private cloud (VPC) : Default
+=> Subnet group  : Default
+=> Public access : Yes
+
+VPC security group : 
+Existing VPC security groups  : jlc-db-group
+
+****Availability Zone : us-east-1a
+
+=> Additional configuration
+     Port : 3306
+
+H) Database authentication
+---------------------------------------
+=> Password Autntocation
+
+I) Additional configuration
+---------------------------------------
+a) Database options
+Intital database : mybookstoredb
+
+b) Backup (Use Defaults)
+=> Backup retention period : 1 days
+
+c) Encryption 
+=> Select Enable Encryption
+
+d) Backtrack
+=> Select Enable Backtrack
+
+e) Monitoring  - 
+=> Use Defaults
+
+f) Log exports 
+=> Use Defaults
+
+g) Maintenance 
+=> Use Defaults
+
+h) Deletion protection 
+Uncheck Enable deletion protection
+
+J) Click on Create database.
+
+3) Vertical Scaling 
+================
+a) Select your Database 
+b) Click on the Modify Button
+c) Change the Instance Type from db.t3.medium to dm.t3.large 
+d) Keep all remaining Same
+e) Click on Next button
+f) Select - Apply immediately
+g) CLick on Modify DB Instance
+
+
+4) Add Read Replica
+================
+a) Select your Database 
+b) Select Actions => Add Reader
+c) Provide the following
+	i) Aurora replica source : Selecting from existing
+	ii) name : jlc-aurora-mysql-reader-9
+	
+d) Keep all remaining Same
+e) Click on Next button
+f) Select - Apply immediately
+g) CLick on Modify DB Instance
+
+Note : You can add the Readers in Same Zone or Cross-Zone.
+
+=============================
+6) Scaling Non-Relational Databases
+=============================
+=> Non-Relatinal Database or NoSQL Database in AWS is DynamoDB
+
+=> DynamoDB is Fully Managed AWS Service.
+
+=> Scaling is Simplified with DynamoDB because AWS will do everything.
+
+=> There are Two Scaling Options for DynamoDB
+i) Provisioned
+ii) On-Demand
+
+i) Provisioned:
+----------------------
+a) Usecase : 
+----------------
+=> Generally Predictable Workloads
+
+b) Effort to Use: 
+----------------------
+=> Need to Review Past usage to Identify Upper and Lower Scaling Bounds 
+=> Specify the following 3 Values
+	Min
+	Max
+	Target Utilization
+
+c) Cost : 
+-----------
+=> Most Cost-Effective
+
+ii) On-Demand
+----------------------
+a) Usecase : 
+----------------
+=> Sporadic or Un-Predictable Workloads
+
+b) Effort to Use: 
+----------------------
+=> Just Select On-Demand
+
+c) Cost : 
+-----------
+=> Pay small amount of money per Read and Write
+=> Less Cost-Effective
+
+Demo: Scaling Non-Relational Databases
+=================================
+1) Goto DynamoDB Dashborad
+2) Create DynamoDB table as follows.
+
+

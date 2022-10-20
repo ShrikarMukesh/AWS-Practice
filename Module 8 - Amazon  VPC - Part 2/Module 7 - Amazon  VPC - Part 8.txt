@@ -1,0 +1,139 @@
+==========================
+Module 7 - Amazon  VPC - Part 8
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring Site-to-Site VPN Connection
+14) Exploring VPN CloudHub
+
+Part 9:
+=====
+15) Exploring AWS DirectConnect
+16) Exploring Transit Gateway
+
+Part 10:
+=====
+17) Understanding IPv6 for VPC
+
+18) Exam Tips
+Exam #7 - VPC
+
+=========================
+12) Exploring AWS PrivateLink
+=========================
+
+Sharing Applications accross VPCs
+------------------------------------------------
+=> You can use the following two options to open up your applications to other VPCs
+1) Open up the VPC to the Internet
+2) Use VPC Peering
+
+1) Open up the VPC to the Internet
+------------------------------------------------
+=> Security Considerations - Everything in the public subnet is public.
+=> Lots of things to manage like Security Groups, Network ACL, Route Tables etc
+=> SO Not a Good Idea
+
+2) Use VPC Peering
+--------------------------
+=> You have to create and manage many different Peering Relationships
+=> When you create Peering Connection to VPC , Whole Network will be accessable. This is not good when you have multiple applications within your VPC
+=> SO Not a Good Idea
+
+**Best way is Using AWS PrivateLink**
+
+AWS PrivateLink(VPC Endpoint Services):
+----------------------------------------------------------
+=> AWS PrivateLink allows to  expose Service VPC to tens, hendreds or thousands of Customer VPCs
+=> PrivateLink is Most secure and Scalable
+=> PrivateLink does not require VPC Peering , Route Tables, NAT Gateways , Internet Gateways etc.
+=> You can expose Service VPC to your own account or other aws accounts.
+
+=> You just need the following
+*** You need Network LoadBalancer on the Service VPC
+*** You need ENI on the Customer VPC
+
+	*****   Diagram   *****
+
+=> if NLB is in multiple AZ's then ENI also must be in multiple AZ's
+=>This solution is fault tolerant and highly scalable.
+
+==================================
+13) Exploring Site-to-Site VPN Connection
+===================================
+=> By default, Instances that you launch into your Amazon VPC can't communicate with your Corporate Data Center.
+
+=> You can enable access to your Corporate Data Center from your VPC by creating an AWS Site-to-Site VPN connection, and configuring routing to pass traffic through the connection.
+
+=> VPN connection refers to the connection between your VPC and your own Corporate Data Center.
+
+=>  Site-to-Site VPN supports Internet Protocol security (IPsec) VPN connections.
+
+VPN Connection - Encryption
+---------------------------------------------
+=> Uses Public Internet 
+=> Data in Transit is Encrypted with IPsec-encrypted
+
+AWS Site-to-Site VPN connection
+--------------------------------------------
+=> Needs Two things
+1) Virtual Private Gateway(VGW)
+2) Customer Gateway(CGW)
+
+1) Virtual Private Gateway(VGW)
+--------------------------------------------
+=> VPN Connector on the AWS side of the VPN Connection
+=> Virtual Private Gateway is Created and Attached to the VPC from which you want to create the Site-to-Site VPN connection
+
+2) Customer Gateway(CGW)
+--------------------------------------
+=>  VPN Connector on the Customer side of the VPN Connection
+
+
+========================
+14) Exploring VPN CloudHub
+========================
+=> If you have multiple sites and each site is having its own VPN Connection , then you can use AWS VPN CloudHub to connect these sites together.
+
+=> Hub-and-Spoke model
+=> Low Cost and easy to manage
+=> It Operates on the public internet, but all the traffic between Customer gateway and AWS VPN CloudHub is encrypted.
+
+	*****   Diagram   *****
+
+ 
+
+

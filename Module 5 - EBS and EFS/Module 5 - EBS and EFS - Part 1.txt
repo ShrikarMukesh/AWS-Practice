@@ -1,0 +1,277 @@
+========================
+Module 5 : EBS and EFS - Part 1
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+==================
+1) EBS Fundamentals
+==================
+=> EBS  - Elastic Block Storage
+=> EBS Volume - Virtual Hard Disk in the Cloud.
+=> EBS Volumes are Storage Volumes you can attach to Your EC2 Instances
+=> Use these EBS Volumes the same way you use any system Hard Disk.
+	* Run Operating System
+	* Run Database
+	* Create File System
+	* Store Data
+	* Install Applications
+	
+=> These are designed for Mission-Critical Production Workloads.
+
+
+IMP Points about EBS Volumes
+========================
+1) Location
+------------------
+=> EBS Volumes will be in the Same AZ where EC2 Instance is present.
+=> Automatically Replicated with Single AZ to Protect against hardware failures.
+
+2)Resize on the Fly
+---------------------------
+=>You can Resize the EBS Volumes on the Fly.(i.e from 25GB to 125GB)
+=> You do Not need to stop or restart the Instances
+
+3) Switch the Volume Types
+------------------------------------------
+=> You can change the Volume Types on the Fly ( i.e from gp2 to gp3)
+=> You do Not need to stop or restart the Instances
+
+EBS Volume Types
+==============
+SSD - Solid State Disk
+HDD - Hard Disk Drive
+
+1) General Purpose SSD (gp2)
+2) General Purpose SSD (gp3)
+
+3) Provisioned IOPS SSD (io1)
+4) Provisioned IOPS SSD (io2)
+
+**5) Provisioned IOPS SSD (io2 Block Express)
+
+6) Throughput Optimized HDD (st1)
+7) Cold HDD (sc1)
+
+IOPS Vs Throughput
+================
+IOPS
+====
+=> Measures the Number of Read and Write Operations per Second.
+=> Important Metric for Low-Latency Applications and Transactional Workloads.
+=> Ability to perform Read and Writes Very Quickly.
+=> Choose Provisoned SSD (gp1,gp2,io1, io2, io2 Block Express)
+
+Throughput
+==========
+=> Measures the Number of Bits Read or Written per Second (MB/S).
+=> Important Metric for Large Data Sets, Complex Queries.
+=> Ability to deal with Large Data Sets.
+=> Choose Throughput Optimized HDD(st1) , For Low cost use Cold HDD(sc1)
+
+Google has Peta Bytes of Search Data 
+100PB - 1000 TB - 1000* 1000GB => 10Cr GB
+
+Read - 1GB of Data from Disk 
+=> 1GB - 1000MB   - 
+1s, 2s, 4s, 8s, 16s
+
+1) General Purpose SSD (gp2):
+=======================
+i) Balance of Price and Performance
+
+ii) Use Cases:
+---------------
+a) Transactional workloads
+b) Virtual desktops
+c) Medium-sized, single-instance databases
+d) Development and test environments
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 1 GiB - 16 TiB	
+=> Max IOPS per volume (16 KiB I/O)	: 16,000
+=> Max throughput per volume	: 250 MiB/s *
+=> Amazon EBS Multi-attach		: Not supported	
+=> Boot volume			: Supported
+
+iv) Durability :
+---------------
+=> 99.8% - 99.9% durability (0.1% - 0.2% annual failure rate)
+
+2) General Purpose SSD (gp3):
+=======================
+i) Balance of Price and Performance
+
+ii) Use Cases:
+---------------
+a) Transactional workloads
+b) Virtual desktops
+c) Medium-sized, single-instance databases
+d) Development and test environments
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 1 GiB - 16 TiB	
+=> Max IOPS per volume (16 KiB I/O)	: 16,000
+=> Max throughput per volume	: 1000 MiB/s *
+=> Amazon EBS Multi-attach		: Not supported	
+=> Boot volume			: Supported
+
+iv) Durability :
+---------------
+=> 99.8% - 99.9% durability (0.1% - 0.2% annual failure rate)
+
+
+3) Provisioned IOPS SSD (io1):
+=======================
+i) Provides high performance for mission-critical, low-latency, or high-throughput workloads and most expensive
+
+ii) Use Cases:
+---------------
+a) Workloads that require sustained IOPS performance or more than 16,000 IOPS
+b) I/O-intensive database workloads
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 1 GiB - 16 TiB	
+=> Max IOPS per volume (16 KiB I/O)	: 64,000
+=> Max throughput per volume	: 1000 MiB/s *
+=> Amazon EBS Multi-attach		: supported	
+=> Boot volume			: Supported
+
+iv) Durability :
+---------------
+=> 99.8% - 99.9% durability (0.1% - 0.2% annual failure rate)
+
+4) Provisioned IOPS SSD (io2):
+=======================
+i) Provides high performance for mission-critical, low-latency, or high-throughput workloads and most expensive
+
+ii) Use Cases:
+---------------
+a) Workloads that require sustained IOPS performance or more than 16,000 IOPS
+b) I/O-intensive database workloads
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 4 GiB - 16 TiB	
+=> Max IOPS per volume (16 KiB I/O)	: 64,000 
+=> Max throughput per volume	: 1000 MiB/s 
+=> Amazon EBS Multi-attach		: Supported	
+=> Boot volume			: Supported
+
+iv) Durability :
+---------------
+=> 99.999% durability (0.001% annual failure rate)
+
+5) Provisioned IOPS SSD (io2 Block Express):
+=======================
+i) Provides high performance for mission-critical, low-latency, or high-throughput workloads and most expensive
+
+ii) Use Cases:
+---------------
+a) Sub-millisecond latency
+b) Sustained IOPS performance
+c) More than 64,000 IOPS or 1,000 MiB/s of throughput
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 4 GiB - 64 TiB	
+=> Max IOPS per volume (16 KiB I/O)	: 256,000	
+=> Max throughput per volume	: 4,000 MiB/s	
+=> Amazon EBS Multi-attach		: Supported	
+=> Boot volume			: Supported
+
+iv) Durability :
+---------------
+=> 99.999% durability (0.001% annual failure rate)	
+
+Note :  
+io2 Block Express volumes are currently supported with C7g, R5b, X2idn, and X2iedn instances only.
+
+6) Throughput Optimized HDD (st1)
+=========================
+i) Low-Cost HDD Volumes
+
+ii) Use Cases:
+---------------
+a) Big data
+b) Data warehouses
+c) Log processing
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 125 GiB - 16 TiB		
+=>Max IOPS per volume (1 MiB I/O)	: 500
+=> Max throughput per volume	: 500 MiB/s
+=> Amazon EBS Multi-attach		: Not supported	
+=> Boot volume			: Not supported	
+
+iv) Durability :
+---------------
+=> 99.8% - 99.9% durability (0.1% - 0.2% annual failure rate)	
+
+
+7) Cold HDD (sc1)
+=========================
+i) Lowest - Cost Option
+
+ii) Use Cases:
+---------------
+a) Throughput-oriented storage for data that is infrequently accessed
+b) Scenarios where the lowest storage cost is important
+
+iii) Imp Data
+-----------------
+=> Volume Size 			: 125 GiB - 16 TiB		
+=>Max IOPS per volume (1 MiB I/O)	: 250
+=> Max throughput per volume	: 250 MiB/s
+=> Amazon EBS Multi-attach		: Not supported	
+=> Boot volume			: Not supported	
+
+iv) Durability :
+-------------------
+=> 99.8% - 99.9% durability (0.1% - 0.2% annual failure rate)	
+
+Demo:
+======
+1) What is Root Device Volume
+2) List of Volumes
+3) Create the Volume
+4) Attach the Volume to EC2 Instance
+5) Detach the Volume from EC2 Instance
+6) Delete the Volume ( First Detach and Delete)

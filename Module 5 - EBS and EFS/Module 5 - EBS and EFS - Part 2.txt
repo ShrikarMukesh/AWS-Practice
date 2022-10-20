@@ -1,0 +1,129 @@
+========================
+Module 5 : EBS and EFS - Part 2
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+====================
+2) Volumes and SnapShots
+====================
+
+EBS Volumes
+--------------------
+=> EBS volume is a durable, block-level storage device that you can attach to your instances Only. 
+=> Think the EBS Volumes as Vritual Hard Disks.
+=> After attaching the volume to EC2 instance, You can use it as you would use a Physical Hard Disk.
+=> You need minimum of one Volume per EC2 Instance for O.S Booting. This is called as Root Device Volume.
+
+EBS Snapshots
+--------------------
+=> You can take the back up of the data on your EBS volumes
+=> Snapshots sit on  S3 by taking point-in-time copies.
+
+=> When you create the Snapshot first-time , It may take some time to Create as there is not Previous point-in-time copy.
+
+=> Snapshots are incremental backups, which means that only the blocks on the device that have changed after your most recent snapshot are saved. This minimizes the time required to create the snapshot and saves on storage costs by not duplicating data. 
+
+=> When you create an EBS volume based on a snapshot, the new volume begins as an exact replica of the original volume that was used to create the snapshot.
+
+3 IMP points about EBS Snapshots
+--------------------------------------------------
+1) Consistent Snapshots
+2) Encrypted Snapshots
+3) Sharing Snapshots
+
+1) Consistent Snapshots
+----------------------------------
+=> Consistent  Snapshots only Capture the Data that has been written to EBS Volume.
+=> Consistent  Snapshots may exclude the Data that has been cached locally by your application or O.S
+=> For Consistent  Snapshots, It is Recommended that you stop the EC2 Instance and Take a Snap.
+
+2) Encrypted Snapshots
+----------------------------------
+=> If you take the Snapshot of Encrypted EBS Volume, then the Snapshot also will be Encrypted automatically.
+
+3) Sharing Snapshots
+----------------------------------
+=> You can share the Snapshots , but only in the region where it is created.
+=> To Share to other regions, You need copy them to Destination Region and then Share.
+
+Demo 1:
+======
+* Create the Snapshot from EBS Volume.
+
+Demo 2:
+======
+* Create the EBS Volume from EBS Snapshot. 
+In same Zone 
+In Different Zone
+In Different Region ( will be discussed)
+
+Demo 3:
+======
+* Attching EBS Volume to EC2 Instance
+* Deleting Snapshots
+
+Demo 4:
+=========
+1) Launch the EC2 Instance
+2) Install Your Apps , Software , Data etc ( myjlc folder, hello.txt)
+3) Create the Snapshot from Volume
+4) Create Image from Snapshot ( MyJLC-AMI)
+5) Launch the EC2 Instance from Your AMI
+6) Test Your Data .( myjlc folder, hello.txt)
+
+This process can be used to auto launch instance in case of 
+=> Instance crash 
+=> Autoscaling
+
+=====================================
+Student Questions:
+=================
+Q1) Snapshot will be taken after X amount of time, what will happen to the data with in an interval of taking snapshot ?
+SunDay:9P.M 
+---> Friday Crashed
+Next Sunday : 9P.M
+
+Q2)  If i detached EBS and delete this, Then Snapshot will be delete at same time ?
+
+Q3) will restore from latest snapshot or need to restore base plus incremental snapshot
+
+Q4) whether we need to create or amazon will take care for new volume ?  You 
+
+Q5) can we take snapshot of root volume aswell Yes Yes
+
+Q6)  its mandatory to take S3 service for snapshot?? or we can take backup in our physical system?
+S3

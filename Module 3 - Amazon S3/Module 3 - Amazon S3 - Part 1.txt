@@ -1,0 +1,126 @@
+===============================
+Module 3 : Simple Storage Service (S3) 
+==============================
+Part 1:
+======
+A) Exploring Amazon S3 
+
+Part 2:
+======
+B) Securing Your Buckets with S3 Block Public Access
+C) Hosting Static Website using S3
+
+D) Versioning Objects in S3
+E) S3 Storage Classes*
+F) Lifecycle Management with S3
+G) S3 Bucket Lock and Glacier Vault Lock
+H) Enrypting S3 Objects
+I) Optimizing S3 Performance
+J) Backup Data with S3 Replication
+K) Exam Tips
+Exam #3 - Simple Storage Service (S3) 
+
+==================
+A) Exploring Amazon S3 
+==================
+1) What is S3?
+2) Working with S3 Buckets
+3) Key-Value Store
+4) Availability and Durability
+
+1) What is S3?
+=============
+=> S3 - Simple Storage Service 
+=> S3 is Global Service but Region Selection is Required while you Create Bucket
+=> S3 is an Object Storage in Cloud
+=> S3 Manages Data as Objects rather than files in File System.
+
+=> S3 provides Highly Secure , Highly Durable , Highly Avaiable , Highly Scalable Object Storage.
+
+=> S3 allows you to store and retreive any amount of data from anywhere on web at very low cost.
+=> S3 is Easy to use with Simple Web Interface.
+
+=> You can Upload any file types in S3.
+Ex:
+  Text Files
+  Documents
+  Images
+  Videos
+   etc
+
+=> S3 can not be used to run Operating Systems or Databases.
+
+Unlimited Storage:
+-------------------------
+=> Amount of Data you can store in S3 in Unlimited.
+=> Number of Objects you can store in S3 in Unlimited.
+
+Objects upto 5TB in size:
+--------------------------------
+=> Individual S3 object can range in size from a minimum of 0 bytes to a maximum of 5 TB. 
+=> Largest object that can be uploaded in a single PUT is 5 GB. 
+
+
+2) Working with S3 Buckets
+======================
+=> S3 Stores the Files in Buckets ( Bucket is like a Folder)
+
+=> Each S3 Bucket name is globally Unique.
+=> All AWS accounts share the S3 Namespace.
+
+Sample S3 Object URL's
+----------------------------------
+https://bucket-name.s3.region.amazonaws.com/key-name
+https://myjlc-bucket1.s3.amazonaws.com/hello.html (Picks from Any AZ in ANy Region)
+https://myjlc-bucket1.s3.us-east-1.amazonaws.com/hello.html (Specific Zone in One Region)
+https://myjlc-bucket1.s3.amazonaws.com/test/hello.html
+
+=> When the File upload to S3 is successful then you will receive HttpStatus code 200.( AWS CLI/SDK?AWS API)
+
+=> You can upload any number of objects to the bucket.
+
+=>  By default, You can create up to 100 buckets in each of your AWS accounts. 
+=> If you need more buckets, you can increase your account bucket limit to a maximum of 1,000 buckets by submitting a service limit increase.
+
+3) Key-Value Store
+==============
+=> Every File you are uploading will be stored in S3 as Object.
+=> S3 Object has following Properties.
+
+a) Key :
+------------
+=> Name of the Object is the Key.
+ Ex: 
+    hello.jpg
+    index.html
+
+b) Value :
+------------
+=> Data itself which is made up of sequence of bytes.
+
+c) Version Id:
+---------------
+=> Objects wil be stored in Multiple versions
+
+d) MetaData
+----------------
+=> Data about the Data you are storing
+Ex:
+    content-type
+    last-modified
+    content-size
+
+4) Availability and Durability
+========================
+=> S3 is a Very Safe place to Store your files
+
+=> Data in S3 is Spread accross Multiple Devices and Multiple Facilities to ensure Availability and Durability
+
+=> S3 is Built for Highly Available
+
+*** Built  for 99.95% to 99.99% Service Availability depends on S3 Tier.
+
+=> S3 is Designed for Highly Durable
+
+*** Designed for 99.999999999% Durability ( 11 9's)
+

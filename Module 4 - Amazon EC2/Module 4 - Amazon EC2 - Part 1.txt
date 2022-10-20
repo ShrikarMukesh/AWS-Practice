@@ -1,0 +1,215 @@
+========================
+Module 4 : Amazon EC2 - Part 1
+========================
+Part 1:
+======
+1) Exploring Amazon EC2 
+2) Launching EC2 Instances
+3) Key pairs
+
+Part 2:
+======
+4) Security Groups
+5) Connect to EC2 Instances
+
+Part 3:
+======
+6) Virtualization
+7) EC2 Instance Types
+8) AWS Command Line
+
+Part 4:
+======
+9) Using Roles
+10) BootStrap Scripts with UserData
+11) EC2 MetaData 
+
+Part 5:
+======
+12) EC2 Pricing Options
+13) EC2 Placement Groups
+14) EC2 Tenancy Models
+
+Part 6:
+======
+15) Exam Tips
+Exam #4 - Amazon EC2
+
+
+==================
+1) Exploring Amazon EC2 
+==================
+A) Introduction to EC2
+B) EC2 Pricing Options
+
+A) Introduction to EC2
+=================
+=> EC2 - Elastic Compute Cloud.
+=> EC2 is Service from Compute Type.
+=> EC2 is one of the most popular Service among AWS Services.
+=> EC2 is Secure and Re-Sizable Compute Capacity in the Cloud.
+=> EC2 is a Virtual Server hosted in the Cloud****
+=> Provides the Compute Capacity You want when You need.
+=> EC2 = Infrastructure as a Service(IaaS)
+
+Compute : Processing
+--------------
+*On-Premises Infrastructure
+---------------------------------------
+=> Your Data Center at Your Office.
+=> Expectation that Application will grow and Setup the Infra now Only.
+=> Long-Term Investment , 3- 5 Years
+=> Lots of Wasted Capacity.
+=> Need Months to Setup the Required Compute Capacity.
+
+
+*Game Changer
+----------------------
+=> EC2 Launched in 2006 and Complete Game Changer.It Literally changed the Entire Industry.
+=> AWS led a big Change in the Industry by Introducing EC2.
+
+*Pay only for what you use.
+---------------------------------------
+=> EC2 changed the Econamics of Computing
+
+*No Wasted Capacity
+----------------------------
+=> Select the Capacity you need right now.
+=> Grow and Shrink when you need.
+
+*Wait for Minutes , Not Months
+--------------------------------------------
+=> Need Minutes to Setup the Required Compute Capacity.
+
+B) EC2 Pricing Options
+-------------------------------
+1) On-Demand Instances
+2) Reserved Instances
+3) Spot Instances
+4) Decicated Instances
+
+1) On-Demand Instances
+-----------------------------------
+=> Pay for the Hour or Second you use 
+
+2) Reserved Instances
+--------------------------------
+=> Reserve the Capacity for 1 to 3 Years
+=> Upto 72% Discount on Hourly Charges
+
+3) Spot Instances
+-------------------------
+=> Purchase the Unused Capacity at discount upto 90%.
+
+4) Decicated Instances
+--------------------------------
+=> Physical EC2 Server dedicated for Your Uses.
+=> This is Most Expensive.
+
+=====================
+2) Launching EC2 Instances
+=====================
+A) About EC2:
+===========
+Q) Where will you deploy your application in the Cloud?
+Ans: Virtual Servers in the Cloud / EC2 Instances
+
+EC2 Instance => Virtual Servers in the Cloud
+
+B)EC2 Service
+===========
+a) Manage the Lifecycle of EC2 Instances
+Create , Start , Stop , Delete (Terminate)
+
+b)Add the Storage Capabilities(EBS - Elastic Block Store)
+c)Add the Network Capabilities(VPC - Virtual Private Cloud)
+d) Load Balancing Capabilities(ELB - Elastic Loab Balancer)
+e)Auto-Scaling Capabilities(ASG - Auto Scaling Group)
+etc
+
+C)EC2 Configuration
+================
+a) O.S => Linux, Windows, Mac
+b) CPU => Cores Required 
+c) RAM => RAM Required
+d) Storage => EBS (HardDisk)
+e) Network => VPC , Sub-Net Masks
+f) Firewalls => Security Groups
+g) Login Details => key-pair
+h) BootStrap Scripts => User Data
+etc
+
+D) EC2 Instance Creation
+====================
+1) Goto EC2 Home/ Dashboard
+2) Click on Instances ( left Menu)
+3) Click On Launch Instances
+
+Step 1: Choose an Amazon Machine Image (AMI)
+----> O.S Software ---
+Ubuntu Server 20.04 LTS (HVM), SSD Volume Type
+
+Step 2: Choose an Instance Type
+----> Hardware ---
+Currently selected: t2.micro (- ECUs, 1 vCPUs, 2.5 GHz, -, 1 GiB memory, EBS only)
+
+Step 3: Configure Instance Details
+Nothing to DO
+
+Step 4: Add Storage
+
+Storage : 10GB
+
+Step 5: Add Tags
+Name : MyApp-Server-1
+
+Step 6: Configure Security Group
+
+Security group name: myapp-server-group
+Add One Rule
+
+Step 7: Review Instance Launch
+
+Key-pair name :  myapp-key-pair.pem
+
+
+Public IP   : 44.203.70.209
+Public IP :   44.204.77.46
+
+Private IP  : 172.31.88.208
+Private IP  : 172.31.88.208
+
+us-east-1
+us-east-1a
+us-east-1b
+us-east-1c
+us-east-1d
+us-east-1e
+
+E) EC2 Instance States
+
+Start Instance
+Stop Instance
+Reboot Instance
+Hibernate Instance
+Terminate Instance
+
+F) Starting and Stop the EC2 Instance
+=====================
+
+3) Amazon EC2 key pairs
+=====================
+*** All the Cloud Servers are Password less by deafult.***
+*** Password Authetication is disabled by deafult.***
+*** How to Connect to EC2 Instance***
+
+=> A Key-Pair, contains a Public key and a Private key
+=> A Key-Pair,  is a set of security credentials that you use to prove your identity when connecting to an Amazon EC2 instance.
+=> Amazon EC2 stores the public key on your instance
+=> You store the private key.
+=> Anyone who has your private key can connect to your instances, so it's important that you store your private key in a secure place.
+
+=> When you launch an instance, you are prompted for a key pair. If you plan to connect to the instance using SSH, you must specify a key pair. You can choose an existing key pair or create a new one.
+
+=> For Linux instances, the private key allows you to securely SSH into your instance.
+

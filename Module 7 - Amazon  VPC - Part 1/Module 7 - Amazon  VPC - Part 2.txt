@@ -1,0 +1,158 @@
+==========================
+Module 7 - Amazon  VPC - Part 2
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+10) Exploring VPC Endpoints
+11) Exploring VPC Peering
+
+12) Exploring AWS PrivateLink
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+===============
+4) Exploring VPC
+===============
+=> You can have multiple VPCs in one AWS Region 
+=> Max VPC limit  per region : 5 ( Can be Extended)
+=> Max CIDR Blocks per VPC : 5
+=> For each CIDR
+	Min Size : /28
+	Max Size : /16 
+
+=> VPC is a Private Network So Only Private IPv4 Ranges are allowed.
+	10.0.0.0/24
+	172.16.0.0/24
+	192.168.0.0/24
+
+=> Your VPC CIDR Block should not Overlap with your other Networks.
+
+Demo 1 : Create the VPC
+===================
+1) Goto VPC Dashboard
+2) Click on Your VPCs
+3) Click on Create VPC
+4) Provide the following Details
+
+i) VPC settings
+---------------------
+a) Resources to create  	 :  VPC Only 
+b) Name tag		 : myjlc-vpc
+c) IPv4 CIDR block
+	- Select  - IPv4 CIDR manual input
+
+d) IPv4 CIDR 	:	10.0.0.0/20
+e) IPv6 CIDR block
+	- Select - No IPv6 CIDR block
+
+f) Tenancy	: 	Default
+
+ii) Tags 	
+----------
+-- Give Any Tags you want
+
+5) Click on Create VPC button
+
+=================
+5) Exploring Subnets
+=================
+=> You can Create Max of 200 Subnets in the VPC.
+=> You can Create more Subnets in One AZ.
+=> Each subnet can be specified with CIDR Block / IP Range
+=> AWS Reserves 5 IP Address (First Four and Last One) in Each Subnet.
+=> These 5 IP Addresses are not available to you.
+
+Ex:
+CIDR Block => 10.10.0.0/28
+=> Allows 16 IPs only ( You can use only 11 IPs)
+*** 10.10.0.0  => Network Address
+*** 10.10.0.1  => Reserved for VPC Router
+*** 10.10.0.2  => Reserved for Mapping to Amazon-Provided DNS
+*** 10.10.0.3  => Reserved for Future Use
+*** 10.10.0.4  
+*** 10.10.0.5 
+*** 10.10.0.6 
+*** 10.10.0.7 
+*** 10.10.0.8 
+*** 10.10.0.9 
+*** 10.10.0.10 
+*** 10.10.0.11
+*** 10.10.0.12
+*** 10.10.0.13
+*** 10.10.0.14
+*** 10.10.0.15 => Reserved for Network Broadcast. ( AWS Does not Support Network Broadcast)
+
+=======================
+Demo 2 : Create the Subnets
+======================
+** We will Create Two Subnets , One Public Subnet and another Private Subnet
+
+A) Create the Public Subnet:
+====================
+1) Goto VPC Dashboard
+2) Click on Subnets
+3) Click on Create Subnet
+4) Provide the following Details
+
+i) VPC
+---------------------
+a) VPC ID  	 : vpc-02a0c7a328564a287 | myjlc-vpc
+
+ii) Subnet settings
+-----------------------------
+Subnet 1 of 1
+
+a) Subnet name	:  myjlc-public-subnet
+b) Availability Zone  :  us-east-2a
+c) IPv4 CIDR block     : 10.0.1.0/24
+d) Tags 		: Add Any tags required 
+    
+5) Click on Create Subnet button
+
+B) Create the Private Subnet:
+====================
+1) Goto VPC Dashboard
+2) Click on Subnets
+3) Click on Create Subnet
+4) Provide the following Details
+
+i) VPC
+---------------------
+a) VPC ID  	 : vpc-02a0c7a328564a287 | myjlc-vpc
+
+ii) Subnet settings
+-----------------------------
+Subnet 1 of 1
+
+a) Subnet name	:  myjlc-private-subnet
+b) Availability Zone  :  us-east-2b
+c) IPv4 CIDR block     : 10.0.2.0/24
+d) Tags 		: Add Any tags required 
+    
+5) Click on Create Subnet button

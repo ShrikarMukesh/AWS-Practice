@@ -1,0 +1,147 @@
+========================
+Module 5 : EBS and EFS - Part 5
+========================
+Part 1:
+======
+1) EBS Volumes Fundamentals
+
+Part 2:
+======
+1) EBS Volumes Fundamentals ( Contin.. )
+2) Volumes and SnapShots
+
+Part 3:
+======
+2) Volumes and SnapShots ( Contin...)
+3) Encrypting EBS Volumes
+
+Part 4:
+======
+3) Encrypting EBS Volumes   ( Contin...)
+4) EBS Vs Instance Store
+5) EC2 Hibernation
+
+Part 5:
+======
+6) EFS Fundamentals
+
+Part 6:
+======
+6) EFS Fundamentals ( Contin...)
+7) FSx Fundamentals
+8) AWS Backup
+
+Part 7:
+======
+9) Exam Tips
+Exam #5 - EBS and EFS
+
+
+================
+6) EFS Fundamentals
+================
+=> EFS - Elastic File System
+
+EFS Overview:
+============
+=> EFS is a Managed Network File System (NFS) that can be mounted on many EC2 Instances.
+=> EFS Works with EC2 Instances in Multiple AZ's i.e 
+Data will be Stored accross Multiple AZ's within Region.
+
+=> You can Create EFS file system, mount the file system on an EC2 instance, and then read and write data to and from your file system. 
+=> You can mount an Amazon EFS file system in your virtual private cloud (VPC), through the Network File System versions 4.0 and 4.1 (NFSv4) protocol.
+
+=> Highly Available and Scalable but More Expensive.
+
+=> Supports the Network File System version 4 (NFSv4.1 and NFSv4.0) protocol, 
+=>  Multiple compute instances, including EC2, ECS, and AWS Lambda, can access an EFS at the same time
+=> Compatible with Linix-bases AMI's ( Not Supported for Windows AMI's currently).
+=> File System Scales automatically, No Capacity Planing is required
+=> Only Pay for storage you use
+
+
+EFS Performance
+============
+=> EFS supports thousands of Concurrent Connections with EC2 Instances.
+=> EFS can Handle upto 10Gbps in throughput
+=> EFS Storage can be scaled to Peta Bytes.
+
+EFS Encryption:
+=============
+=> EFS supports Encryption in transit and Encryption at rest.
+=> You can enable encryption at rest when creating an Amazon EFS file system. 
+If you do, all your data and metadata is encrypted. 
+=> You can enable encryption in transit when you mount the file system. 
+
+
+Storage Tiers
+==========
+=> EFS comes with Storage Tiers and Lifecycle Management which allows to move the data from One tier to another tier after N-days.
+
+=> EFS supports following Storage Tiers
+
+a) EFS Standard
+----------------------
+=>  Stores Data in Multiple AZ's
+=> For Frequestly Accessed Files
+
+b) EFS Standard-IA
+---------------------------
+=> Stores Data in Multiple AZ's
+=> For Infrequestly Accessed Files
+
+c) EFS One Zone 
+--------------------------
+=> Stores Data in Single AZ's
+=> For Frequestly Accessed Files
+
+d) EFS One Zone-IA
+-----------------------------
+=> Stores Data in Single AZ's
+=> For Infrequestly Accessed Files
+
+
+EFS Lifecycle Management:
+====================
+=> EFS Lifecycle Management automatically manages cost-effective file storage for your file systems. 
+
+=> When enabled, Lifecycle Management migrates files that haven't been accessed for a set period of time to an infrequent access storage class
+
+=>  You define that period of time by using a lifecycle policy.
+EFS Standard => EFS Standard-IA
+EFS One Zone  => EFS One Zone-IA
+
+EFS Intelligent‐Tiering:
+==================
+=> EFS Intelligent‐Tiering uses lifecycle management to monitor the access patterns of your workload and automatically transitions files to and from your corresponding storage class.
+
+=> With intelligent tiering, files in the EFS Standard or EFS One Zone that are not accessed for a period of time, for example 30 days, are transitioned to the corresponding EFS Standard-IA or EFS One Zone-IA  storage class. 
+
+=> If access patterns change, EFS Intelligent‐Tiering automatically moves files back to the EFS Standard or EFS One Zone storage classes from EFS Standard-IA or EFS One Zone-IA  storage classes
+
+
+EFS replication:
+===========
+=> You can create a replica of your Amazon EFS file system in the AWS Region of your preference using Amazon EFS Replication.
+
+=> When enabled, Amazon EFS Replication automatically and transparently replicates the data and metadata on your EFS file system to a new destination EFS file system that is created in an AWS Region that you choose.
+
+=> Amazon EFS automatically keeps the source and destination file systems synchronized.
+
+
+EFS Use Cases:
+===========
+a) Content Management :
+----------------------------------
+=> Great Fit for Content Management Systems as you easily Share content among multiple EC2 Instances 
+
+b) Web Servers
+----------------------
+=> Great Fit for Web Servers
+=> Have Just Single Folder Structure for your website and Let multiple EC2 Instances to Access.
+
+Demo:
+=====
+
+
+

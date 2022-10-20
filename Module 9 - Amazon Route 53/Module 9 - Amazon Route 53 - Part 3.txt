@@ -1,0 +1,254 @@
+=============================
+Module 9 - Amazon Route 53 - Part 3
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+==========================
+*4) Exploring DNS Record Types
+==========================
+Following are Important DNS Record Types
+-----------------------------------------------------------
+1) A	=> Maps the Domain to IPv4 Address
+myjlc123.com	=> 1.2.3.4 ( Public IP of EC2 INstance)
+
+2) AAAA	=> Maps the Domain to IPv6 Address
+myjlc123.com	=> 123:456::789  ( Public IP of EC2 INstance)
+
+3) CNAME	=> Maps the Domain to another Host name
+
+myjlc123.com	=>  http://myjlc-bucket-1.s3-website-us-east-1.amazonaws.com
+
+4) ALIAS      => Maps the Domain to another Host name
+
+myjlc123.com	=>  http://myjlc-bucket-1.s3-website-us-east-1.amazonaws.com
+
+=========================
+5) Deploying the Application
+=========================
+1) Goto EC2 Dashboard
+
+2) Launch EC2 Instance in US-EAST-1(N.Virginia) Region with the following Details
+------------------------------------------------------------------
+a) Name 			:    jlc-virginia-server
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    virginia-key-pair
+e) Network settings
+    i) VPC - required		:    Default VPC
+    ii) Subnet 		:    us-east-1a
+    iii) Auto-assign public IP	:    Enable
+    iv) Firewall (security groups):  virginia-web-sg
+    v) Description		:   virginia-web-sg for N.Virginia Region
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) Click on Launc Instance
+
+3) Update the Security Group as per the requirement.
+
+4) Connect using EC2 Instance Connect
+
+5) Setup Nginx Server
+
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+systemctl status nginx
+
+6) Deploy ypu Web Application
+
+cd /var/www/html
+sudo mv index.nginx-debian.html index.html
+sudo vim index.html
+
+<h1> Hello Guys, Welcome <h1>
+<h2> I am from N.Virginia Region </h2>
+
+7) Take the Public IP of EC2 Instance and Access the Web Application from browser
+http://44.201.39.208
+
+8) Launch EC2 Instance in EU-WEST-2(London) Region with the following Details
+------------------------------------------------------------------
+a) Name 			:    jlc-london-server
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    london-key-pair
+e) Network settings
+    i) VPC - required		:    Default VPC
+    ii) Subnet 		:    eu-west-2a
+    iii) Auto-assign public IP	:    Enable
+    iv) Firewall (security groups):  london-web-sg
+    v) Description		:   london-web-sg for London Region
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) Click on Launc Instance
+
+9) Update the Security Group as per the requirement.
+
+10) Connect using EC2 Instance Connect
+
+11) Setup Nginx Server
+
+sudo apt-get update
+sudo apt-get install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
+systemctl status nginx
+
+12) Deploy ypu Web Application
+
+cd /var/www/html
+sudo mv index.nginx-debian.html index.html
+sudo vim index.html
+
+<h1> Hello Guys, Welcome <h1>
+<h2> I am from London Region </h2>
+
+13) Take the Public IP of EC2 Instance and Access the Web Application from browser
+http://18.134.240.192
+
+14) Now we have 3 Web Servers in 3 different Regions
+
+Mumbai - http://43.205.230.180
+N. Virginia - http://44.201.39.208
+London - http://18.134.240.192
+
+15) Creating DNS Record
+----------------------------------------
+i) Goto Route 53 Dashboard
+ii) Click on Hosted zones (Left Menu)
+iii) Select Your Domain( In my case - myjlc123.com) 
+iv) Click on Create Record
+v)  Provide the following details
+a) Record name 	: 	myjlc123.com
+b) Record type 	: 	A 
+c) Value 		: 	43.205.230.180 
+			44.201.39.208 
+			18.134.240.192
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Simple 
+
+vi) After providing Above Details, Click on  Create Record.
+vii) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+*** It has to show the IP : 	43.205.230.180 
+			44.201.39.208 
+			18.134.240.192
+
+16) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+=======================
+6) Route 53 - Health Checks
+=======================
+=> You can set Health Checks on Individual Record Sets.
+i.e May on Individual EC2 Instances or Individual Load Balancers 
+
+=> If the Record Set/Resource fails a Health Check, then That will be removed from Route 53 until It passes the Health Checks
+
+=> You can set SNS Notifications to alert your team about Health Checks
+
+Demo : Create the Health Check for Resource.
+--------------------------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Create Health Check.
+3) Provide the following
+a) Name 		:  	mumbai-HC***
+b) What to Monitor 	:	Endpoint
+c) Specify endpoint by:	IP Address
+d) Protocal	:	HTTP
+e) IP Address	:	IP of Mumbai Resource***
+f) Host Name 	: 	index.html
+g) port		: 	80
+h) path		:	---
+And Click On Next
+
+4)Provide the Following
+a) Create Alaram	- No
+And Click On Create Health Check
+
+Note : Create the Health Checks for N.Virgina and London Resouces also
+
+=======================
+7) Simple Routing Policy
+=======================
+=> If you choose Simple Routing Policy, You can Create Only One Record.
+=> One Record can have One or More Values.
+=> If you specify the Multiple Values in the single Record, then Route 53 Returns all the Values to Use in the Random Order.
+
+*** Diagram ***
+
+=======================
+8) Multi-Values Answer  Routing Policy
+=======================
+=> This is similar to Simple Routing Policy. however, it allows to put Health Checks on Each Record Set.
+=> If you choose Multi-Values Routing Policy, You can Create One or More Records.
+=> You specify the Multiple Values in the  Record.
+=> Multi-Values Routing lets you to check the health of each resource.
+=> So Route 53 Returns only values for Healthy Resources.
+
+*** Diagram ***
+
+Demo: Using Multi-Values Answer Routing Policy
+-------------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) Click on Create Record
+5)  Provide the following details
+a) Record name 	: 	myjlc123.com
+b) Record type 	: 	A 
+c) Value 		: 	43.205.230.180
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Simple 
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+

@@ -1,0 +1,184 @@
+==========================
+Module 7 - Amazon  VPC - Part 6
+==========================
+Part 1:
+=====
+1) VPC Fundamentals
+2) Understanding Default VPC
+3) Understanding IPv4 for VPC
+
+Part 2:
+=====
+4) Exploring VPC
+5) Exploring Subnets
+
+Part 3:
+=====
+6) Exploring Internet Gateways
+7) Exploring Route Tables
+
+Part 4:
+=====
+8) Exploring NAT Gateways
+
+Part 5:
+=====
+9) Exploring Security Groups and NACLs
+
+Part 6:
+=====
+10) Exploring VPC Endpoints
+
+Part 7:
+=====
+11) Exploring VPC Peering
+
+Part 8:
+=====
+12) Exploring AWS PrivateLink
+13) Exploring VPN CloudHub
+14) Exploring AWS DirectConnect
+15) Exploring Transit Gateway
+16) Understanding IPv6 for VPC
+
+17) Exam Tips
+Exam #7 - VPC
+
+========================
+10) Exploring VPC Endpoints
+========================
+=> VPC Endpoint allows you to privately connect Your VPC to Supported AWS Services.
+=> VPC Endpoints are powered by PrivateLink without requiring Internet Gateway, NAT Gateway, VPN Connection or AWS Direct Connect Connection.
+
+=> Instances in your VPC do not require Public IP to Communicate with the AWS Services
+
+IMP Note : 
+*** Traffic between Your VPC ad other  AWS Services does not leave the Amazon Network
+
+ VPC Endpoints are Virtual Devices:
+-------------------------------------------------
+=>  VPC Endpoints are horizontally Scaled and Highly Available VPC Components
+=>  VPC Endpoints allows communication between  Instances in your VPC and AWS Services without imposing Availability Risks or bandwidth Constraints on your network Traffic.
+
+Ex:
+Bandwidth using NAT Gateway  - 45Gbps
+Bandwidth using  VPC Endpoints  - Unlimited.
+
+Types of  VPC Endpoints:
+----------------------------------
+=> There are two types of  VPC Endpoints
+	1) Interface Endpoints
+	2) Gateway Endpoints
+
+1) Interface Endpoints:
+--------------------------------
+=>  Interface Endpoint is an Elastic Network Interface(ENI) with Private IP Address that Serves as an Entry point for the traffic handled to a supported services.
+=> This supports a large number of AWS Services 
+
+2) Gateway Endpoints:
+--------------------------------
+=> Similar to NAT Gateways
+=> Gateway Endpoint is a Virtual Device you Provision
+=> This supports Connect to S3 and DynamoDB currently.
+
+Demo 11: VPC Endpoints
+-----------------------------------
+Public Network with Using Internet Gateway 
+===================================
+A) Connect to Web Server
+
+ssh ubuntu@3.145.55.219 -i myjlc-kp.pem
+
+B) Intsall AWS CLI in EC2 
+
+sudo -i
+apt-get update
+apt-get install awscli -y
+aws --version
+
+C) Create IAM Role to with S3 Access.
+
+Name : myEC2-Access-S3
+
+D) Attach the IAM Role Created above to EC2 Instance
+
+E) Access S3 from our EC2 Instances.
+
+aws s3 ls
+aws s3 ls s3://myjlc-bucket-1
+
+Public Network with Using NAT Gateway 
+===================================
+A) Connect to Web Server
+
+ssh ubuntu@3.145.55.219 -i myjlc-kp.pem
+
+B) Connect to DB Server
+
+ssh ubuntu@10.0.2.27 -i myjlc-kp.pem
+
+C) Intsall AWS CLI in EC2 
+
+sudo -i
+apt-get update
+apt-get install awscli -y
+aws --version
+
+D) Attach the IAM Role Created above to EC2 Instance
+
+E) Access S3 from our EC2 Instances.
+
+aws s3 ls
+aws s3 ls s3://myjlc-bucket-1
+
+Private Network with Using VPC Endponits
+===================================
+A) Connect to Web Server
+
+ssh ubuntu@3.145.55.219 -i myjlc-kp.pem
+
+B) Connect to DB Server
+
+ssh ubuntu@10.0.2.27 -i myjlc-kp.pem
+
+C) Access S3 from our EC2 Instances.
+
+aws s3 ls				//OK
+aws s3 ls s3://myjlc-bucket-1		//OK
+
+curl google.com			//OK
+
+D) Delete the NAT Gateway
+i) Update Private Route Table
+ii) Delete NAT Gateway component
+
+E) Access S3 from our EC2 Instances.
+
+aws s3 ls			//Error
+aws s3 ls s3://myjlc-bucket-1	//Error
+
+curl google.com		//Error
+
+F)  Create VPC Endpint
+1) Goto VPC bashboard 
+2) Select Endpoints ( Leftside menu)
+3) Click on Create Endpoints
+a) Name tag -	 myjlc-s3-endpoint
+b) Service category - AWS Services
+c) Services : 
+com.amazonaws.us-east-2.s3	amazon	Gateway
+d) VPC		- myjlc-vpc
+e) Route tables 
+-- Select One or More Route Tables
+f) Policy	: Full Access
+g) Tags
+
+G) Access S3 from our EC2 Instances.
+
+aws s3 ls	--region us-east-2	//Ok
+
+curl google.com		//Error
+
+
+
+

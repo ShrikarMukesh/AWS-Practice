@@ -1,0 +1,123 @@
+=============================
+Module 9 - Amazon Route 53 - Part 4
+============================
+Part 1:
+=====
+1) DNS Fundamentals
+2) Route 53 Fundamentals
+3) Registering Domain
+
+Part 2:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+
+Part 3:
+=====
+*4) Exploring DNS Record Types
+*5) Deploying the Application
+6) Route 53 - Health Checks
+7) Simple Routing Policy
+8) Multi-Values Answer Routing Policy
+
+Part 4:
+=====
+9) Weighted Routing Policy
+10) Geolocation Routing Policy
+
+Part 5:
+=====
+11) Latency Routing Policy
+12) Failover Routing Policy
+13) GeoProximity Routing Policy
+
+Part 6:
+=====
+14) CNAME Vs ALIAS Records
+15) Creating Records with Godaddy
+
+Part 7:
+=====
+16) Exam Tips
+Exam #8 - Route 53
+
+=======================
+9) Weighted Routing Policy
+=======================
+=> Allows you to split your user traffic based on different weights assigned.
+
+Ex:
+You can set
+5% of  trafic to us-east-1(N.Virginia)
+90% of  trafic to eu-west-2(London)
+5% of  trafic to ap-south-1(Mumbai)
+
+*** Diagram ***
+
+Demo: Using Weighted Routing Policy
+---------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) Click on Create Record
+5)  Provide the following details
+a) Record name 	: 	myjlc123.com
+b) Record type 	: 	A 
+c) Value 		: 	 mumbai-IP
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Weighted
+f) Weight		: 	5
+g) Health Check	: 	mumbai-HC
+h) Health Record	: 	mumbai-Record
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+
+==========================
+10) Geo-Location Routing Policy
+==========================
+=> Geo-Location routing lets you choose where your traffic will be sent based on the geographic location of your users.
+
+Ex: 
+I want to route all 
+
+Asian users traffic to Mumbai region.
+US users traffic to N.Virginia region 
+Europe users traffic to London region 
+
+Localization:
+-----------------
+=> These servers may have the local language of your respective customers and display all the prices in respective currencies.
+
+
+*** Diagram ***
+
+Demo: Using Geo-Location Routing Policy
+-------------------------------------------------------
+1) Goto Route 53 Dashboard
+2) Click on Hosted zones (Left Menu)
+3) Select Your Domain( In my case - myjlc123.com) 
+4) Click on Create Record
+5)  Provide the following details
+a) Record name 	: 	myjlc123.com
+b) Record type 	: 	A 
+c) Value 		: 	 mumbai-IP
+d) TTL (seconds) 	: 	120
+e) Routing policy 	: 	Geo-Location
+f) Location	: 	Asia
+g) Health Check	: 	mumbai-HC
+h) Health Record	: 	mumbai-Record
+
+6) After providing Above Details, Click on  Create Record.
+7) Wait for 120 Seconds (TTL) , try with nslookup
+
+nslookup myjlc123.com
+
+8) Now You canAccess the Web Application from browser with domain myjlc123.com
+http://myjlc123.com
+

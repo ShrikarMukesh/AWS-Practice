@@ -1,0 +1,49 @@
+========================
+Module 6 : Databases - Part 8
+========================
+1) Amazon RDS
+2) Amazon Aurora
+3) ElastiCache
+4) DynamoDB
+5) Exam Tips
+Exam #6 - Databases
+
+==================
+5) Exam Tips
+==================
+A) Amazon RDS
+-----------------------------
+=> RDS - Relational Database Service
+=> RDS is Managed Service for Relational Database from AWS.
+=> RDS supports the following 6 Relational Databases Engines.
+	1) MySQL
+	2) Oracle
+	3) Microsoft SQL Server
+	4) PostgreSQL
+	5) MariaDB
+	6) Amazon Aurora ( Amazon's Own Relational Database)
+
+=> RDS is for OLTP Workloads.
+=> RDS is not for OLAP Workloads.
+
+OLTP Vs OLAP
+-------------------
+OLTP:
+---------
+=> Process the  data from Transactions in real time
+=> OLTP is all about data processing and completing large number of small Transactions in real time.
+=> Ex: 
+	Customer Orders
+	Banking Txs
+	Payments 
+	Booking Systems
+
+OLAP:
+---------
+=> Process the Complex Queries to analyze the historical data.
+=> OLAP is all about data analysis using large data sets and complex queries that take long time to complete.
+=> Ex
+	Sales ForeCasting
+	Predictions
+	
+
