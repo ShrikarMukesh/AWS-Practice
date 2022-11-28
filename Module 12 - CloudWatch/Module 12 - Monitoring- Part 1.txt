@@ -1,0 +1,247 @@
+==========================
+Module 12 - Monitoring - Part 1
+==========================
+Part 1:
+---------
+1) Introduction to CloudWatch
+2) CloudWatch Alarms
+
+Part 2:
+---------
+2) CloudWatch Alarms
+3) CloudWatch Logs
+
+4) CloudWatch Metrics
+5) Monitoring with Grafana
+6) Monitoring with Prometheus
+7) Exam Tips
+Exam #11 - Monitoring 
+
+
+========================
+1) Introduction to CloudWatch
+========================
+
+About CloudWatch:
+===================
+=> Amazon CloudWatch monitors your AWS resources and applications you run on AWS in real time. 
+
+=> You can use CloudWatch to collect and track metrics about your resources and applications.
+
+=> You can create alarms that watch metrics and send notifications or automatically make changes to the resources you are monitoring when a threshold is breached. 
+
+=> For example, 
+        ***  You can monitor the CPU usage and disk reads and writes of your EC2 instances 
+        *** You can use that data to determine whether you should launch additional instances to handle increased load. 
+        *** You can also use this data to stop under-used instances to save money.
+
+=> With CloudWatch, you gain system-wide visibility into resource utilization, application performance, and operational health.
+
+CloudWatch Key Features:
+===================
+A) Easily collect and store logs:
+----------------------------------------
+=> CloudWatch Logs service allows you to collect and store logs from your resources, applications, and services in near real time. 
+
+B) Unified operational view with dashboards:
+------------------------------------------------------------
+=> CloudWatch dashboards enable you to create reusable graphs and visualize your cloud resources and applications in a unified view.
+=> You can graph metrics and logs data side by side in a single dashboard to quickly get the context and move from diagnosing the problem to understand the root cause. 
+
+C) Automate response to operational changes with CloudWatch Events:
+--------------------------------------------------------------------------------------------
+=> CloudWatch Events provides a near real-time stream of system events that describe changes to your AWS resources. 
+=> It allows you to respond quickly to operational changes and take corrective action.
+=>  You simply write rules to indicate which events of your application and what automated actions to take when a rule matches an event.
+
+for example, Set a rule to Simple Notification Service (Amazon SNS) topic.
+
+D) Log analytics:
+------------------------
+=> CloudWatch Logs Insights enables you to drive actionable intelligence from your logs to address operational issues without needing to provision servers or manage software.
+=> You can instantly begin writing queries with aggregations, filters, and regular expressions. 
+=> In addition, You can visualize time-series data, drill down into individual log events, and export query results to CloudWatch Dashboards. 
+
+E) CloudWatch Alarams:
+--------------------------------
+
+About CloudWatch Metrics:
+=====================
+=> You can use CloudWatch to collect Metrics about Systems and Applications
+
+Systems Metrics:
+-----------------------
+=> Metics about O.S . Memory , CPU, Networking etc
+=> Collects by Default
+
+Application Metrics
+-----------------------
+=> Metics about Your Application
+=> Need to Install CloudWatch Agent
+
+Types of CloudWatch Metrics:
+========================
+a) Default Metrics
+b) Custom Metrics
+
+a) Default Metrics:
+-------------------------
+=> These metrics are provided out of the box and Do not require any Additional Configuration
+=>  These metrics comes with Every Service
+
+Ex:
+	* CPU Utilization
+	* Network Throughput
+	etc
+
+b) Custom Metrics:
+-------------------------
+=> Need to Install CloudWatch Agent on the host to collect the Custom Metrics required.
+
+Ex:
+	* EC2 Memory Utilization
+	* EBS Storage Capacity
+	etc
+
+
+
+========================
+2) CloudWatch Alarms
+========================
+
+Demo 1: Creating Alarms with Notifications Action
+=======================================
+There are 3 Main Tasks in this Demo
+
+A) Launch EC2 Instance 
+B) Create SNS Topic
+C) Create Alarm with SNS Notifications Action
+D) Fire Alaram and Check the Status
+
+A) Launch EC2 Instance 
+----------------------------------
+1) Goto EC2 Dashboard
+2) Click on Instances  (Left menu)
+3) Click on Launch Instance.
+4) Launch EC2 Instance in US-EAST-2 Region with the follwoing Info.
+
+a) Name 			:    jlc-server-1
+b) Amazon Machine Image	:    Ubuntu 22.04 LTS
+c) Instance type		:    t2.micro
+d) Key pair (login)		:    myjlc-key-pair
+e) Network settings
+    i) VPC - required		:    Default VPC
+    ii) Subnet 		:    us-east-2a
+    iii) Auto-assign public IP	:    Enable
+    iv) Firewall (security groups):   myjlc-web-sg
+    v) Description		:    myjlc-web-sg for Ohio Region
+
+f) Configure storage		:    10GB
+g) Advanced details		:    Keep Defaults
+h) User Data 	:
+
+#!/bin/bash
+/bin/apt-get update
+/bin/apt-get install nginx -y
+/bin/systemctl start nginx
+/bin/systemctl enable nginx
+cd /var/www/html
+sudo rm index.nginx-debian.html
+sudo touch index.html
+/bin/echo "<h1> Hello Guys, Welcome to JLC !!! </h1>" >> index.html
+/bin/echo "<h1> I am from $(hostname -f)  </h1>" >> index.html
+/bin/echo "<h1> I am from $(hostname -f)  </h1>" >> index.html
+
+i) Click on Launch Instance
+
+5) Update the Security Group as per the requirement.
+
+6) Take the Public IP of EC2 Instance and Access the Web Application from browser
+http://18.119.163.84
+
+
+B) Create SNS Topic
+----------------------------------
+7) Goto Amazon SNS Dashboard
+8) Click on Topics (Left menu)
+9) Click on Create Topic
+10) Provide the following Details
+a) Type 		:	Standard
+b) Name 		: 	myhello-topic
+c) Display name 	:	myhello-topic
+d) Keep Remaining Optional as it is
+e) Click on Create Topic
+
+11) Create the Subscriptions as follows.
+i) Select the Topic : myhello-topic
+ii) Click on Create Subscription
+iii) Provide the following Details
+a) Topic ARN	:	arn:aws:sns:us-east-2:166473396133:myhello-topic   ( will be showm autimatically)
+b)  Protocol	:	Email
+c)   Endpoint	: 	<Give Valid email ID>
+d)  Keep Remaining Optional as it is
+e) Click on Create Subscription
+
+Note 1: After your subscription is created, Goto Email and you must confirm it.
+Note 2: You can Create multiple  Subscriptions. To Create multiple  Subscriptions, Repeat Step 11.
+
+C) Create Alarm with SNS Notifications Action
+-------------------------------------------------------------
+12) Goto to CloudWatch
+13) Click on Alarms => All Alarams (Left Menu)
+14)  Click on Create Alaram
+15) Provide the Following Info as follows
+
+Step1: Specify metric and conditions
+------------------------------------------------
+a) Click on Select Metric button
+b) Click on EC2
+c) Click on Per-Instance Metrics
+d) Select - CPU Utilization Metric and Click on Select Metric Orange Button
+e) Provide the Following 
+i) Namespace	 : AWS/EC2   		( No Change)
+ii) Metric name 	 : CPU Utilization 		( No Change)
+iii) InstanceId 	 :  i-01ab96e4b7147d6bf  	( No Change)
+iv) Instance name	 : MyJLC-Server 		( No Change)
+v) Statistic	 : Average 			( No Change)
+vi) Period		 : 1 minute 		( Change This)
+vii) Threshold type	 : Static 			( No Change)
+viii) Whenever CPUUtilization is... : > Greather	( No Change)
+ix) Define the threshold value.	: 1		( Change This)
+
+f) Click on Next Orange Button
+
+Step 2: Configure actions
+----------------------------------
+g) Alarm state trigger	:	In Alarm
+h) Check Radio Button 	:	 Select an existing SNS topic 	
+i) Send a notification to… 	:	myhello-topic
+
+j) Click on Next Orange Button
+
+Step 3: Add name and description
+----------------------------------
+k) Name 		:  	myhello-alarm
+l)  Description	: 	myhello-alarm
+
+m) Click on Next Orange Button
+
+Step 4: Preview and create
+----------------------------------
+n) Check all the Details given and Click on Create Alarm Orange button
+
+D) Fire Alaram and Check the Status
+--------------------------------------------------
+o) Run the Following Command from command line
+
+aws cloudwatch set-alarm-state \
+--alarm-name  myhello-alarm \
+--state-value   ALARM \
+--state-reason  "Testing"
+
+p) Above command will force the Alarm to trigger and Send the Message to SNS Topic. Further SNS Topic send the Mail to Subcriptions.
+
+
+
+
+
