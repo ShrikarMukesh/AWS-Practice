@@ -1,0 +1,646 @@
+==================================
+Module 13 - Application Integration - Part 5
+==================================
+Part 1:
+---------
+1) Introduction to Messaging
+2) Amazon SQS 
+2.1) Introduction to SQS
+2.2) Exploring SQS Standard Queue 
+2.3) SQS Configurations
+
+Part 2:
+---------
+2.3) SQS Configurations( Cont...)
+2.4) Dead-Letter Queues:
+2.5) SQS - FIFO Queues:
+
+Part 3:
+---------
+3) Amazon SNS
+3.1) Introduction to SNS
+3.2) SNS Configurations
+3.3) Exploring SNS Topic
+3.4) Exploring SNS Topic Subcriptions
+
+Part 4:
+---------
+4) Amazon MQ
+4.1) Inroduction to Amazon MQ
+4.2) SQS and SNS Vs Amazon MQ
+4.3) Amazon MQ with Apache Active MQ
+4.4) Amazon MQ with Rabbit MQ
+
+Part 5:
+---------
+5) Exam Tips
+Exam #12 - Application Integration 
+
+============
+5) Exam Tips
+============
+
+1) Introduction to Messaging
+========================
+=> When you have Distributed Applications, You will deploy different applications in different Servers.
+=> Distributed Applications Running in different servers has to communicate with each other.
+
+=> There are two ways of application communication.
+a) Synchronous/Online  Comminication
+b) ASynchronous/Offline Comminication
+
+a) Synchronous Comminication:
+------------------------------------------
+=> One Application/Service calls another Application/Service using Http/Https protocal
+=> Caller Application has to wait for the response from Called Applicaion util it finishes the Processing 
+=> It offers the Tightly Coupled Architecture( Not at all Good One)
+
+b) ASynchronous Comminication
+------------------------------------------
+=> One Application/Service sends the message to Messaging middleware 
+=> Caller Application continues its work without waiting for a response 
+=> One or more other applications/services will process the message asynchronously.
+=> It offers the Loosely Coupled Architecture
+
+Poll-based Messaging Vs Push-based Messaging
+------------------------------------------------------------
+** You need to understand the Difference
+
+
+2) Amazon SQS
+==============
+   ***    SQS => Simple Queue Service
+
+=> SQS is a messaging Queue that allows ASynchronous processing of work.
+=> SQS is a fully managed AWS Service allows poll-based Messaging 
+
+=> One Application/Service sends the message to SQS Queue.
+=> Another Application/Service polls for message 
+=> if messages are there then  reads the message from SQS Queue and process them.
+=> One-to-One Messaging : One message will be processed by One Application
+
+SQS Configurations 
+==================
+1) Visibility timeout:
+---------------------------
+=> Default Visibility timeout : 30 Seconds
+=> You can set between 0 sec to 12 hours depending the amount of time required to process the message.
+
+=> One Message in the Queue must be processed by One Consumer
+
+=> To Avoid another backend server from processing the Same Queue again, SQS puts the Visibility timeout during which SQS stops other servers from reading and processing the Same message.
+
+Ex: You Visibility timeout : 60 Seconds
+=> When One Server reads the Message then SQS places the Lock on the Message for 60 seconds, but No one else can see that.
+=> If the Server process the message in 60 seconds  and deletes that message then It is Over.
+=> If the Server fails to process the message in 60 seconds then that message will show-up again in the Queue.
+=> Now Any one can see that. Any One can Poll for that Message.
+
+2) Message retention period:
+-------------------------------------
+=> Default Retention Peroid is 	4 Days
+=> You can set Default Retention between 1 min to 14 days.
+
+=> Messages have limited time to stay in the SQS Queue
+=> If the Retension period is over , then SQS purge the messages automatically.
+
+3) Delivery delay:
+-----------------------
+=> Default Delivery delay is 0 seconds.
+=> You can set Upto 15 minutes.
+
+=> When you specify the Delivery delay more than zero , SQS hides the message for set duration of time before it shows to backend server.
+
+4) Maximum message size:
+----------------------------------
+=> You can publish the message upto 256 KB of text in any format.
+
+5) Receive message wait time:
+---------------------------------------
+=> Default Receive Message Wait time is 0 seconds which for Short Polling.
+=> You can set wait time more than 0 seconds if you want Long Polling.
+=> You can set max wait time of 20 Seecs
+
+6) Encryption:
+-------------------
+=> Messages are encrypted in transit by default. 
+=> You can enable at-rest encryption to your queue
+=> You can add Client-Sid Encryption if you want.
+
+7) Queue Depth:
+--------------------
+=> This can be a trigger for Auto Scaling
+=> You can Integrate SQS and CloudWacth to fire the Alaram based on Queue Depth Metric to Scale the Servers.
+
+8) Long Polling Vs Short Polling
+------------------------------------------
+=> Amazon SQS provides two ways to receive messages from a queue.
+a) Short Polling 
+b) Long Polling  
+
+By default, SQS queues use short polling.
+
+a) Short Polling:
+----------------------
+=> Backend server connects and check if there is any message on the queue. 
+=> If the message is not found, the backend server disconnects 
+=> It keeps doing that until it finds messages to process
+
+=> Short polling approach has some Problems. 
+a)It burns CPU cycles on the backend server. 
+b)We have to pay for making those extra API calls to SQS.
+
+b) Long Polling   ( Better)
+----------------------------------
+=> Long polling enables us to connect and then wait for a while. 
+=> The highest long polling wait time is 20 seconds.
+
+=> You can Set a value greater than zero for the parameter Receive message wait time
+
+2.4) Dead-Letter Queues(DLQ)
+========================
+
+=> Dead-Letter Queue is a queue that one or more source queues can use for messages that are not consumed successfully
+
+=> SQS does not create the dead-letter queue automatically. 
+=> You must first create the queue before using it as a dead-letter queue.
+
+=> Dead-Letter Queue of a FIFO queue must also be a FIFO queue. 
+=> Similarly, Dead-Letter Queue of a standard queue must also be a standard queue.
+
+
+Standard Queues Vs FIFO Queues
+========================
+1) Standard Queue supports Unlimited Messages per Second 
+where as 
+FIFO Queue supports 300 Messages per Second per group.
+
+2)  You may get Message Duplication in Standard Queue 
+where as
+NO Message Duplication in FIFO Queue 
+
+3) Best-Effort Ordering in Standard Queue 
+where as
+Gauranteed Message Ordering in FIFO Queue 
+
+
+
+3) Amazon SNS
+==============
+
+  ***    SNS => Simple Notification Service
+
+=> SNS is a Push based messaging Service.
+=> SNS will pro-actively deliver the messages to endpoints subscribed to it.
+=> SNS can be used to alert the System or Person
+=> SNS uses Topic message delivery pattern- 
+=> One-to-many Pattern / Pub-Sub Model
+
+=> One Application/Service sends the message to SNS Topic
+=> SNS Topic delivers that Message to multiple Subscriptions.
+
+
+ SNS Configurations
+==================
+1) Supported subscription Types
+--------------------------------------------
+=> Email
+=> SMS
+=> Mobile Push Notications
+=> HTTP/HTTPS
+=> Lambda
+=> SQS
+=> Kinesis Data Firehose
+
+
+2) Maximum message size:
+----------------------------------
+=> You can publish the message upto 256 KB of text in any format.
+
+3) DLQ Support
+--------------------
+=> Messages that failed to be delivered can be stored in SQS DLQ.
+
+4) Encryption:
+-------------------
+=> Messages are encrypted in transit by default. 
+=> You can enable at-rest encryption to your Topic
+
+Exploring SNS Topic Subcriptions
+==============================
+=>SNS Topic can have the following subscription Types
+----------------------------------------------------------------------
+=> Email
+=> SMS
+=> Mobile Push Notifications
+=> HTTPS
+=> Lambda
+=> SQS
+=> Kinesis Data Firehose
+
+a) Application-to-application (A2A):
+---------------------------------------------------
+=> SNS is a managed messaging service that lets you decouple publishers from subscribers. 
+=> This is useful for application-to-application messaging for microservices, distributed systems, and serverless applications.
+
+=>Allowed subscription Types for A2A
+	** Lambda
+	** SQS
+	** HTTPS
+
+b) Application-to-person (A2P):
+----------------------------------------
+=> SNS allows you to send push notifications to mobile apps, text messages to mobile phone numbers, and plain-text emails to email addresses. 
+=> You can fan out messages with a topic
+
+=>Allowed subscription Types for A2P
+	** Email
+	** SMS
+	** Push Notifications
+
+
+
+4) Amazon MQ
+==============
+
+=> Amazon MQ is a fully managed message broker service that makes it easy to set up, migrate and operate message brokers on AWS Cloud.
+
+=> Message broker allows applications to communicate using various programming languages, operating systems, and formal messaging protocols.
+
+=> Currently, Amazon MQ supports two engine types.
+a) Apache ActiveMQ 
+b) RabbitMQ 
+
+4.2) SQS and SNS Vs Amazon MQ
+========================
+a) Topic and Queues :
+---------------------------
+=> Each offers architectures with Topics and Queues
+=> Allows for One-to-One or One-to-many messaging patterns
+
+b) Existing Applications
+---------------------------------
+=> You can use Amazon MQ for migrating applications from existing message brokers that rely on compatibility with APIs such as JMS or protocols such as AMQP 0-9-1, AMQP 1.0, MQTT, OpenWire, and STOMP.
+
+c) New Applications
+---------------------------------
+=> SQS and SNS are queue and topic services that are highly scalable, simple to use, and don't require you to set up message brokers. 
+=> You can use SQS and SNS services for new applications that can benefit from nearly unlimited scalability and simple APIs.
+
+d) Publicly Accessible
+-----------------------------
+=> Amazon MQ requires private networking like VPC, Direct Connect etc.
+=> SQS and SNS are Publicly Accessible by default.
+
+
+4.3) Amazon MQ with Apache Active MQ
+==============================
+=> Apache Active MQ supports two deployment models
+a) Single-instance broker
+b) Active/standby broker
+
+a) Single-instance broker:
+----------------------------------
+=> Creates a broker in a single Availability Zone (AZ) 
+=> EBS or EFS can be used for storage.
+=> Suitable for development and testing environments or smaller production workloads 
+
+b) Active/standby broker:
+---------------------------------
+=> Creates a single broker instance in one Availability Zone (AZ) and another standby broker instance in a different AZ
+=> EFS can be used for storage.
+=> Provides high availability and automatic failover capability. 
+=> Suitable for production workloads
+
+
+4.4) Amazon MQ with Rabbit MQ
+===========================
+=> Rabbit MQ supports two deployment models
+a) Single-instance broker
+b) Cluster deployment
+
+a) Single-instance broker:
+----------------------------------
+=> Creates a broker in a single Availability Zone (AZ) behind a Network Load Balancer (NLB).  
+=> EBS can be used for storage.
+=> Suitable for development and testing environments or smaller production workloads 
+
+b) Cluster deployment:
+---------------------------------
+=> A cluster deployment is a logical grouping of three RabbitMQ broker nodes behind a Network Load Balancer and distributed across three  Availability Zones (AZ).
+=> EBS can be used for storage.
+=> Use for production workloads that require high availability and message durability.
+
+
+=============================
+Exam #12 - Application Integration 
+=============================
+
+Q1) SNS is a _____-based messaging service.
+
+A) Pull
+
+B) Grab
+
+C) Poll
+
+D) Push
+
+Ans: D
+
+
+Q2) If the visibility timeout on a message in an SQS queue expires, what happens to the message?
+
+A) It's now available in the queue to be retrieved.
+
+B) It's deleted.
+
+C) An SNS Topic is notified.
+
+D) It's emailed to sqs-help@amazon.com.
+
+Ans: A
+
+
+Q3) Which layers of our applications need to be loosely coupled?
+
+A) Internal and external
+
+B) Just internal
+
+C) Just external
+
+D) None — it's bad practice to loosely couple applications
+
+Ans: A
+
+
+
+Q4) Which service is SNS commonly paired with to alert users that an alarm has gone off?
+
+A) EC2
+
+B) CloudWatch
+
+C) S3
+
+D) SWF
+
+Ans: B
+
+
+
+Q5) Which tool can be used to sideline malformed SQS messages?
+
+A) Dead-letter queues (DLQ)
+
+B) Alive-letter queues (ALQ)
+
+C) It can't be done
+
+D) Side-letter queues (SLQ)
+
+Ans: A
+
+
+Q6) What type of service is SQS?
+
+A) Machine learning tool
+
+B) Messaging queue
+
+C) Compute resource
+
+D) Database
+
+Ans: B
+
+
+
+Q7) How can you ensure that your SQS messages arrive in the correct order?
+
+A) SQS will do that automatically.
+
+B) Enable "correct_order" in your SQS queue.
+
+C) Use an SQS FIFO queue.
+
+D) Route the messages through an ELB.
+
+Ans: C
+
+
+
+Q8) What is the maximum length of time a message may remain in an SQS queue?
+
+A) 4 Days
+
+B) 14 Days
+
+C) 12 Hours
+
+D) Forever
+
+Ans: B
+
+
+Q9) What kind of architecture does AWS recommend building?
+
+A) Loosely Coupled
+
+B) Tightly Coupled
+
+C) Single Coupling
+
+D) Medium Coupled
+
+Ans: A
+
+
+
+Q10) Which message broker engine types are supported on Amazon MQ?
+
+Choose 2
+
+A) Kafka
+B) RabbitMQ
+C) SQS
+D) Kinesis Data Firehose
+E) ActiveMQ
+
+Ans: B,E
+
+
+
+Q11) Which tool can be used to monitor the queue depth of a DLQ?
+
+A) CloudTrail
+
+B) CloudWatch
+
+C) S3
+
+D) SQS
+
+Ans: B
+
+
+
+Q12) What is the largest message size you can store in SQS?
+
+A) 128KB
+
+B) 256KB
+
+C) 512KB
+
+D) 1MB
+
+Ans: B
+
+
+
+Q13) If your application needs to process 5,000 messages per second, which type of SQS queue would you use?
+
+A) SQS Standard
+
+B) SQS FIFO
+
+C) SQS Performance
+
+D) SQS paired with an EC2 Auto Scaling Group
+
+Ans: A
+
+
+Q14) Which of the following endpoints can use a custom delivery policy to define how Amazon SNS retries the delivery of messages when server-side errors occur?
+
+A) HTTP/S
+
+B) It can't retry messages
+
+C) Email
+
+D) SMS
+
+Ans: A
+
+Q15) You need to migrate an existing RabbitMQ-based application from on-premises to AWS with the least impact to functionality and design. Which service would be the best choice?
+
+A) AWS Batch
+
+B) AWS Application Messaging Service
+
+C) Amazon MQ
+
+D) Amazon Managed Broker
+
+Ans: C
+
+
+Q16) You have an e-commerce website and you are preparing for Black Friday which is the biggest sale of the year. You expect that your traffic will increase by 100x. Your website already using an SQS Standard Queue, and you're running a fleet of EC2 instances in an Auto Scaling Group to consume SQS messages. What should you do to prepare your SQS Queue?
+
+A) Contact AWS Support Team to Pre-Warm up SQS Queue
+
+B) Enable Auto Scaling with SQS Queue
+
+C) Increase the Capacity of SQS Queue
+
+D) Do Nothing. SQS Scales Automatically
+
+Ans: D
+
+
+Q17) You have an SQS Queue where each consumer polls 10 messages at a time and finishes processing them in 1 minute. After a while, you noticed that the same SQS messages are received by different consumers resulting in your messages being processed more than once. What should you do to resolve this issue?
+
+A) Enable Long-Polling
+
+B) Add DelaySeconds parameter to messages when being produced.
+
+C) Increase the Visibility Timeout
+
+D) Decrease the Visibility Timeout
+
+Ans: C
+
+
+Q18) You have 3 different applications that you'd like to send them the same message. All 3 applications are using SQS. What is the best approach would you choose?
+
+A) Use SQS Replication Feature
+
+B) Use SNS + SQS Fan Out Pattern
+
+C) Send Messages Individually to 3 SQS Queues.
+
+Ans: B
+
+
+
+Q19) Which of the following is NOT a supported subscriber for SNS?
+
+A) Kenisis Data Strams
+
+B) SQS
+
+C) AWS Lambda
+
+D) HTTPS
+
+Ans: A
+
+
+Q20) Which AWS service helps you when you want to send email notifications to your users?
+
+A) Amazon SQS with AWS Lambda
+
+B) Amazon  SNS
+
+C) Amazon Kenisis
+
+D) SES
+
+Ans: B
+
+
+Q21) SQS is a _____-based messaging service.
+
+A) Pull
+
+B) Grab
+
+C) Poll
+
+D) Push
+
+Ans: C
+
+
+
+Q22) What type of service is SNS?
+
+A) Machine learning tool
+
+B) Messaging Topic
+
+C) Compute resource
+
+D) Database
+
+Ans: B
+
+
+Q23) Which of the following Tool can be used for Bulk-Email Sending in AWS?
+
+A) SNS
+
+B) SQS
+
+C) SNS + SQS
+
+D) SES
+
+Ans: D
+
+SES - Simple Email Service
+
+

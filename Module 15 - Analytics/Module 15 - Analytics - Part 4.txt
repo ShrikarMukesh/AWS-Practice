@@ -1,0 +1,260 @@
+=======================
+Module 15 - Analytics - Part 4
+=======================
+Part 1:
+---------
+1) Introduction to BigData
+2) Amazon RedShift 
+2.1) Introduction
+2.2) Key Points about Redshift
+2.3) Snapshots and DR
+2.4) Storing Data into Redshift
+2.5) Redshift Cluster
+2.6) Demo : Creating Redshift Cluster
+2.7) Redshift Spectrum
+2.8) Redshift Serverless
+
+3) Amazon EMR
+3.1) Introduction
+3.2) Hadoop Cluster
+3.3) Demo : Creating EMR Cluster
+3.4) Amazon EMR Serverless
+
+Part 2:
+---------
+4) Amazon Kiness
+4.1) Introduction
+4.2) Kinesis Data Streams
+4.2.1) Introduction
+4.2.2) How Kinesis Data Streams works Internally
+4.2.3) Demo : Creating Kinesis Data Stream
+
+Part 3:
+---------
+4.3) Kinesis Data Firehose
+4.3.1) Introduction
+4.3.2) How Kinesis Data Firehouse works Internally
+4.3.3) Demo : Creating Kinesis Data Firehose
+4.3.4) Kinesis Data Strams(KDS) Vs Kinesis Data Forhose(KDF)
+
+4.4) Kinesis Data Analytics
+4.4.1) Kinesis Data Analytics
+4.4.2) Kinesis Data Analytics for SQL Applications
+4.4.3) Kinesis Data Analytics for Flink Applications
+4.4.4) When Should I Use Amazon Kinesis Data Analytics?
+
+Part 4:
+-----------
+5) Amazon Athena
+5.1) Athena Introduction
+5.2) Key Points
+5.3) Demo: Working with Athena
+
+6) AWS Glue
+6.1) Introdunction to Glue
+6.2) AWS Glue features
+6.3) More on AWS Glue 
+6.4) Data Catalog and crawlers in AWS Glue
+6.5) Demo : Working with Glue
+
+Part 5:
+-----------
+7) Amazon MSK
+8) Amazon QucikSight
+9) AWS Data Pipeline
+10) Amazon OpenSearch Service
+
+Part 6:
+-----------
+11) Analytics -  Tips
+Exam #14 - Analytics 
+
+Kinesis Data Analytics  - SQL , Apache Flink
+Athena	Data in S3	    - SQL, Apache Spark
+
+================
+5) Amazon Athena
+================
+5.1) Athena Introduction
+====================
+=> Athena is an Interactive Query Service that is used to Analyze data in S3 using SQL.
+=> Athena allows to directly Query the Data in S3 bucket without loading data into Database.
+
+=> Athena also allows to interactively run data analytics using Apache Spark
+
+=> Athena helps you analyze unstructured, semi-structured, and structured data 
+
+Ex:
+CSV, JSON, or Columnar Data Formats such as Apache Parquet and Apache ORC,Avro
+
+=> Athena is out-of-the-box integrated with Amazon Glue Data Catalog to design the Schema for Your data.
+
+=> Athena can be integrated with Amazon QuickSight for Reporting/dashboards
+
+5.2) Key Points:
+-----------------------
+a) Athena is Serverless:
+------------------------------
+=> So there is no infrastructure to manage and  No administration. 
+=> You pay only for the queries that you run.
+
+b) Athena is Super Fast:
+-------------------------------
+=>Athena automatically executes queries in parallel, so most results come back within seconds
+
+c) Athena is easy to use:
+--------------------------------
+=> Simply point to your data in Amazon S3, define the schema, and start querying using standard SQL.
+=> This makes it easy for anyone with SQL skills to quickly analyze large-scale datasets.
+
+d) Federated Data Sources:
+-------------------------------------
+=> Athena is also used to Analyze other federated data sources using standard SQL.
+=> Athena allows you to run SQL queries across data stored in Relational Databases, Non-Relational databases, Objects and other Custom Data Sources
+=> Use Data Source Connectors that Run on AWS Lambda to run Fedaral Queries.
+=> Store Results back in S3.
+
+e) Performance Tips:
+---------------------------
+=> Partition datasets in S3 for easy Querying
+=> Use Larger Files(>128MB) to minimize overhead
+=> Compress data for smaller Retrievals
+=> Use Columnar Data (Parquet or ORC )
+
+5.3) Demo: Working with Athena
+--------------------------------------------
+=> We will do the demo with AWS Glue 
+
+
+===========
+6) AWS Glue
+===========
+6.1) Introdunction to Glue
+=====================
+=> AWS Glue is a Serverless Data integration service 
+=> Glue allows analytics users to discover, prepare and integrate data from multiple sources 
+and Prepares the Required Schema for Your Data. 
+
+=> With AWS Glue, you can connect to more than 70 different Data Sources and manage your data in a centralized data catalog.
+
+=> It allows you to perform ETL Workloads without managing underlying Servers.
+
+=> Glue replaces EMR.
+
+6.2) AWS Glue features
+====================
+a) Search across multiple data stores:
+--------------------------------------------------
+=> Store, index, and search across multiple data sources by cataloging all your data in AWS.
+
+b) Automatically discover data:
+-------------------------------------------
+=> Use AWS Glue crawlers to automatically infer schema information 
+=> Integrate it into your AWS Glue Data Catalog.
+
+c) Connect to a wide variety of data sources:
+-----------------------------------------------------------
+=> Tap into multiple data sources using Glue connections to build your data lake.
+=> Both on premises and on AWS 
+
+d) Automatically scale based on workload:
+-----------------------------------------------------------
+=> Dynamically scale resources up and down based on workload. 
+=> This assigns workers to jobs only when needed.
+
+6.3) More on AWS Glue 
+====================
+a) Glue Data Catalog
+-----------------------------
+=> AWS Glue Data Catalog contains Schemas of your Source Data
+
+b) Glue Job Bookmarks:
+------------------------------
+=> AWS Glue tracks data that has already been processed during a previous run of an ETL job by persisting state information from the job run. 
+=> This persisted state information is called a job bookmark. 
+=> Job bookmarks help AWS Glue maintain state information and prevent the reprocessing of old data
+
+c) Glue DataBrew:
+------------------------------
+=> AWS Glue DataBrew is a visual data preparation tool that enables users to clean and normalize data without writing any code. 
+
+d) Glue Stream ETL
+------------------------------
+=> You can create Streaming ETL jobs that run continuously, consume data from streaming sources like Kinesis Data Streams, Kafka, and Managed Streaming for Kafka (Amazon MSK). 
+=> Jobs cleanse and transform the data, and then load the results into Amazon S3.
+
+e) Glue Studio:
+------------------------------
+=> AWS Glue Studio is a new graphical interface that makes it easy to create, run, and monitor extract, transform, and load (ETL) jobs.
+
+6.4) Data Catalog and crawlers in AWS Glue
+==============================
+=> AWS Glue Data Catalog contains references to your Source Data
+=> AWS Glue Data Catalog is an index to the location, schema, and runtime metrics of your data. 
+=> You use the information in the Data Catalog to create and monitor your ETL jobs. 
+=> Information in the Data Catalog is stored as metadata tables, where each table specifies a single data store. 
+=> You can run a crawler to take inventory of the data in your data stores
+
+=> Following is the general workflow for how a crawler populates AWS Glue Data Catalog:
+
+a) Crawler runs either custom classifiers or built-in classifiers to infer the format and schema of your data
+(Built-in classifier is one that recognizes JSON).
+
+b) Crawler connects to the data store. 
+
+C) Inferred schema is created for your data.
+
+D) Crawler writes metadata to the Data Catalog. 
+*** Data Catalog is collection of databases
+*** Database is Collection of Tables
+*** Table definition contains metadata about the data in your data store.
+
+6.5) Demo : Wotking with Glue
+========================
+1) Create S3 Bucket - myjlc-students
+2) Copy mystuents.json file to S3 bucket
+
+3) Goto AWS Glue Dashboard
+4) Select Databases under Data Catalog  ( Leftside Menu)
+5) Click on Create database 
+
+6) Provide the following
+a) Name		:	myjlc-database
+b) Location	:	-
+c) Description	:	myjlc-database
+
+7) Click on Create database button after providing all data
+
+8) Click on Crawlers  under Data Catalog   ( Leftside Menu)
+9) Click on Create Crawler 
+10) Provide the following details
+....
+...
+
+11) Click on Create Crawler button after providing all data
+12) Click on Run Crawler.
+13) After Running Crawler , You will see the Glue Table.
+
+14) Create S3 Bucket - mystudent-reports
+
+15) Goto Amazon Athena Dashboard
+16) Click on Settings
+17) Click on Manage button
+18) Specify s3://mystudent-reports as Query results bucket and Click on Save button
+
+19) See the Glue Database and Glue Tables in Athena Editor.
+
+20) Start Queries
+
+SELECT * FROM "myjlc-database"."myjlc_students" limit 10;
+
+SELECT * FROM "myjlc-database"."myjlc_students";
+
+SELECT count(*) FROM "myjlc-database"."myjlc_students" where feebal>0;
+
+SELECT * FROM "myjlc-database"."myjlc_students" where feebal>0;
+
+
+
+
+

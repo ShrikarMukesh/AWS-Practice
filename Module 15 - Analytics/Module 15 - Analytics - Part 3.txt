@@ -1,0 +1,298 @@
+=======================
+Module 15 - Analytics - Part 3
+=======================
+Part 1:
+---------
+1) Introduction to BigData
+2) Amazon RedShift 
+2.1) Introduction
+2.2) Key Points about Redshift
+2.3) Snapshots and DR
+2.4) Storing Data into Redshift
+2.5) Redshift Cluster
+2.6) Demo : Creating Redshift Cluster
+2.7) Redshift Spectrum
+2.8) Redshift Serverless
+
+3) Amazon EMR
+3.1) Introduction
+3.2) Hadoop Cluster
+3.3) Demo : Creating EMR Cluster
+3.4) Amazon EMR Serverless
+
+Part 2:
+---------
+4) Amazon Kiness
+4.1) Introduction
+4.2) Kinesis Data Streams
+4.2.1) Introduction
+4.2.2) How Kinesis Data Streams works Internally
+4.2.3) Demo : Creating Kinesis Data Stream
+
+Part 3:
+---------
+4.3) Kinesis Data Firehose
+4.3.1) Introduction
+4.3.2) How Kinesis Data Firehouse works Internally
+4.3.3) Demo : Creating Kinesis Data Firehose
+4.3.4) Kinesis Data Strams(KDS) Vs Kinesis Data Forhose(KDF)
+
+4.4) Kinesis Data Analytics
+4.4.1) Kinesis Data Analytics
+4.4.2) Kinesis Data Analytics for SQL Applications
+4.4.3) Kinesis Data Analytics for Flink Applications
+4.4.4) When Should I Use Amazon Kinesis Data Analytics?
+
+Part 4:
+-----------
+5) Amazon Athena
+6) AWS Glue
+7) Amazon MSK
+
+Part 5:
+-----------
+8) Amazon QucikSight
+9) AWS Data Pipeline
+10) Amazon OpenSearch Service
+
+Part 6:
+-----------
+11) Analytics -  Tips
+Exam #14 - Analytics 
+
+====================
+4.3) Kinesis Data Firehose
+====================
+4.3.1) Introduction
+===============
+=> Kinesis Data Firehose is a fully managed AWS Service 
+=> Kinesis Data Firehose is mainly for delivering real-time streaming data to Various Destinations.
+
+=> You can write Kinesis Data Firehose data to the following Destinations
+	a) AWS Destinations
+	b) 3rd Party Partner Destinations
+	c) Custom Destinations
+
+a) AWS Destinations
+---------------------------
+=>  S3, Redshift, OpenSearch 
+
+b) 3rd Party Partner Destinations
+--------------------------------------------
+=> MongoDB, Splunk,  Datadog, Dynatrace, LogicMonitor, New Relic, Sumo Logic. 
+
+c) Custom Destinations
+-----------------------------
+=> Custom HTTP endpoint
+
+
+=> Following Producers can send the Data to Kinesis Data Firehose
+*** Kinesis Data Data Stream
+*** Web or Mobile Clients
+*** Any Applications
+*** CloudWatch Logs
+*** IOT Devices
+etc
+
+=> With Kinesis Data Firehose, You don't need to write applications or manage resources.
+
+=> You configure your data producers to send data to Kinesis Data Firehose, and it automatically delivers the data to the destination that you specified. 
+
+=> You can also configure Kinesis Data Firehose to transform your data before delivering it.
+
+=> It supports many Data Formats, Conversions, Transformations, Compressions.
+
+=> It also supports custom Data Transformations with Lambda.
+
+=> You can send all data to S3 Backup Bucket
+=> You can send failed data to S3 Backup Bucket
+
+4.3.2) How Kinesis Data Firehouse works Internally
+=======================================
+
+a) Delivery Stream:
+-------------------------
+=> Delivery Stream is an Underlying entity of Kinesis Data Firehose.
+=> Create Delivery Stream 
+=> Send Record to Delivery Stream. 
+
+b) Record
+-------------
+=> Record is a Data that Your Producer sends to a Kinesis Data Firehose Delivery Stream. 
+=> Record can be as large as 1,000 KB.
+
+c) Data Producer
+-----------------------
+=> Producers send records to Kinesis Data Firehose Delivery Streams. 
+=> For example, Web server that sends log data to a Delivery Stream is Data Producer.
+
+d) Buffer Size and Buffer Interval
+--------------------------------------------
+=> Kinesis Data Firehose buffers incoming streaming data to a certain size or for a certain period of time before delivering it to destinations. 
+=> Buffer Size is in MBs 
+=> Buffer Interval is in seconds.
+
+4.3.3) Demo : Creating Kinesis Data Firehose
+===================================
+1) Goto Amazon Kinesis Dashboard
+2) Create Data Stream 	- myjlc-data-stream
+3) Create S3 Bucket 		- myjlc-web-logs
+
+4) Click on Delivery streams (Left menu)
+5) Click on Create Delivery Stream
+
+6) Provide the following Details
+
+I) Choose source and destination
+---------------------------------------------
+a) Source			:	Amazon Kinesis Data Streams
+b) Destination		:	Amazon S3
+
+II) Source settings
+-------------------------
+c) Kinesis data stream 	:	myjlc-data-stream
+
+III) Delivery stream name
+-----------------------------------
+d) Delivery stream name	:	myjlc-delivery-stream
+
+IV) Transform and convert records - optional
+--------------------------------------------------
+e) Currently Leave as it is
+
+V) Destination settings
+-------------------------------
+f)S3 bucket		:	myjlc-web-logs
+g) Dynamic partitioning	:	Not Enabled
+h) Remaining Leave as it is
+ 
+*S3 buffer hints
+-------------------
+i) Buffer size		:	1 Mib  ( Default 5 MB)
+j) Buffer interval		:	60 Sec  ( Default 300 Sec)
+
+*S3 compression and encryption
+------------------------------------------
+k)Compression for data records:	Not enabled
+l) Encryption for data records	:	Not enabled
+
+VI) Advanced settings
+-----------------------------
+m) Keep the Defaults  as it is
+
+7) Click on Create Delivery stream button
+
+
+8) Open CloudShell
+
+9) Send the Record to Data Stream
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "{  \"userId\": \"JLC-101\",  \"username\": \"Srinivas\",  \"requestURI\": \"register\" } "  \
+--cli-binary-format raw-in-base64-out
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "{  \"userId\": \"JLC-102\",  \"username\": \"Srinivas\",  \"requestURI\": \"register\" } "  \
+--cli-binary-format raw-in-base64-out
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "{  \"userId\": \"JLC-103\",  \"username\": \"Srinivas\",  \"requestURI\": \"register\" } "  \
+--cli-binary-format raw-in-base64-out
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "{  \"userId\": \"JLC-104\",  \"username\": \"Srinivas\",  \"requestURI\": \"register\" } "  \
+--cli-binary-format raw-in-base64-out
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "{  \"userId\": \"JLC-105\",  \"username\": \"Srinivas\",  \"requestURI\": \"register\" } "  \
+--cli-binary-format raw-in-base64-out
+
+10) Check in S3 Bucket
+
+4.3.4) Kinesis Data Strams(KDS) Vs Kinesis Data Forhose(KDF)
+================================================
+a) KDS is Streaming Service for Ingesting Data at Large Scale 
+where as 
+KDF is used to Load Streaming data into Various Destinations (S3,Redshift,OpenSearch etc)
+
+b) In the case of KDS, You need to write Custom Code for Producers and Consumers
+where as 
+In the case of KDF, It is fully managed, No need to write any Code 
+
+c) KDS is Real-time 
+where as 
+KDF is Near-Real-time 
+
+d) In the case of KDS, You have to manage the Scaling (You need to specify the no.of shards)
+where as 
+In the case of KDF, It is Auto-Scaling 
+
+d) In the case of KDS, Data Storage for 1 to 365 days.
+where as 
+In the case of KDF, No Data Storage 
+
+e) KDS has Data Replay Capacity
+where as 
+ KDF does not have any Data Replay
+
+
+4.4) Kinesis Data Analytics
+====================
+4.4.1) Kinesis Data Analytics
+======================
+=> Kinesis Data Analytics allows you to Read, Process and Store Streaming Data in near real time. 
+
+=> This Service supports ingesting data from two Streaming sources.
+a) Kinesis Data Streams 
+b) Kinesis Data Firehose 
+
+=> Kinesis Data Analytics supports the following destinations
+a) Kinesis Data Firehose ( S3, Redshift, OpenSearch Service, and Splunk), 
+b) AWS Lambda
+c) Kinesis Data Streams
+
+=> Kinesis Data Analytics  supports two ways to Analyze the Data
+a) Kinesis Data Analytics for SQL Applications
+b) Kinesis Data Analytics for Flink Applications
+
+4.4.2) Kinesis Data Analytics for SQL Applications
+======================================
+=> The service enables you to quickly write and run powerful SQL code against Streaming Source
+=>You can write your SQL code using the interactive editor and test it with live streaming data. 
+
+
+4.4.3) Kinesis Data Analytics for Flink Applications
+======================================
+=> The service enables you to Write and run Flink applications against Streaming Source.
+=> You can build Java and Scala applications  using open-source libraries based on Apache Flink. 
+
+=> Apache Flink is a popular framework and engine for processing data streams.
+=> Kinesis Data Analytics provides the underlying infrastructure for your Apache Flink applications. 
+=> It handles core capabilities like provisioning compute resources, parallel computation, automatic scaling, and application backups 
+
+4.4.4) When Should I Use Amazon Kinesis Data Analytics?
+==============================================
+Following are some of scenarios for using Kinesis Data Analytics:
+
+a) Generate time-series analytics:
+-------------------------------------------
+=> You can calculate metrics over time windows, and then stream values to S3 or Redshift through a Kinesis Data Delivery Stream.
+
+b) Feed real-time dashboards:
+---------------------------------------
+=> You can send aggregated and processed streaming data results downstream to feed real-time dashboards.
+
+c) Create real-time metrics:
+-----------------------------------
+=> You can create custom metrics and triggers for use in real-time monitoring, notifications, and alarms.
+

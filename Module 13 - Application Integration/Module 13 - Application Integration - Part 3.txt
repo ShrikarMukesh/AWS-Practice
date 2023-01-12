@@ -1,0 +1,219 @@
+==================================
+Module 13 - Application Integration - Part 3
+==================================
+Part 1:
+---------
+1) Introduction to Messaging
+2) Amazon SQS 
+2.1) Introduction to SQS
+2.2) Exploring SQS Standard Queue 
+2.3) SQS Configurations
+
+Part 2:
+---------
+2.3) SQS Configurations( Cont...)
+2.4) Dead-Letter Queues:
+2.5) SQS - FIFO Queues:
+
+Part 3:
+---------
+3) Amazon SNS
+3.1) Introduction to SNS
+3.2) SNS Configurations
+3.3) Exploring SNS Topic
+3.4) Exploring SNS Topic Subscriptions
+
+Part 4:
+---------
+4) Amazon MQ
+4.1) Inroduction to Amazon MQ
+4.2) SQS and SNS Vs Amazon MQ
+4.3) Amazon MQ with Apache Active MQ
+4.4) Amazon MQ with Rabbit MQ
+
+Part 5:
+---------
+5) Exam Tips
+Exam #12 - Application Integration 
+
+==============
+3) Amazon SNS
+==============
+
+3.1) Introduction to SNS
+==================
+   ***    SNS => Simple Notification Service
+=> SNS is a Push based messaging Service.
+=> SNS will pro-actively deliver the messages to endpoints subscribed to it.
+=> SNS can be used to alert the System or Person
+=> SNS uses Topic message delivery pattern
+
+*** Diagram ***
+
+=> One Application/Service sends the message to SNS Topic
+=> SNS Topic delivers that Message to multiple Subscriptions.
+
+
+3.2) SNS Configurations
+==================
+1) Supported subscription Types
+--------------------------------------------
+=> Email
+=> SMS
+=> Mobile Push Notications
+=> HTTP/HTTPS
+=> Lambda
+=> SQS
+=> Kinesis Data Firehose
+
+
+2) Maximum message size:
+----------------------------------
+=> You can publish the message upto 256 KB of text in any format.
+
+3) DLQ Support
+--------------------
+=> Messages that failed to be delivered can be stored in SQS DLQ.
+
+4) Encryption:
+-------------------
+=> Messages are encrypted in transit by default. 
+=> You can enable at-rest encryption to your Topic
+
+3.3) Exploring SNS Topic
+=====================
+
+Demo 1: Creating  SNS Topic 
+=======================
+1) Goto Amazon SNS Dashboard
+2) Click on Topics (Left menu)
+3) Click on Create Topic 
+4) Provide the following Details
+
+I)Details:
+-----------
+a) Type 		:	Standard
+b) Name 		: 	mybookstore-topic
+c) Display name 	:	mybookstore-topic
+d) Keep Remaining Optional as it is
+e) Click on Create Topic
+
+3.4) Exploring SNS Topic Subcriptions
+==============================
+=>SNS Topic can have the following subscription Types
+----------------------------------------------------------------------
+=> Email
+=> SMS
+=> HTTPS
+=> Lambda
+=> SQS
+=> Kinesis Data Firehose
+
+a) Application-to-application (A2A):
+---------------------------------------------------
+=> SNS is a managed messaging service that lets you decouple publishers from subscribers. 
+=> This is useful for application-to-application messaging for microservices, distributed systems, and serverless applications.
+
+=>Allowed subscription Types for A2A
+	** Lambda
+	** SQS
+	** HTTPS
+
+b) Application-to-person (A2P):
+----------------------------------------
+=> SNS allows you to send push notifications to mobile apps, text messages to mobile phone numbers, and plain-text emails to email addresses. 
+=> You can fan out messages with a topic
+
+=>Allowed subscription Types for A2P
+	** Email
+	** SMS
+	** Push Notifications
+
+Demo 2: Creating Email Subscriptions 
+===============================
+1) Create the Subscriptions as follows.
+i) Select the Topic : mybookstore-topic
+ii) Click on Create Subscription
+iii) Provide the following Details
+a) Topic ARN	:	arn:aws:sns:ap-south-1:166473396133:mybookstore-topic
+b)  Protocol	:	Email
+c)   Endpoint	: 	<Give Valid email ID>
+d)  Keep Remaining Optional as it is
+e) Click on Create Subscription
+
+Note 1: After your subscription is created, Goto Email and you must confirm it.
+Note 2: You can Create multiple  Subscriptions. To Create multiple  Subscriptions.
+
+Demo 3: Creating SMS Subscriptions 
+=============================
+Note : Add Phone number to Sandbox Destination phone numbers list.
+
+1) Create the Subscriptions as follows.
+i) Select the Topic : mybookstore-topic
+ii) Click on Create Subscription
+iii) Provide the following Details
+a) Topic ARN	:	arn:aws:sns:ap-south-1:166473396133:mybookstore-topic
+b)  Protocol	:	SMS
+c)   Endpoint	: 	+91-12345-12345
+d)  Keep Remaining Optional as it is
+e) Click on Create Subscription
+
+
+Demo 4: Creating SQS Subscriptions 
+=============================
+1) Create the SQS Queue - mybookstore-queue
+
+2) Create the Subscriptions as follows.
+i) Select the Topic : mybookstore-topic
+ii) Click on Create Subscription 
+iii) Provide the following Details
+a) Topic ARN	:	arn:aws:sns:ap-south-1:166473396133:mybookstore-topic
+b)  Protocol	:	Amazon SQS
+c)   Endpoint	: 	arn:aws:sqs:ap-south-1:166473396133:mybookstore-queue
+d) Check Enable raw message delivery
+e)  Keep Remaining Optional as it is
+f) Click on Create Subscription
+
+3) Update Access policy of mybookstore-topic
+
+a) Select the Topic : mybookstore-topic
+b) Click on Edit Button
+c) copy the followng pocily document in Access Policy Section
+
+{
+  "Version": "2008-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "__default_statement_ID",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "SNS:Publish",
+        "SNS:RemovePermission",
+        "SNS:SetTopicAttributes",
+        "SNS:DeleteTopic",
+        "SNS:ListSubscriptionsByTopic",
+        "SNS:GetTopicAttributes",
+        "SNS:AddPermission",
+        "SNS:Subscribe"
+      ],
+      "Resource": "arn:aws:sns:ap-south-1:166473396133:mybookstore-topic",
+      "Condition": {
+        "ArnEquals": {
+          "aws:SourceArn": "arn:aws:sns:ap-south-1:166473396133:mybookstore-topic"
+        }
+      }
+    }
+  ]
+}
+
+d) Click on Save Changes
+
+4) Send Message to Topic. That message should goto your Queue.
+ Check in the Queue
+
+
+

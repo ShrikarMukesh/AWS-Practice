@@ -1,0 +1,187 @@
+==================================
+Module 13 - Application Integration - Part 4
+==================================
+Part 1:
+---------
+1) Introduction to Messaging
+2) Amazon SQS 
+2.1) Introduction to SQS
+2.2) Exploring SQS Standard Queue 
+2.3) SQS Configurations
+
+Part 2:
+---------
+2.3) SQS Configurations( Cont...)
+2.4) Dead-Letter Queues:
+2.5) SQS - FIFO Queues:
+
+Part 3:
+---------
+3) Amazon SNS
+3.1) Introduction to SNS
+3.2) SNS Configurations
+3.3) Exploring SNS Topic
+3.4) Exploring SNS Topic Subcriptions
+
+Part 4:
+---------
+4) Amazon MQ
+4.1) Inroduction to Amazon MQ
+4.2) SQS and SNS Vs Amazon MQ
+4.3) Amazon MQ with Apache Active MQ
+4.4) Amazon MQ with Rabbit MQ
+
+Part 5:
+---------
+5) Exam Tips
+Exam #12 - Application Integration 
+
+
+==============
+4) Amazon MQ
+==============
+
+4.1) Inroduction to Amazon MQ
+========================
+=> Amazon MQ is a fully managed message broker service that makes it easy to set up, migrate and operate message brokers on AWS Cloud.
+
+=> Message broker allows applications to communicate using various programming languages, operating systems, and formal messaging protocols.
+
+=> Amazon MQ works with your existing applications and services without the need to manage, operate, or maintain your own messaging system.
+
+=> Currently, Amazon MQ supports two engine types.
+a) Apache ActiveMQ 
+b) RabbitMQ 
+
+4.2) SQS and SNS Vs Amazon MQ
+========================
+a) Topic and Queues :
+---------------------------
+=> Each offers architectures with Topics and Queues
+=> Allows for One-to-One or One-to-many messaging patterns
+
+b) Existing Applications
+---------------------------------
+=> You can use Amazon MQ for migrating applications from existing message brokers that rely on compatibility with APIs such as JMS or protocols such as AMQP 0-9-1, AMQP 1.0, MQTT, OpenWire, and STOMP.
+
+c) New Applications
+---------------------------------
+=> SQS and SNS are queue and topic services that are highly scalable, simple to use, and don't require you to set up message brokers. 
+=> You can use SQS and SNS services for new applications that can benefit from nearly unlimited scalability and simple APIs.
+
+d) Publicly Accessible
+-----------------------------
+=> Amazon MQ requires private networking like VPC, Direct Connect etc.
+=> SQS and SNS are Publicly Accessible by default.
+
+
+4.3) Amazon MQ with Apache Active MQ
+==============================
+=> Apache Active MQ supports two deployment models
+a) Single-instance broker
+b) Active/standby broker
+
+a) Single-instance broker:
+----------------------------------
+=> Creates a broker in a single Availability Zone (AZ) 
+=> EBS or EFS can be used for storage.
+=> Suitable for development and testing environments or smaller production workloads 
+
+b) Active/standby broker:
+---------------------------------
+=> Creates a single broker instance in one Availability Zone (AZ) and another standby broker instance in a different AZ
+=> EFS can be used for storage.
+=> Provides high availability and automatic failover capability. 
+=> Suitable for production workloads
+
+Demo 1: Creating ActiveMQ broker with Apache ActiveMQ Engine
+==================================================
+1) Goto Amazon MQ bashboard
+2) Click on Brokers (Leftside menu)
+3) Click on Create Broker
+4) Provide the following Details
+
+Step 1: Select broker engine
+---------------------------------------
+a) Select broker engine	:	Apache ActiveMQ
+
+Click on Next Button
+
+Step 2: Select deployment and storage type
+------------------------------------------------------
+b)Deployment mode		:	Single-instance broker
+c) Storage type		:	Durability optimized
+
+Click on Next Button
+
+Step 3: Configure settings
+-------------------------------------
+d) Broker name		: 	myjlc-activemq
+e) Broker instance type	:	mq.t3.micro
+f) Username		:	srinivas123
+g) Password		: 	srinivas123dande
+
+h) Keep remaining as defaults 
+
+Click on Next Button
+
+Step 4: Review and create
+------------------------------------
+i) Verify all and Click on Create Broker button.
+
+
+4.4) Amazon MQ with Rabbit MQ
+===========================
+=> Rabbit MQ supports two deployment models
+a) Single-instance broker
+b) Cluster deployment
+
+a) Single-instance broker:
+----------------------------------
+=> Creates a broker in a single Availability Zone (AZ) behind a Network Load Balancer (NLB).  
+=> EBS can be used for storage.
+=> Suitable for development and testing environments or smaller production workloads 
+
+b) Cluster deployment:
+---------------------------------
+=> A cluster deployment is a logical grouping of three RabbitMQ broker nodes behind a Network Load Balancer and distributed across three  Availability Zones (AZ).
+=> EBS can be used for storage.
+=> Use for production workloads that require high availability and message durability.
+
+Demo 2: Creating ActiveMQ broker with RabbitMQ Engine
+===========================================
+1) Goto Amazon MQ bashboard
+2) Click on Brokers (Leftside menu)
+3) Click on Create Broker
+4) Provide the following Details
+
+Step 1: Select broker engine
+---------------------------------------
+a) Select broker engine	:	RabbitMQ
+
+Click on Next Button
+
+Step 2: Select deployment mode
+---------------------------------------
+b)Deployment mode		:	Single-instance broker
+
+Click on Next Button
+
+Step 3: Configure settings
+-------------------------------------
+c) Broker name		: 	myjlc-rabbit
+d) Broker instance type	:	mq.t3.micro
+e) Username		:	srinivas123
+f) Password		: 	srinivas123dande
+
+g) Keep remaining as defaults 
+
+Click on Next Button
+
+Step 4: Review and create
+------------------------------------
+h) Verify all and Click on Create Broker button.
+
+
+
+

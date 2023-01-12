@@ -1,0 +1,245 @@
+==================================
+Module 13 - Application Integration - Part 1
+==================================
+Part 1:
+---------
+1) Introduction to Messaging
+2) Amazon SQS 
+2.1) Introduction to SQS
+2.2) Exploring SQS Standard Queue 
+2.3) SQS Configurations
+
+Part 2:
+---------
+2.3) SQS Configurations( Cont...)
+2.4) Dead-Letter Queues:
+2.5) SQS - FIFO Queues:
+
+Part 3:
+---------
+3) Amazon SNS
+3.1) Introduction to SNS
+3.2) SNS Configurations
+3.3) Exploring SNS Topic
+3.4) Exploring SNS Topic Subcriptions
+
+Part 4:
+---------
+4) Amazon MQ
+4.1) Inroduction to Amazon MQ
+4.2) SQS and SNS Vs Amazon MQ
+4.3) Amazon MQ with Apache Active MQ
+4.4) Amazon MQ with Rabbit MQ
+
+Part 5:
+---------
+5) Exam Tips
+Exam #12 - Application Integration 
+
+========================
+1) Introduction to Messaging
+========================
+=> When you have Distributed Applications, You will deploy different applications in different Servers.
+=> Distributed Applications Running in different servers has to communicate with each other.
+
+=> There are two ways of application communication.
+a) Synchronous Comminication
+b) ASynchronous Comminication
+
+a) Synchronous Comminication:
+------------------------------------------
+*** Diagram ***
+
+=> One Application/Service calls another Application/Service using Http protocal
+=> Caller Application has to wait for the response forom Called Applicaion util it finishes the Processing 
+
+=> Prefer this if really Required in the business use-cases.
+=> It offers the Tightly Coupled Architecture
+
+
+Two Problems:
+--------------------
+i) 
+ii)
+
+b) ASynchronous Comminication
+------------------------------------------
+*** Diagram ***
+
+=> One Application/Service sends the message to Messaging middleware 
+=> Caller Application continues its work without waiting for a response 
+=> One or more other applications/services will process the message asynchronously.
+
+=> Prefer to use ASynchronous Comminication in the suitable business use-cases.
+=> It offers the Loosely Coupled Architecture
+
+
+What Amazon offers:
+--------------------------
+Queue Model 	-> 	SQS
+Topic Model	-> 	SNS
+Real-Time Streaming -> 	Kiness
+
+Poll-based Messaging Vs Push-based Messaging
+-----------------------------------------------------------
+
+==============
+2) Amazon SQS
+==============
+
+2.1) Introduction to SQS
+==================
+   ***    SQS => Simple Queue Service
+
+=> SQS is a messaging Queue that allows ASynchronous processing of work.
+=> SQS is a fully managed AWS Service allows poll-based Messaging 
+
+
+*** Diagram ***
+
+=> One Application/Service sends the message to SQS Queue.
+=> Another Application/Service polls for message 
+=> if messages are there then  reads the message from SQS Queue and process them.
+
+
+2.2) Exploring SQS Standard Queue 
+==========================
+
+Demo 1: Creating Standard SQS Queue
+=======================
+1) Goto Amazon SQS Dashboard
+2) Click on Queues (Left menu)
+3) Click on Create Queue
+4) Provide the following Details
+
+I)Details:
+-----------
+a) Type 		:	Standard
+b) Name 		: 	myjlc-queue
+
+II)Configuration
+----------------------
+c) Visibility timeout		:	30 seconds
+d) Message retention period	:	4 Days
+e) Delivery delay		:	0 seconds
+f) Maximum message size	:	256 KB
+g) Receive message wait time	:	0 seconds
+
+III) Encryption
+--------------------
+h) Server-side encryption 	: 	Eabled
+i) Encryption key type	:	Amazon SQS key (SSE-SQS)
+
+IV) Access policy
+----------------------
+j) Choose method		:	Basic
+
+k) Define who can send 	
+   messages to the queue	:	Only the queue owner
+
+l) Define who can receive 
+   messages from the queue	:	Only the queue owner
+
+V) Redrive allow policy
+-------------------------------	
+m) Select which source queues 
+can use this queue as the dead-letter queue.	: Disabled
+
+VI) Dead-letter queue
+-----------------------------
+n) Set this queue to receive 
+undeliverable messages.		: Disabled
+
+VII) Tags	
+-----------
+o) Add some Tags if you want 
+
+5) Click on Create Queue
+
+6) Click on Send and receive messages
+
+7) Try Send and Receive Messages
+
+2.3) SQS Configurations
+==================
+1) Visibility timeout:
+---------------------------
+=> Default Visibility timeout : 30 Seconds
+=> You can set between 0 sec to 12 hours.
+
+=> When backend server retrives and Process the message from Queue, that message stays in the Queue.
+=> SQS does not purge the Message automatically becasue there is a chance that backend server has failed to process the message successfully due to any reason.
+
+=> Therefore backend server must delete the message from Queue after reading and processing successfully.
+=> So After Reading the Message, It stays in the Queue. 
+
+=> To Avoid another backend server from processing the Same Queue again, SQS puts the Visibility timeout during which SQS stops other servers from reading and processing the Same message.
+
+Ex: You Visibility timeout : 60 Seconds
+=> When One Server reads the Message then SQS places the Lock on the Message for 60 seconds, but No one else can see that.
+=> If the Server process the message in 60 seconds  and deletes that message then It is Over.
+=> If the Server fails to process the message in 60 seconds then that message will show-up again in the Queue.
+=> Now Any one can see that. Any One can Poll for that Message.
+
+2) Message retention period:
+-------------------------------------
+=> Default Retention Peroid is 	4 Days
+=> You can set Default Retention between 4 min to 14 days.
+
+=> Messages have limited time to stay in the SQS Queue
+=> If the Retension period is over , then SQS purge the messages automatically.
+
+3) Delivery delay:
+-----------------------
+=> Default Delivery delay is 0 seconds.
+=> You can set Upto 15 minutes.
+
+=> When you specify the Delivery delay more than zero , SQS hides the message for set duration of time before it shows to backend server when backend server polls for the message.
+
+4) Maximum message size:
+----------------------------------
+=> You can publish the message upto 256 KB of text in any format.
+
+5) Receive message wait time:
+---------------------------------------
+=> Default Receive Message Wait time is 0 seconds which for Short Polling.
+=> You can set wait time more than 0 seconds if you want Long Polling.
+=> You can set max wait time of 20 Seecs
+
+6) Encryption:
+-------------------
+=> Messages are encrypted in transit by default. 
+=> You can enable at-rest encryption to your queue
+=> You can add Client-Sid Encryption if you want.
+
+7) Queue Depth:
+--------------------
+=> This can be a trigger for Auto Scaling
+=> You can Integrate SQS and CloudWacth to fire the Alaram based on Queue Depth Metric to Scale the Servers.
+
+8) Long Polling Vs Short Polling
+------------------------------------------
+=> Amazon SQS provides two ways to receive messages from a queue.
+a) Short Polling 
+b) Long Polling  
+
+By default, SQS queues use short polling.
+
+a) Short Polling:
+----------------------
+=> Backend server connects and check if there is any message on the queue. 
+=> If the non-message is found, the backend server disconnects 
+=> It keeps doing that until it finds messages to process
+
+=> Short polling approach has some Problems. 
+a)It burns CPU cycles on the backend server. 
+b)We have to pay for making those extra API calls to SQS.
+
+b) Long Polling  
+----------------------
+=> Long polling enables us to connect and then wait for a while. 
+=> The highest long polling wait time is 20 seconds.
+
+=> You can Set a value greater than zero for the parameter Receive message wait time
+
+

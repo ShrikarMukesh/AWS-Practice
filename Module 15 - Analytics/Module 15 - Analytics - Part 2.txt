@@ -1,0 +1,254 @@
+=======================
+Module 15 - Analytics - Part 2
+=======================
+Part 1:
+---------
+1) Introduction to BigData
+2) Amazon RedShift 
+2.1) Introduction
+2.2) Key Points about Redshift
+2.3) Snapshots and DR
+2.4) Storing Data into Redshift
+2.5) Redshift Cluster
+2.6) Demo : Creating Redshift Cluster
+2.7) Redshift Spectrum
+2.8) Redshift Serverless
+
+3) Amazon EMR
+3.1) Introduction
+3.2) Hadoop Cluster
+3.3) Demo : Creating EMR Cluster
+3.4) Amazon EMR Serverless
+
+Part 2:
+---------
+4) Amazon Kiness
+4.1) Introduction
+4.2) Kinesis Data Streams
+4.2.1) Introduction
+4.2.2) How Kinesis Data Streams works Internally
+4.2.3) Demo : Creating Kinesis Data Stream
+
+Part 3:
+---------
+4.3) Kinesis Data Firehose
+4.3.1) Introduction
+4.3.2) How Kinesis Data Firehouse works Internally
+4.3.3) Demo : Creating Kinesis Data Firehose
+4.3.4) Kinesis Data Strams(KDS) Vs Kinesis Data Forhose(KDF)
+
+4.4) Kinesis Data Analytics
+4.4.1) Kinesis Data Analytics
+4.4.2) Kinesis Data Analytics for SQL Applications
+4.4.3) Kinesis Data Analytics for Flink Applications
+4.4.4) When Should I Use Amazon Kinesis Data Analytics?
+
+Part 4:
+-----------
+5) Amazon Athena
+6) AWS Glue
+7) Amazon MSK
+
+Part 5:
+-----------
+8) Amazon QucikSight
+9) AWS Data Pipeline
+10) Amazon OpenSearch Service
+
+Part 6:
+-----------
+11) Analytics -  Tips
+Exam #14 - Analytics 
+
+================
+4) Amazon Kiness
+================
+
+4.1) Introduction
+===============
+=> Amazon Kiness allows you to ingest , process and analyze Real-time Streaming Data.
+
+=> You can think of it as huge Data Pipe is connected to your AWS Account.
+
+=> You can Ingest Real-time Data such as
+	* Application Logs
+	* Metrics
+	* Website Click-Stream
+	* IOT Data
+	etc
+
+=> There are 3 major types of Kinesis available.
+a) Kinesis Data Streams
+b) Kinesis Data Firehose
+c) Kinesis Data Analytics
+
+*** Kinesis Video Streams
+
+a) Kinesis Data Streams
+---------------------------------
+=> Capture , Process and Store Data Streams
+
+b) Kinesis Data Firehose
+---------------------------------
+=> Load data Streams into AWS data Stores
+
+c) Kinesis Data Analytics
+---------------------------------
+=> Analyze the Data Streams with SQL
+
+d) Kinesis Video Streams
+---------------------------------
+=> Capture , Process and Store Video Streams
+
+
+4.2) Kinesis Data Streams
+====================
+4.2.1) Introduction
+===============
+=> You can use Kinesis Data Streams to collect and process large streams of data records in real time. 
+
+=> You can create data-processing applications, known as Kinesis Data Streams applications.
+=> Kinesis Data Streams application reads data from a data stream as data records.
+=> These applications can use the Kinesis Client Library, and they can run on Amazon EC2 instances.
+=> You can send the processed records to dashboards, use them to generate alerts, dynamically change pricing and advertising strategies, or send data to a variety of other AWS services.
+
+=> Following are typical scenarios for using Kinesis Data Streams:
+a) Accelerated log processing
+b) Real-time metrics and reporting
+c) Real-time data analytics
+d) Complex stream processing
+
+4.2.2) How Kinesis Data Streams works Internally
+---------------------------------------------------------
+*** Diagram ***
+
+
+a) Producer:
+-----------------
+=> Producers put records into Kinesis Data Streams.
+
+=> Available Producers:
+   AWS SDK
+   Kinesis Producer Library(KPL)
+   Kinesis Agent
+
+b) Consumer:
+------------------
+=> Consumers get records from Kinesis Data Streams and process them.
+=> These consumers are known as Kinesis Data Streams Application
+
+=> Available Consumers:
+   Amazon Kinesis Data Analytics
+   Amazon Kinesis Data Firehose
+   Kinesis Consumer Library(KCL)
+
+c) Kinesis Data Stream:
+--------------------------------
+=> Kinesis data stream is a set of shards. 
+=> Each shard has a sequence of data records. 
+=> Each data record has a sequence number that is assigned by Kinesis Data Streams.
+
+d) Shard
+------------
+=> Shard is a uniquely identified sequence of data records in a stream. 
+=> Stream is composed of one or more shards, each of which provides a fixed unit of capacity. 
+=> Total capacity of the stream is the sum of the capacities of its shards.
+=>  If your data rate changes, you can increase or decrease the number of shards allocated to your stream. 
+
+=> Write capacity -   1 MiB/second and 1,000 records/second
+=> Read capacity - 2 MiB/second and 2,000 records/second
+
+
+e) Data Record:
+--------------------
+=> Data Record is the unit of data stored in a Kinesis data stream. 
+=> Data records are composed of a 3 things
+	i) Sequence Number
+	ii) Partition Key, 
+	iii) Data Blob, 
+
+=> Data Blob an immutable sequence of bytes. 
+=> Kinesis Data Streams does not inspect, interpret, or change the data in the blob in any way. 
+=> Data Blob can be up to 1 MB.
+
+
+f) Partition Key:
+---------------------
+=> Partition key is used to group data by shard within a stream. 
+=> Kinesis Data Streams segregates the data records belonging to a stream into multiple shards. 
+=> It uses the partition key that is associated with each data record to determine which shard a given data record belongs to.
+ => When an application puts data into a stream, it must specify a partition key.
+
+g) Sequence Number:
+---------------------------
+=> Each data record has a sequence number that is unique per partition-key within its shard. 
+=> Kinesis Data Streams assigns the sequence number after you write to the stream 
+
+
+h) Capacity Mode:
+------------------------
+=> Kinesis Data Streams supports two Capacity Modes
+
+i) On-demand mode 
+ii) Provisioned mode
+
+i) On-demand mode:
+----------------------------
+=> Kinesis Data Streams automatically manages the shards in order to provide the necessary throughput. 
+=> You are charged only for the actual throughput that you use 
+
+ii) Provisioned mode:
+----------------------------
+=> You must specify the number of shards for the data stream. 
+=> Total capacity of a data stream is the sum of the capacities of its shards.
+=> You can increase or decrease the number of shards in a data stream as needed 
+=> You are charged for the number of shards at an hourly rate. 
+
+i) Retention Period:
+--------------------------
+=> Retention Period is the length of time that data records are accessible after they are added to the stream. 
+=> Stream’s retention period is set to a default of 24 hours after creation. 
+=> You can increase the retention period up to 8760 hours (365 days) 
+
+4.2.3) Demo : Creating Kinesis Data Stream
+=================================
+1) Goto Amazon Kinesis Dashboard
+2) Click on Data streams (Left menu)
+3) Click on Create Data Stream
+4) Provide the following Details
+
+I) Cluster configuration
+---------------------------------
+a) Data stream name	:	myjlc-data-stream
+b) Capacity Mode		: 	Provisioned
+c) Provisioned shards	: 	1
+
+5) Click on Create Data Stream button
+
+6) Open CloudShell
+
+7) Send the Record to Data Stream
+
+aws kinesis put-record \
+--stream-name  myjlc-data-stream  \
+--partition-key jlc1  \
+--data "Hello Guys, Welcome 1111 "  \
+--cli-binary-format raw-in-base64-out
+
+
+8) Describe the Stream
+
+aws kinesis describe-stream --stream-name  myjlc-data-stream 
+
+9) Get the Shard Iterator 
+
+aws kinesis get-shard-iterator  \
+--stream-name  myjlc-data-stream  \
+--shard-id "shardId-000000000001" \
+--shard-iterator-type TRIM_HORIZON
+
+10) Cosume the Message from Stream using Shard Iterator
+
+aws kinesis  get-records  --shard-iterator  "AAAAAAAAAAEQMDdHM43lp1kRp3dIP/1MFXo0e/YVyBhnN3QHJndaUoxQivsG4g4ty3rDNMcWOshJz4tEtMNupWbna+KJ77POpsxWS2F91zB8rEUW0Acn/AY3uKpQVJ1w1Y7wB96lh3IuRksGuc4BHKYh2Zx2X2yB7b2NL56eRci77TpX4jewmljnk7SWvQp4Dk9iUfsZwVmH9PXf9nNaM7iYynqx9FaTRaCDbnDQB4W2+5N3jYBMlw=="
+
+

@@ -1,0 +1,287 @@
+=======================
+Module 15 - Analytics - Part 5
+=======================
+Part 1:
+---------
+1) Introduction to BigData
+2) Amazon RedShift 
+3) Amazon EMR
+
+
+Part 2:
+---------
+4) Amazon Kiness
+4.1) Introduction
+4.2) Kinesis Data Streams
+
+
+Part 3:
+---------
+4.3) Kinesis Data Firehose
+4.4) Kinesis Data Analytics
+
+
+Part 4:
+-----------
+5) Amazon Athena
+6) AWS Glue
+
+Part 5:
+-----------
+7) Amazon MSK
+7.1) Introduction to MSK
+7.2) Key Points
+7.3) Resiliency in Amazon MSK
+
+8) Amazon QucikSight
+
+9) AWS Data Pipeline
+9.1) Introduction 
+9.2) Components of AWS Data Pipeline
+9.3) Use-cases
+
+10) Amazon OpenSearch Service
+10.1) Introduction 
+10.2) Features of Amazon OpenSearch Service
+10.3) Amazon OpenSearch Serverless
+
+Part 6:
+-----------
+11) Analytics -  Tips
+Exam #14 - Analytics 
+
+
+===========
+7) Amazon MSK
+===========
+7.1) Introduction to MSK
+===================
+*  Amazon MSK- Amazon Managed Streaming for Apache Kafka
+
+=> Amazon MSK is a Fully Managed Service that allows you to build and run applications that use Apache Kafka to process Streaming Data.
+
+=> Amazon MSK provides the Control-Plane operations:
+=> It Provides Control-pane operations required 
+	* Creating the Cluster
+	* Updating the Cluster
+	* Deleting the Cluster
+
+=> It allows you use Apache Kafka Data-Plane operations:
+	* Producing Data
+	* Consuming data. 
+
+=>Amazon MSK runs open-source versions of Apache Kafka.
+This means existing applications, tooling, and plugins from partners and the Apache Kafka community are supported without requiring changes to application code. 
+
+*** Diagram ***
+
+7.2) Key Points
+============
+a) Broker Nodes:
+----------------------
+=> You can specify number of broker nodes required to create in each AZ. 
+
+b) Zoo-Keeper Nodes
+---------------------------
+=> Amazon MSK also creates the Apache ZooKeeper nodes for you. 
+=> Apache ZooKeeper is an open-source server that enables highly reliable distributed coordination
+
+c) Producers ,  Consumers and Topics
+-----------------------------------------------
+=> Amazon MSK allows you use Apache Kafka data-plane operations to create topics and to produce and consume data.
+
+d) Cluster Operations:
+-----------------------------
+=> You can use the AWS Console, the AWS CLI or the APIs in the SDK to perform control-plane operations. 
+
+7.3) Resiliency in Amazon MSK
+========================
+a) Automatic Recovery:
+-------------------------------
+=> Amazon MSK detects and automatically recovers from the most common failure scenarios
+=>So Your producer and consumer applications can continue their write and read operations with minimal impact. 
+
+b) Detection:
+-----------------
+=> When Amazon MSK detects a broker failure, it mitigates the failure or replaces the unhealthy or unreachable broker with a new one. 
+
+c) Reducer Data Replication:
+-------------------------------------
+=> It re-uses the storage from the older broker to reduce the data that Apache Kafka needs to replicate. 
+
+d) Time Required:
+------------------------
+=> Your availability impact is limited to the time required for Amazon MSK to complete the detection and recovery. 
+
+e) After Recovery:
+--------------------------
+=> After a recovery, your producer and consumer apps can continue to communicate with the same broker IP addresses that they used before the failure.
+
+7.4) MSK Serverless
+================
+=> MSK Serverless allows you to run Apache Kafka without having to manage and scale cluster capacity. 
+
+=>  MSK Serverless  automatically provisions and scales capacity while managing the partitions in your topic, so you can stream data without thinking about scaling clusters. 
+
+=> MSK Serverless is fully compatible with Apache Kafka, so you can use any compatible client applications to produce and consume data. 
+
+7.5) MSK Connect
+===============
+=> MSK Connect allows developers to easily Stream Data to and from their Apache Kafka clusters. 
+
+=> MSK Connect uses Kafka Connect, an open-source framework for connecting Apache Kafka clusters with external systems such as databases, search indexes, and file systems. 
+
+7.6) Demo: Working with MSK
+=========================
+1)  Goto Amazon MSK Dashboard
+2) Click on Clsuters (Left menu)
+3) Click on Create Clsuter 
+4) Provide the following Details
+a) Cluster creation method	:	Quick create
+b) Cluster name		:	myjlc-kafka-cluster-1
+c) Cluster type		:	Provisioned
+d) Apache Kafka version	:	2.8.1
+e) Broker Type		:	kafka-.m5.large
+f) EBS Storage		:	5GB
+g) You can just see all the Cluster Setters
+
+5) Click on Create Cluster Button.
+
+====================
+8) Amazon QucikSight
+====================
+
+=> Amazon QucikSight is a fully managed ML-Powered BI Service for Data Visualization.
+=> QucikSight allows to easily create Interactive Dashboards with the Real-Time Data.
+=> QucikSight can be Ingested with the Data from Variety of Sources lke RDS, Aurora,DynamoDB, Athena,Redshift, S3 etc
+
+=> Use Cases:
+-----------------
+a) Business Analytics
+b) Dashboards 
+c) Business Insights with Data
+
+=> QucikSight is Like Tableau
+
+====================
+9) AWS Data Pipeline
+====================
+
+9.1) Introduction 
+------------------------
+=> AWS Data Pipeline is a Managed ETL Service that you can use to automate the movement and transformation of data.
+=> With AWS Data Pipeline, you can define data-driven workflows, so that tasks can be dependent on the successful completion of previous tasks. 
+
+=> You define the parameters of your data transformations and AWS Data Pipeline enforces the logic that you've set up.
+
+=> AWS hosts the Resources on Highly Available and Distributed Infrastructure.
+
+=> Automatocally tries the Failed Tasks
+=> You can configure Notifications via SNS for failures or even for successful Tasks.
+=> Integrates easily with S3,RDS,DynamoDB, Redshift.
+=> Works with EC2 and EMR for Compute needs.
+
+9.2) Components of AWS Data Pipeline:
+-------------------------------------------------
+=> Following are the Components of AWS Data Pipeline which works together to manage your data:
+
+a) Activities/Tasks:
+----------------------------
+=> Activities define the Work to perform
+
+Ex:
+*** Copy log files to Amazon S3
+*** Export RDS data to Amazon S3
+*** Launch Amazon EMR Cluster.
+
+b) Managed Compute:
+---------------------------
+=> Service that creates EC2 Instances to perform your Activities
+
+c) Data Nodes:
+------------------
+=> Define the Location and Types of Data that will be the Input and Output.
+
+d) Task Runners:
+--------------------
+=> Task Runners[EC2 Instances] polls for tasks and then performs those tasks. 
+
+Ex:
+=> Task Runner could copy log files to Amazon S3 and launch Amazon EMR clusters. 
+
+e) Pipeline Definition:
+-----------------------------
+=> Pipeline Definition specifies the business logic of your data management. 
+=> Pipeline schedules and runs tasks by creating Amazon EC2 instances to perform the defined work activities. 
+
+9.3) Use-cases:
+--------------------
+Usecase 1: Exporting MySQL Data to S3 to generate Reports
+===============================================
+=> You can use AWS Data Pipeline to export your MySQL data to Amazon S3 each day and then run a weekly Amazon EMR Cluster over that Data to generate Sales reports. 
+
+=> AWS Data Pipeline schedules the daily tasks to export your MySQL data and the weekly task to launch the Amazon EMR cluster. 
+
+*** Diagram ***
+
+Usecase 2: Exporting Webserver Logs to S3 to generate Reports
+=================================================
+=> You can use AWS Data Pipeline to load Webserver logs to Amazon S3 each day and then run a weekly Amazon EMR Cluster over that Data to generate Traffic reports. 
+
+=> AWS Data Pipeline schedules the daily tasks to load Webserver logs data and the weekly task to launch the Amazon EMR cluster. 
+
+*** Diagram ***
+
+=========================
+10) Amazon OpenSearch Service
+=========================
+
+10.1) Introduction:
+------------------------
+=> Amazon OpenSearch Service is a managed Service allows you to RUN Search and Analytics engines for various use-cases.
+=> Amazon OpenSearch Service is successor to Amazon Elastic Search Service.
+
+*** OpenSearch is a fully open-source search and analytics engine for use cases such as Log analytics,Real-Time application monitoring, and ClickStream analysis.***
+
+=> Amazon OpenSearch Service provisions all the resources for your OpenSearch cluster and launches it. 
+
+=> It also automatically detects and replaces failed OpenSearch Service nodes, reducing the overhead associated with self-managed infrastructures. 
+
+10.2) Features of Amazon OpenSearch Service:
+---------------------------------------------------------------
+a) Quick Analysis:
+----------------------
+=> Quickly Ingest, Seacrh and Analyze data in your cluster.
+=> Commonly part of ETL process.
+
+b) Scalable:
+----------------
+=> Easily Scalable Cluster Infrastructure running OpenSearch Service
+
+c) Security:
+----------------
+=> Leverage IAM for access control
+=> Easy integration with VPC and VPC security groups
+=> Encryption of data at rest and node-to-node encryption
+
+d) Stability
+--------------
+=> Node allocation across two or three Availability Zones in the same AWS Region, known as Multi-AZ
+=> Dedicated master nodes to offload cluster management tasks
+=> Automated snapshots to back up and restore
+
+e) Flexibility
+-----------------
+=> SQL support for integration with business intelligence (BI) applications
+
+f) Integration with popular services
+--------------------------------------------------
+=> Data visualization using OpenSearch Dashboards
+=> Integration with CloudWatch, AWS CloudTrail, S3, Kinesis and DynamoDB
+=> Alerts from SNS when your data exceeds certain thresholds
+
+10.3) Amazon OpenSearch Serverless
+-------------------------------------------------
+=> OpenSearch Serverless is an on-demand, auto scaling, serverless configuration for Amazon OpenSearch Service.
+=> Serverless removes the operational complexities of provisioning, configuring, and tuning your OpenSearch clusters. 
+
