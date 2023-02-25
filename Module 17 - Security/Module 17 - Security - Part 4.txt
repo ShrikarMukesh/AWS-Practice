@@ -1,0 +1,216 @@
+=======================
+Module 17 - Security - Part 4
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) AWS Network Firwall
+7) Amazon GuardDuty
+8) Amazon Cognito
+
+Part 4:
+---------
+9) Amazon Inspector
+10) Amazon Detective
+11) Amazon Macie
+12) Sharing S3 Buckets using Pre-Signed URLs or Cookies
+
+
+Part 5:
+---------
+13) KMS and CloudHSM
+
+Part 6:
+---------
+14) AWS Secrets Manager
+15) Parameter Store
+16) AWS Certificate Manager
+
+Part 7:
+---------
+17) AWS Audit Manager
+18) AWS Artifact
+19) AWS Security Hub
+
+Part 8:
+---------
+20) Security -  Tips
+Exam #16 - Security
+
+=================
+9) Amazon Inspector
+=================
+
+9.1) Amazon Inspector - Introduction
+---------------------------------------------------
+=> Amazon Inspector is an automated security assessment service that helps to improve security and compliance of applications deployed in AWS.
+
+=> Inspector automatically assesses applications for known software vulnerabilities and unintended network exposure.
+
+=> After performing an assessment, Inspector produces the detailed list of security findings prioritized by level of severity.
+
+=> These findings are available in Amazon Inspector console or API ot in CloudWatch Events(EventBridge)
+
+=> Inspector Scans the Infrastructure continuously, only when needed.
+
+=> Basically, Inspector Scans the following resources 
+	a) EC2 Instances
+	b) For Lambda Functions
+	c) For Docker Images pushed to ECR
+
+a) EC2 Instances
+-----------------------
+=> Analyze against unintended network accessibility
+=> Analyze the Running O.S against known software vulnerabilities 
+
+b) For Lambda Functions
+-----------------------------------
+=> Identifies software vulnerabilities in Lambda function code and dependent packages
+
+c) For Docker Images pushed to ECR
+-----------------------------------------------
+=> Analyze the docker images for software  vulnerabilities 
+
+9.2) Finding types in Amazon Inspector
+---------------------------------------------------
+a) Package vulnerability
+b) Network reachability
+
+a) Package vulnerability
+-------------------------------
+=> Package vulnerability findings identify software packages in your AWS environment that are exposed to Common Vulnerabilities and Exposures 
+
+=> Package vulnerability findings are generated for EC2 instances , ECR container images and Lambda functions.
+
+b) Network reachability
+--------------------------------
+=> Network reachability findings indicate that there are allowed network paths to EC2 instances in your environment. 
+=> These findings appear when your TCP and UDP ports are reachable from the VPC edges, such as an internet gateway, VPC peering connection, etc. 
+
+=> These findings highlight network configurations that may be overly permissive, such as mismanaged security groups, ACLs, or IGWs, or that may allow for potentially malicious access.
+
+=> Network reachability findings are generated only for EC2 resources. 
+
+=> Inspector preforms scans for Network Reachability findings every 24 hours.
+
+
+==================
+10) Amazon Detective
+==================
+
+10.1) Amazon Detective - Introduction
+---------------------------------------------------
+=> Using Detective, You can analyze, Investigate and quickly Identify the root cause of the potential security issues or suspicious activities
+
+=> Detective automatically pulls the logs data from your aws resources 
+
+=> Detective uses Machine Leanring , Statistial Analysys and Graph Theory to build linked set of data that enables you to quickly figure out the root cause of your security issues.
+
+=> Detective uses following sources within your aws account to automatically Create an overview of your Users, Resources and Interaction between them over the time.
+a) VPC Flow Logs
+b) CloudTrail Logs
+c) Kubernetes Audit Logs
+d) GuardDuty Findings
+etc
+
+10.2) Amazon Detective - Use-cases
+---------------------------------------------------
+a) Triage Security Findings:
+-------------------------------------
+=> If you have a suspected security instance, you need to assess quickly whether it is real or false.
+=> Detective generates Visualizations that can show you what Resources, IP address and aws accounts are connected to your security Incident to determine whether the finding is an actual malicious activity or not.
+
+b) Threat Hunting:
+------------------------
+=> In addition to root-cause alanylis, you can also go  Threat Hunting
+=> Detective helps with Threat Hunting by creating detailed Visualizations on Specific Resources usch as IP address and aws accounts, VPCs and EC2 Instances.
+
+===============
+11) Amazon Macie
+===============
+=> Amazon Macie is a data security service that discovers Sensitive Data in S3 by using machine learning and pattern matching, 
+=> Macie provides visibility into data security risks, and enables automated protection against those risks.
+=> Uses AI to recognize whether your S3 Bucket contains Sensitive Data like PII, PHI, Financial Data etc
+
+Ex:
+	About Un-Encrypted S3 buckets
+	About public S3 buckets
+	About the shared with Other AWS Accounts.
+	etc
+		
+=> If Macie detects a potential issue with the security or privacy of your data, Macie generates a finding for you to review and remediate as necessary.
+
+=> You can filter and search Macie Alerts in AWS Cosnole.
+
+=> Alerts can be sent to EventBridge 
+
+=> Can be Integrated with other AWS Services such as Step Functions to automatically take remediation actions.
+
+============================================
+12) Sharing S3 Buckets using Pre-Signed URLs or Cookies
+============================================
+
+12.1) Introduction:
+--------------------------
+=> All objects in S3 bucket are private by default.
+
+=> Only Object owner has permission to access these objects.
+
+=> However, Object owner can optionally share objects with others by Creating Pre-Signed URLs to grant time-limited permission to access the objects.
+
+=> While Object owner is creating Pre-Signed URLs, Object Owner has use their own security credentials.
+
+=> You can generate PreSigned URLs using CLI or Programatically.
+
+12.2) PreSigned URLs
+-----------------------------
+=> When you create Pre-Signed URL for your object, you must provide the following.
+a) Your own security credentials
+b) Bucket name and Object key
+c) Http method
+d) Expiration Date and Time
+
+=> PreSigned URLs are valid only for the specified duration.
+
+=> Any one who receives the PreSigned URL can access the object.
+
+Ex:
+=> Consider you have a video in your S3 bucket and both bucket and object are private.
+=> You can share the Video with others by generating PreSigned URL.
+
+12.3) PreSigned Cookies
+---------------------------------
+=> This can be useful when you want to provide access to multiple restricted files.
+=> Cookies can be sent to users computer.
+=> That user can access the restricted files as long as cookie is persisted in users computer.
+
+12.4) Demo on PreSigned URLs
+------------------------------------------
+1) Goto S3 dashboard
+2) Create the bucket - myjlc-bucket-123
+3) Upload some file (dandes-logo.jpg)
+
+4) Open Cloudshell and run the following commands
+	
+	aws s3 ls
+	aws s3 ls s3://myjlc-bucket-123
+
+	aws s3 presign  s3://myjlc-bucket-123/dandes-logo.jpg  --expires-in   3600
+
+5) Now you will get URL.
+  Open that URL in the browser to access the file.
+
+
+
+

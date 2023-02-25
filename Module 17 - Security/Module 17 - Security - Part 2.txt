@@ -1,0 +1,140 @@
+=======================
+Module 17 - Security - Part 2
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) Amazon GuardDuty
+7) Amazon Inspector
+8) Amazon Macie
+
+9) KMS and CloudHSM
+10) AWS Secrets Manager
+11) Parameter Store
+12) Advanced IAM Policy Documents
+13) AWS Certificate Manager
+14) AWS Audit Manager
+15) AWS Artifact
+16) Amazon Cognito
+17) Amazon Detective
+18) AWS Security Hub
+
+19) Security -  Tips
+Exam #16 - Security
+
+================
+3) AWS Shield
+================
+
+3.1) AWS Shield - Introduction
+----------------------------------------
+=> Protection against DDoS attacks is of primary importance for your internet-facing applications.
+
+=> AWS Shield is a managed DDoS protection service that safeguards applications running on AWS.
+
+=> AWS Shield protects against  Layer 3/Layer 4 attacks only
+
+=> AWS Shield comes with two flavors
+	a) Shield Standard
+	b) Shield Advanced
+
+3.2) Shield Standard:
+-------------------------
+=> This is Activated for every AWS Account and is Free for all the Accounts.
+
+=> Provides the Protection for all the AWS Customers on EC2, ELB, CloudFront, Global Accelerator, Route 53.
+
+=> Provides protection from attacks such as SYN/UDP Floods , Amplification/Reflection attacks and other Layer 3/Layer 4 attacks.
+
+3.3) Shield Advanced
+-------------------------
+=> It is an Optional DDoS mitigation Service.
+=> Charges are $3,000 per month per Organization.
+
+=> Provides the Protection against more sophistificated attacks on EC2, ELB, CloudFront, Global Accelerator, Route 53.
+
+=> Offers Always-On monitoring of network traffic and active application monitoring to provide near real-time notifications of DDoS attacks.
+
+=> Gives 24/7 Access to AWS DDoS Response Team 
+=> Protects against higher fees during usage spikes due to DDoS attacks.
+
+=> Sheild Advanced has wonderful feature called - "Automatic Application Layer DDoS mitigation"
+=> This feature automatically creates, evaluates and deploys AWS WAF Rules to mitigate Layer-7 Attacks.
+
+3.4) Shield - Demo
+-------------------------
+=> Refer the Video and Write down the steps
+
+================
+4) AWS WAF
+================
+
+4.1) AWS WAF - Introduction
+---------------------------------------
+*** WAF - Web Application Firewall
+
+=> WAF allows you to monitor the HTTP(S) requests that are forwarded to your web application resources. 
+
+=> You can protect the following resource types:
+	* CloudFront distribution
+	* Application Load Balancer
+	* API Gateway REST API
+	* AppSync GraphQL API
+	* Cognito user pool
+
+=> WAF operates on Application Layer( Layer 7)
+=> WAF Protects your web applications from common Layer-7 attacks.
+
+=> WAF also allows you to control access to your content.
+=> Define Web ACL Rules ( Web Access Control List)
+=> Web ACLs are regional except CloudFront distributions.
+=> You can configure the conditions like
+	* What IP addresses are allowed to make request.
+	* What Query string parameter need to be passed with reqest to be allowed.
+	
+=> Based on the conditions you specify, Your protected resource responds to requests either with the requested content, with an HTTP 403 status code (Forbidden), or with a custom response.
+
+4.2) Behaviors
+---------------------
+=> At most basic level, WAF allows 3 different behaviors
+a) Allow All Requests except the ones you specify
+b) Block All Requests except the ones you specify
+c) Count the Requests that match the properties you specify
+
+4.3) Web Access Control List ( Web ACL)
+-----------------------------------------------------
+=> Web ACL gives you fine-grained control over all of the HTTP(S) web requests that your protected resource responds to. 
+=> You can protect CloudFront, API Gateway, Application Load Balancer, AppSync, and Cognito resources.
+
+=> You can use criteria like the following to allow or block requests:
+a) IP address that request originate from
+b) Country that request originate from
+c) Values in the Request Headers
+d) Query String Parameters
+e) Presence of SQL Code that is likely to be malicious ( Knows as SQL Injection)
+f) Presence of Script that is likely to be malicious ( Knows as Cross-Site Scripting)
+g) Strings that appear in the request ( either specific strings or strings thatmatch regular exp patterns)
+i) Size of a particular part of the request
+
+=> You can also test for any combination of these conditions. 
+=> You can block or count web requests that meet the specified conditions,
+=> You can block or count web requests that exceed a specified number of requests in any 5-minute period. 
+=> You can combine conditions using logical operators.
+
+4.4) WAF - Demo
+-------------------------
+=> Refer the Video and Write down the steps
+
+
+

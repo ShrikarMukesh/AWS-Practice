@@ -1,0 +1,238 @@
+=======================
+Module 17 - Security - Part 5
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) AWS Network Firwall
+7) Amazon GuardDuty
+8) Amazon Cognito
+
+Part 4:
+---------
+9) Amazon Inspector
+10) Amazon Detective
+11) Amazon Macie
+12) Sharing S3 Buckets using Pre-Signed URLs or Cookies
+
+
+Part 5:
+---------
+13) KMS and CloudHSM
+
+Part 6:
+---------
+14) AWS Secrets Manager
+15) Parameter Store
+16) AWS Certificate Manager
+17) AWS Audit Manager
+18) AWS Artifact
+19) AWS Security Hub
+
+Part 7:
+---------
+20) Security -  Exam Tips
+Exam #16 - Security
+
+
+=================
+13) KMS and CloudHSM
+=================
+
+13.1) Encrypyion:
+------------------------
+=> Encryption is the method of converting Data into secret code using an encryption algorithm. 
+=> The science of encrypting and decrypting Data is called cryptography. 
+=> In computing, 
+	* Un-encrypted data is also known as plaintext
+	* Encrypted data is called ciphertext.
+
+=> AWS supports Encryption in 3 ways
+a) Encryption in the flight (SSL)
+b) Server-Side Encryption at Rest (SSE)
+c)  Client-Side Encryption at Rest (CSE)
+
+13.2) Encryption in the flight (SSL/TLS)
+-----------------------------------------------
+=> Data is Encrypted before sending and Decrypted after receiving
+=> SSL/TLS Certificates help you with Encryption (HTTPS)
+	SSL + Http => Https
+	TLS + Http => Https
+=>Encryption in flight ensures that MITM attcks will not happen.
+** MITM attack- Man In The Middle attack.
+
+*** Diagram ***
+
+13.3) Server-Side Encryption at Rest (SSE)
+-----------------------------------------------------
+=> Data is Encrypted after being received by the Server.
+=> Data will be Encrypted and stored in the Server.
+=> Data is Decrypted before being sent to client.
+=> Encryption and Decryption keys must be managed somewhere else and server must have access to keys.
+
+13.4)  Client-Side Encryption at Rest (CSE)
+-----------------------------------------------------
+=> Data is Encrypted by the Client
+=> Data will be Decrypted by the receiving Client
+=> Server should not be able to Decrypt the Data.
+
+13.5) KMS Key Types
+-----------------------------
+=> KMS key is the new name for KMS CMK(Customer Master Key).
+
+=> There are two types of KMS Keys
+a) Symmetric Keys
+b) Asymmetric Keys
+
+a) Symmetric Keys:
+---------------------------
+=> Symmetric Keys are AES-256 keys.
+=> Single Encryption key that is used to encrypt and decrypt your data.
+=> AWS services that are Integrated with KMS are Symmetric keys.
+=> You can not access KMS key Unencrypted.
+=> You must make a Call to KMS API to use KMS Key.
+
+b) Asymmetric Keys:
+---------------------------
+=> Asymmetric Keys are RSA and ECC key Pairs.
+=> There will be a key pair - one public key and one private key.
+=> Public key is used for Encryption 
+=> Private key is used for Decryption 
+=> Public key is downloadable, but you can not access private key Unencrypted.
+=> Useful when you are doing Encryption outside AWS who can not make the KMS API Calls.
+
+13.6) Exploring AWS KMS 
+----------------------------------
+*** KMS - Key Management Service
+
+=> AWS KMS is a managed service that allows you to easily create and control the Encryption keys which are used to Encrypt your Data.
+=> Simply say - KMS is to Create and Manage the Encryption keys
+
+=> AWS KMS is integrated with other AWS Services such as EBS, S3, RDS, RedShift etc to make it simple to Encrypt you data with KMS Encryption keys.
+
+=> AWS KMS provides you the centralized control over the lifecycle and permissions of your keys
+
+=> AWS KMS is fully Integrated with IAM 
+=> You can create the KMS keys whenever you want
+=> You can give the permissions to users who can access them
+=> You can audit the KMS keys usage using CloudTrail.
+
+=> 3 ways to manage the KMS keys
+a) AWS Managed Keys
+b) Customer Managed Keys
+c) Customer Managed Keys Imported
+
+a) AWS Managed Keys:
+-------------------------------
+=> AWS creates and manages the KMS Keys for you.
+=> Default naming is aws/service-name
+	ex:	
+		aws/ebs
+		aws/rds
+		aws/s3
+		etc
+
+=> Automatic key rotation every year.
+=> Free
+
+b) Customer Managed Keys:
+-------------------------------------
+=> You have to create and manages the KMS Keys
+=> You can use your own names
+	ex:	
+		myjlc/rds
+
+=> Automatic key rotation every year.
+=> $1 per month
+
+c) Customer Managed Keys Imported:
+--------------------------------------------------
+=> You can import the KMS keys created outside AWS
+=> must be 256-bit Symmetric keys
+=> Only manual key rotation is possible.
+=> $1 per month
+
+
+13.7) KMS Key Policies
+------------------------------
+=> KMS Key Policies are like S3 Bucket Policies.
+=> KMS Key Policies are the primary way to control access to KMS keys. 
+=> Every KMS key must have exactly one key policy. 
+=> Statements in the key policy determine who has permission to use the KMS key and how they can use it. 
+=> You can also use IAM policies and grants to control access to the KMS key, but every KMS key must have a key policy.
+
+2 types of Key Policies:
+---------------------------
+a) Default KMS Key Policy
+b) Custom KMS Key Policy
+
+a) Default KMS Key Policy:
+-----------------------------------
+=> Default KMS Key Policy is Created automatically when you do not specify the KMS key policy.
+=> Default KMS Key Policy provides the Complete access to root user.
+
+b) Custom KMS Key Policy:
+-----------------------------------
+=> Define Users,Roles who can access the KMS Key.
+=> Define Who can adminitrate the KMS Key.
+=> Useful for cross-account access of your KMS key.
+
+13.8) HSM  and CloudHSM :
+------------------------------------
+a) HSM:
+--------
+** HSM -  Hardware Security Module
+
+=> HSM is a physical computing device that safeguards and manages digital keys and performs Encryption and Decryption fucntion.
+=> HSM contains one or more secure Crypto-Processor chips.
+=> Internally KMS keys will be generated on HSM only 
+=> AWS KMS uses Shared tenancy of HSM.
+=> Automatic Key rotation is supproted for the keys generated using HSM 
+
+b) AWS CloudHSM:
+-----------------------
+=> AWS CloudHSM is cloud-based HSM that allows you to easily generate and use your own Encryption keys on AWS cloud.
+=> AWS CloudHSM is a physical computing device, entirely dedicated to you.
+=> You will have full control over underlying hardware.
+=> Automatic Key rotation is not supproted for the keys generated using AWS CloudHSM 
+
+13.9) Key Rotation:
+--------------------------
+=> Key Rotation means Changing the key, i.e., replacing it by a new key.
+=> You can configure AWS KMS to automatically rotate KMS keys every year.
+=> Keys generated within AWS KMS HSM will be rotated automatically.
+=> Automatic Key Rotation is not supproted for
+	* Imported Keys
+	* Asymmetric Keys
+	* Keys generated in AWS CloudHSM cluster using Custom key store feature.
+
+13.10) KMS Multi-Region Keys:
+----------------------------------------
+=> You can create following two types of Keys based Regionality.
+a) Single-Region key
+b) Multi-Region key
+
+a) Single-Region key:
+---------------------------
+=> Never allow this key to be replicated into other Regions
+
+b) Multi-Region key:
+---------------------------
+=> Allow this key to be replicated into other Regions
+=> Allows to Encrypt in One Region and Decrypt in other region.
+
+13.11) KMS Demo:
+--------------------------
+.......
+

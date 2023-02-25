@@ -1,0 +1,534 @@
+=======================
+Module 15 - Analytics - Part 6
+=======================
+
+Part 6:
+-----------
+11) Analytics -  Tips
+Exam #14 - Analytics 
+
+========================
+11) Analytics -  Tips
+========================
+
+
+1) Amazon Redshift 
+=================
+
+=> Amazon Redshift is a fully managed, petabyte-scale data warehouse service in the AWS Cloud. 
+=> Redshift is a large Relational Database used in Big Data Applications.
+=> Redshift is used for OLAP Applications, not for OLTP Applications
+(OLAP  - Online Analytical Processing)
+(OLTP  - Online Transaction Processing)- RDS ,Aurora, DynamoDD etc 
+
+Key Points about Redshift
+========================
+a) Size:
+---------
+=> It can store upto 16PB per Cluster.
+
+b) Relational:
+------------------
+=> Redshift is a Relational Database.
+=> You can Integrate BI Tools like Amazon QuickSight or Tableau
+
+c) Usage:
+-----------
+=> Redshift is a great tool for BI Applications.
+=> It is not a replacement for Standard RDS Databases.
+
+Snapshots and DR
+===================
+=> Redshift do not have Multi-AZ mode.
+=> You can create Snapshots of your Redshift cluster
+
+=> You can restore the Snapshot into new Cluster
+
+=> There are two types of snapshots: 
+a) Automated Snapshots 
+b) Manual Snapshots 
+
+a) Automated Snapshots:
+--------------------------------
+=> By default Redshift takes a snapshot about every eight hours or following every 5 GB per node of data changes, or whichever comes first. 
+=> Automated snapshots are enabled by default when you create a cluster.
+
+=> Automated snapshots are deleted at the end of a retention period. 
+=> Default retention period is 1 day and you can modify up to max of 35 Days.
+
+b) Manual Snapshots 
+-----------------------------
+=> You can take a manual snapshot any time. 
+=> By default, manual snapshots are retained indefinitely, even after you delete your cluster. 
+=> You can specify the retention period when you create a manual snapshot
+
+Cross-Region:
+------------------
+=> You can configure Redshift to automatically copy snapshots of the Redshift Cluster to another Region
+
+2) Amazon EMR
+==============
+*** EMR --- Elastic MapReduce
+
+=> EMR is a Fully Managed Big Data platform that allows you to process massive amount of data using Open Source Tools like Hadoop, Spark, Hive etc.
+
+=> EMR helps to create Hadoop Clusters in AWS Cloud***
+
+=> This Cluster can have hundreds of Nodes(EC2 Insatnces)
+
+=> EMR Takes care of all the provisioning and Configuration of Cluster.
+
+=> EMR is ETL Tool
+
+3) Amazon Kiness
+================
+
+=> Amazon Kiness allows you to ingest , process and analyze Real-time Streaming Data.
+
+=> You can think of it as huge Data Pipe is connected to your AWS Account.
+
+=> You can Ingest Real-time Data such as
+	* Application Logs
+	* Metrics
+	* Website Click-Stream
+	* IOT Data
+	etc
+
+=> There are 3 major types of Kinesis available.
+a) Kinesis Data Streams
+b) Kinesis Data Firehose
+c) Kinesis Data Analytics
+d) Kinesis Video Straems
+
+
+4) Kinesis Data Streams
+====================
+=> You can use Kinesis Data Streams to collect and process large streams of data records in real time. 
+
+=> You can create data-processing applications, known as Kinesis Data Streams applications.
+=> Kinesis Data Streams application reads data from a data stream as data records.
+=> These applications can use the Kinesis Client Library, and they can run on Amazon EC2 instances.
+
+=> Following are typical scenarios for using Kinesis Data Streams:
+a) Accelerated log processing
+b) Real-time metrics and reporting
+c) Real-time data analytics
+d) Complex stream processing
+
+Capacity Mode:
+------------------------
+=> Kinesis Data Streams supports two Capacity Modes
+
+i) On-demand mode 
+ii) Provisioned mode
+
+i) On-demand mode:
+----------------------------
+=> Kinesis Data Streams automatically manages the shards in order to provide the necessary throughput. 
+=> You are charged only for the actual throughput that you use 
+
+ii) Provisioned mode:
+----------------------------
+=> You must specify the number of shards for the data stream. 
+=> Total capacity of a data stream is the sum of the capacities of its shards.
+=> You can increase or decrease the number of shards in a data stream as needed 
+
+Retention Period:
+--------------------------
+=> Stream’s retention period is set to a default of 24 hours after creation. 
+=> You can increase the retention period up to 8760 hours (365 days) 
+
+
+5) Kinesis Data Firehose
+====================
+=> Kinesis Data Firehose is a fully managed AWS Service 
+=> Kinesis Data Firehose is mainly for delivering real-time streaming data to Various Destinations.
+
+=> You can write Kinesis Data Firehose data to the following Destinations
+	a) AWS Destinations
+	b) 3rd Party Partner Destinations
+	c) Custom Destinations
+
+a) AWS Destinations
+---------------------------
+=>  S3, Redshift, OpenSearch 
+
+b) 3rd Party Partner Destinations
+--------------------------------------------
+=> MongoDB, Splunk,  Datadog, Dynatrace, LogicMonitor, New Relic, Sumo Logic. 
+
+c) Custom Destinations
+-----------------------------
+=> Custom HTTP endpoint
+
+
+=> Following Producers can send the Data to Kinesis Data Firehose
+*** Kinesis Data Data Stream
+*** Web or Mobile Clients
+*** Any Applications
+*** CloudWatch Logs
+*** IOT Devices
+etc
+
+=> With Kinesis Data Firehose, You don't need to write applications or manage resources.
+
+=> You configure your data producers to send data to Kinesis Data Firehose, and it automatically delivers the data to the destination that you specified. 
+
+=> You can also configure Kinesis Data Firehose to transform your data before delivering it.
+
+=> It supports many Data Formats, Conversions, Transformations, Compressions.
+
+=> It also supports custom Data Transformations with Lambda.
+
+Buffer Size and Buffer Interval
+--------------------------------------------
+=> Kinesis Data Firehose buffers incoming streaming data to a certain size or for a certain period of time before delivering it to destinations. 
+=> Buffer Size is in MBs 
+=> Buffer Interval is in seconds.
+
+
+6) Kinesis Data Analytics
+====================
+=> Kinesis Data Analytics allows you to Read, Process and Store Streaming Data in near real time. 
+
+=> This Service supports ingesting data from two Streaming sources.
+a) Kinesis Data Streams 
+b) Kinesis Data Firehose 
+
+=> Kinesis Data Analytics supports the following destinations
+a) Kinesis Data Firehose ( S3, Redshift, OpenSearch Service, and Splunk), 
+b) AWS Lambda
+c) Kinesis Data Streams
+
+=> Kinesis Data Analytics  supports two ways to Analyze the Data
+a) Kinesis Data Analytics for SQL Applications
+b) Kinesis Data Analytics for Flink Applications
+
+Kinesis Data Analytics for SQL Applications
+-----------------------------------------------------------
+=> The service enables you to quickly write and run powerful SQL code against Streaming Source
+=>You can write your SQL code using the interactive editor and test it with live streaming data. 
+
+
+Kinesis Data Analytics for Flink Applications
+-----------------------------------------------------------
+=> The service enables you to Write and run Flink applications against Streaming Source.
+=> You can build Java and Scala applications  using open-source libraries based on Apache Flink. 
+
+
+7) Amazon Athena
+================
+=> Athena is an Interactive Query Service that is used to Analyze data in S3 using SQL.
+=> Athena allows to directly Query the Data in S3 bucket without loading data into Database.
+
+=> Athena also allows to interactively run data analytics using Apache Spark
+
+=> Athena helps you analyze unstructured, semi-structured, and structured data 
+
+Ex:
+CSV, JSON, or Columnar Data Formats such as Apache Parquet and Apache ORC,Avro
+
+=> Athena is out-of-the-box integrated with Amazon Glue Data Catalog to design the Schema for Your data.
+
+=> Athena can be integrated with Amazon QuickSight for Reporting/dashboards
+
+
+8) AWS Glue
+===========
+=> AWS Glue is a Serverless Data integration service 
+=> Glue allows analytics users to discover, prepare and integrate data from multiple sources 
+and Prepares the Required Schema for Your Data. 
+
+=> With AWS Glue, you can connect to more than 70 different Data Sources and manage your data in a centralized data catalog.
+
+=> It allows you to perform ETL Workloads without managing underlying Servers.
+
+=> Glue replaces EMR.
+
+Data Catalog and crawlers in AWS Glue
+==============================
+=> AWS Glue Data Catalog contains references to your Source Data
+=> AWS Glue Data Catalog is an index to the location, schema, and runtime metrics of your data. 
+=> Information in the Data Catalog is stored as metadata tables, where each table specifies a single data store. 
+=> You can run a crawler to take inventory of the data in your data stores
+
+
+9) Amazon MSK
+===========
+*  Amazon MSK- Amazon Managed Streaming for Apache Kafka
+
+=> Amazon MSK is a Fully Managed Service that allows you to build and run applications that use Apache Kafka to process Streaming Data.
+
+=> Amazon MSK provides the Control-Plane operations:
+=> It Provides Control-pane operations required 
+	* Creating the Cluster
+	* Updating the Cluster
+	* Deleting the Cluster
+
+=> It allows you use Apache Kafka Data-Plane operations:
+	* Producing Data
+	* Consuming data. 
+
+
+10) Amazon QucikSight
+====================
+
+=> Amazon QucikSight is a fully managed ML-Powered BI Service for Data Visualization.
+=> QucikSight allows to easily create Interactive Dashboards with the Real-Time Data.
+=> QucikSight can be Ingested with the Data from Variety of Sources lke RDS, Aurora,DynamoDB, Athena,Redshift, S3 etc
+
+=> Use Cases:
+-----------------
+a) Business Analytics
+b) Dashboards 
+c) Business Insights with Data
+
+=> QucikSight is Like Tableau
+
+
+11) AWS Data Pipeline
+====================
+
+=> AWS Data Pipeline is a Managed ETL Service that you can use to automate the movement and transformation of data.
+=> With AWS Data Pipeline, you can define data-driven workflows, so that tasks can be dependent on the successful completion of previous tasks. 
+
+=> Automatocally tries the Failed Tasks
+=> You can configure Notifications via SNS for failures or even for successful Tasks.
+=> Integrates easily with S3,RDS,DynamoDB, Redshift.
+=> Works with EC2 and EMR for Compute needs.
+
+Usecase 1: Exporting MySQL Data to S3 to generate Reports
+===============================================
+=> You can use AWS Data Pipeline to export your MySQL data to Amazon S3 each day and then run a weekly Amazon EMR Cluster over that Data to generate Sales reports. 
+
+=> AWS Data Pipeline schedules the daily tasks to export your MySQL data and the weekly task to launch the Amazon EMR cluster. 
+
+Usecase 2: Exporting Webserver Logs to S3 to generate Reports
+=================================================
+=> You can use AWS Data Pipeline to load Webserver logs to Amazon S3 each day and then run a weekly Amazon EMR Cluster over that Data to generate Traffic reports. 
+
+=> AWS Data Pipeline schedules the daily tasks to load Webserver logs data and the weekly task to launch the Amazon EMR cluster. 
+
+
+12) Amazon OpenSearch Service
+=========================
+
+=> Amazon OpenSearch Service is a managed Service allows you to RUN Search and Analytics engines for various use-cases.
+=> Amazon OpenSearch Service is successor to Amazon Elastic Search Service.
+
+*** OpenSearch is a fully open-source search and analytics engine for use cases such as Log analytics,Real-Time application monitoring, and ClickStream analysis.***
+
+=> Amazon OpenSearch Service provisions all the resources for your OpenSearch cluster and launches it. 
+
+ELK - Elastic Search + LogStash + Kibana
+ELK - Open Search + LogStash + Kibana
+
+==============================================================================================
+RedShift	EMR	Kinesis		Kinesis Data Streams	Kinesis Data Firehose	Kinesis Data Analytics
+Athena	Glue	QuickSight 	Data Pipeline 		MSK			Open Search
+==============================================================================================
+
+==================
+Exam #14 - Analytics 
+==================
+
+Q1) Which AWS Service can be used to build a schema for your data?
+
+A) Athena
+
+B) Glue
+
+C) Lambda 
+
+D) SQS
+
+Ans: B
+
+
+Q2) Which AWS Service can be used to query the data that's stored in S3?
+
+A) Athena
+
+B) Glue
+
+C) Lambda 
+
+D) SQS
+
+Ans: A
+
+
+Q3) True or False? Redshift supports multi-AZ deployments.
+
+A) True
+
+B) False
+
+Ans: B
+
+
+Q4) Which AWS Service allows you to transform data using SQL as it's being passed through Kinesis.
+
+A) Redshift
+
+B) DynamoDB
+
+C) Kinesis Data Analytics
+
+D) RDS
+
+Ans: C
+
+
+Q5) What service can be used in combination with Kibana and Logstash to create an ELK stack?
+
+A) S3
+
+B) EMR
+
+C) Athena
+
+D) OpenSearch Service (successor to Elasticsearch)
+
+Ans: D
+
+
+Q6) Which AWS service offers a fully managed way of running search and analytics engines?
+
+A) Amazon OpenSearch Service
+
+B) Amazon Elastic Analytics Service
+
+C) AWS Athena
+
+D) Amazon QuickSight
+
+Ans: A
+
+
+Q7) What service allows you to directly visualize your data in AWS?
+
+A) EMR
+
+B) S3
+
+C) QuickSight
+
+D) Redshift
+
+Ans: C
+
+
+Q8) What is a valid use case for Amazon EMR?
+
+A) Extract, transform, and load (ETL) jobs.
+
+B) Simplify data warehouse management
+
+C) Analyze data in Amazon S3 using standard SQL
+
+D) Build real-time applications
+
+Ans: A
+
+
+Q9) What type of database is Redshift?
+
+A) NoSQL
+
+B) Non-Relational
+
+C) Unrelational
+
+D) Relational
+
+Ans: D
+
+
+Q10) If you needed to implement a managed ETL service for automating your movement of data between AWS services, which service would best fit your needs?
+
+A)Amazon S3 Event Notifications
+
+B) Amazon ETL
+
+C) Amazon EventBridge
+
+D) AWS Data Pipeline
+
+Ans: D
+
+
+Q11) How much data can a Redshift database hold per cluster?
+
+A) 16 PB
+
+B) 1 TB
+
+C) 1.6 PB
+
+D) 10.6 PB
+
+Ans:  A
+
+
+Q12) Which AWS service is a good choice for visualizing and analyzing application logs?
+
+A) Amazon Athena
+
+B) AWS Glue
+
+C) Amazon OpenSearch Service
+
+D) Amazon CloudWatch
+
+Ans: C
+
+
+Q13) True or False? You are responsible for scaling Glue performance.
+
+A) True
+
+B) False
+
+Ans: B
+
+
+Q14) How long are automatic Redshift backups retained by default?
+
+A) 35 days
+
+B) 1 day
+
+C) Forever
+
+D) 7 days
+
+Ans:  B
+
+
+Q15) Which AWS Service  provides real-time streaming of data.
+
+A) SQS
+
+B) Kinesis Data Firehose
+
+C) Kinesis Data Analytics
+
+D) Kinesis Data Streams
+
+Ans: D
+
+
+Q16) If you need to create a new streaming application requiring Apache Kafka as the primary component, which AWS service would be the best fit for this requirement?
+
+A) Amazon OpenStreaming Service
+
+B) Amazon Kinesis
+
+C) Amazon Managed Stream for Apache Kafka (MSK)
+
+D) Amazon MQ
+
+Ans: C 
+
+

@@ -1,0 +1,285 @@
+=======================
+Module 17 - Security - Part 6
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) AWS Network Firwall
+7) Amazon GuardDuty
+8) Amazon Cognito
+
+Part 4:
+---------
+9) Amazon Inspector
+10) Amazon Detective
+11) Amazon Macie
+12) Sharing S3 Buckets using Pre-Signed URLs or Cookies
+
+
+Part 5:
+---------
+13) KMS and CloudHSM
+
+Part 6:
+---------
+14) AWS Secrets Manager
+15) Parameter Store
+16) AWS Certificate Manager
+17) AWS Audit Manager
+18) AWS Artifact
+19) AWS Security Hub
+
+Part 7:
+---------
+20) Security -  Exam Tips
+Exam #16 - Security
+
+====================
+14) AWS Secrets Manager
+====================
+
+14.1) Introduction
+------------------------
+=> Secrets Manager is a service that securely Stores , Encrypts and Rotates your Database Credentials and other secrets.
+
+=> Secrets Manager can store the following
+	a) RDS Credentials
+	b) Non-RDS Credentials
+	c) Any other type of Secret which can be stored as Key-Value pair( SSH Keys, API Keys etc)
+
+=> You can store Secrets as PlainText or Encrypted Data
+=> It costs money but highly scalable.
+
+=> Secrets Manager enables you to replace hardcoded credentials in your code, including passwords ,with an API call to Secrets Manager to retrieve the secret programmatically. 
+=> This ensure that secret can't be compromised by someone examining your code
+=>  Also, You can configure Secrets Manager to automatically rotate the secret for you according to a specified schedule.
+
+14.2) Key Points:
+---------------------
+=> Encryption in flight and at rest using KMS
+=> Automatically Rotates the Credentials
+=> Apply fine-grained access control using IAM policies
+=> Replicate Secrets across multiple AWS Regions
+=> Secret manager keeps read-replicas in Sync with the Primary Secret.
+=> Use-cases for read-replicas:
+	a) Multi-Region Apps
+	b) Multi-Region Databases
+
+14.3) Secrets Manager - Demo:
+-----------------------------------------
+
+
+====================
+15) Parameter Store
+====================
+
+15.1) Introduction
+------------------------
+=> Parameter Store is part of AWS Systems Manager which provides secure , hirarchical storage Configuration Data management and Secrets management
+
+=> Parameter Store can  store the following
+	a) Passwords
+	b) Database Strings
+	c) AMI Ids
+	d) License Codes
+	e) API Keys
+	h) SSH Keys
+	etc
+
+=> You can store parameters as PlainText or Encrypted Data
+=> Its is free 
+=> Version Tracking of the Configurations or Secrets
+
+=> Parameter Store enables you to replace hardcoded Configurations and Secrets in your code ,with an API call to Parameter Store  to retrieve the Parameter programmatically. 
+
+=> This ensure that Parameters can't be compromised by someone examining your code
+
+=> Supports Two Tiers
+	a) Stardard
+	b) Advanced 
+
+a) Stardard:
+------------------
+=> Limit of 10,000 parameters. 
+=> Parameter value size up to 4 KB.
+=> Parameter policies are not available. 
+=> No additional charge.
+
+b) Advanced 
+-------------------
+=> Can create more than 10,000 parameters. 
+=> Parameter value size up to 8 KB. 
+=> Parameter policies are available. 
+=> Charges apply
+
+15.2) Key Points:
+---------------------
+=> Apply fine-grained access control using IAM policies
+=> Encryption in flight and at rest using KMS
+=> Parameter Store doesn't provide automatic rotation services for stored secrets. 
+=> You can define TTL(Time To Live) for Parameter to force update or delete Parameter.
+=> You can assign multiple policies at a time
+
+15.3) Parameter Store - Demo:
+-----------------------------------------
+Goto CloudShell
+
+aws ssm get-parameters --names /myjlc/dev/db-username 
+
+aws ssm get-parameters --names /myjlc/dev/db-username /myjlc/dev/db-password 
+
+aws ssm get-parameters --names /myjlc/dev/db-username /myjlc/dev/db-password  --with-decryption
+
+aws ssm get-parameters-by-path --path /myjlc/dev
+
+aws ssm get-parameters-by-path --path /myjlc
+
+aws ssm get-parameters-by-path --path /myjlc --recursive
+
+aws ssm get-parameters-by-path --path /myjlc --recursive --with-decryption
+
+===========================
+16) AWS Certificate Manager(ACM)
+===========================
+
+16.1) Introduction:
+-------------------------
+=> ACM allows you to Create, Manage and Deploy public and private SSL/TLS ceritificates and keys that protect your AWS websites and applications. 
+
+=> ACM Integrates with other services such as ELB, CloudFront, API Gateway, Cognito.
+=> ACM certificates can secure singular domain names, multiple specific domain names, wildcard domains.
+=> ACM wildcard certificates can protect an unlimited number of subdomains.
+
+16.2) Befefits:
+-------------------
+a) Cost:
+---------
+=> ACM provisions both public and private SSL/TLS certificates for free.
+=> You pay only for the AWS resources that utilize your SSL/TLS certificates.
+
+b) Automated Renewals and Deployments:
+---------------------------------------------------------
+=> ACM can automate the renewal of your SSL/TLS certificates.
+=> Updates the New certificates with Integrated Services such as ELB, CloudFront and API Gateway.
+
+c) Easy to Setup:
+---------------------
+=> ACM removes lots of manual process involving in generating key-pair.
+=> You can create your own SSL/TLS certificates with just few clicks in AWS Console.
+
+About SSL and TSL:
+===============
+SSL => Secure Socket Layer
+TLS => Transport Layer Security
+
+Here’s the full history of SSL and TLS releases:
+
+SSL 1.0 – never publicly released due to security issues.
+SSL 2.0 – released in 1995. Deprecated in 2011. Has known security issues.
+SSL 3.0 – released in 1996. Deprecated in 2015. Has known security issues.
+TLS 1.0 – released in 1999 as an upgrade to SSL 3.0. Planned deprecation in 2020.
+TLS 1.1 – released in 2006. Planned deprecation in 2020.
+TLS 1.2 – released in 2008.
+TLS 1.3 – released in 2018.
+
+=> TLS is most recent version of SSL.
+SSL + HTTP => HTTPS
+TLS +HTTP => HTTPS
+
+
+=> Both SSL and TLS are Cryptograpic protocals that encrypt the data in flight.
+
+
+====================
+17) AWS Audit Manager
+====================
+
+17.1) Introduction:
+-------------------------
+=> With Audit Manager, you can continuously audit your AWS usage to makesure that you stay compliant with Industry Standards and Regulations.
+
+=> Audit Manager automates evidence collection to assess whether your policies, procedures, and activities are operating effectively. 
+
+=> Audit Manager is an Automated Service that produces reports specific to auditors for PCI DSS, HIPAA, GDPR, PDPA, CCPA etc
+
+HIPAA 	-   Health Insurance Portability and Accountability Act 
+PCI DSS 	-   Payment Card Industry Data Security Standard 
+GDPR 	-   General Data Protection Regulation
+PDPA 	-   Personal Data Protection Act 
+CCPA 	-   California Consumer Privacy Act
+
+=> Audit Manager provides prebuilt frameworks that structure and automate assessments for a given compliance standard or regulation. 
+
+=> You can also customize frameworks and controls to support internal audits according to your specific requirements.
+
+17.2) Use-Cases
+----------------------
+a) Transition from manual to automated evidence collection:
+-------------------------------------------------------------------------------
+=> Provide automated reports for auditors 
+=> Reduces the need to compile these reports manually.
+
+b) Continuous Auditing and Compliance:
+------------------------------------------------------
+=> It works on continuous basis so that As you AWS environment evolves and adopts, You can provide automated reports to evaluate your AWS environment against Industry Standards.
+
+c) Internal Risk Assessments:
+----------------------------------------
+=> You can create New Framework from the begining or customize pre-built frameworks.
+=> You can launch Assessments to collect the evidences automatically which will help you whether your internal policies are being followed.
+
+==============
+18) AWS Artifact
+==============
+
+18.1) Introduction:
+-------------------------
+=> AWS Artifact is a Single source where you can get compliance related information.
+
+=> AWS Artifact provides on-demand downloads of AWS security and compliance documents, such as 
+	AWS ISO certifications, 
+	Payment Card Industry (PCI) reports
+	AWS SOC ( Service Organization Control) reports. 
+	etc
+
+=> You can submit the security and compliance documents (also known as audit artifacts) to your auditors or regulators to demonstrate the security and compliance of the AWS infrastructure and services that you use. 
+
+
+==================
+19) AWS Security Hub
+==================
+
+19.1) Introduction:
+-------------------------
+=> Use AWS Security Hub to automate security best practice checks, aggregate security alerts into a single place and format, and understand your overall security posture across all of your AWS accounts.
+
+=> Security Hub is a Single place to view all your security alerts from various Security related Services like Guard Duty, Inspector, Macie, and AWS Firewall Manager(Sheild,WAF,Network Firewall).
+
+=> It Works across multiple accounts.
+
+19.2) Use-Cases:
+-----------------------
+a) Conduct Cloud Security Posture Management (CSPM)
+------------------------------------------------------------------------------
+=> Use automated checks that comply with common frameworks ( such as CIS Standards, PCI Standards ) to help reduce your risk.
+
+b) Save time and money by simplifying integrations
+----------------------------------------------------------------------
+=> Simplify and streamline data ingestion by consolidating the integrations between AWS services and  by normalizing your findings.
+
+c) Correlate your security findings to discover new insights
+------------------------------------------------------------------------------
+=> Aggregate all your security findings ine one place allowing your security staff to identify threats and alerts more easily.
+
+

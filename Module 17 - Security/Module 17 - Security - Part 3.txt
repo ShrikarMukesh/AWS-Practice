@@ -1,0 +1,270 @@
+=======================
+Module 17 - Security - Part 3
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) AWS Network Firwall
+7) Amazon GuardDuty
+8) Amazon Cognito
+
+Part 4:
+---------
+9) Amazon Inspector
+10) Amazon Detective
+11) Amazon Macie
+12) Sharing S3 Buckets using Pre-Signed URLs or Cookies
+
+
+Part 5:
+---------
+13) KMS and CloudHSM
+
+Part 6:
+---------
+14) AWS Secrets Manager
+15) Parameter Store
+16) AWS Certificate Manager
+
+Part 7:
+---------
+17) AWS Audit Manager
+18) AWS Artifact
+19) AWS Security Hub
+
+Part 8:
+---------
+20) Security -  Tips
+Exam #16 - Security
+
+
+====================
+5) AWS Firewall Manager
+===================
+
+5.1) Firewall Manager - Introduction
+--------------------------------------------------
+=> Firewall Manager is a Security Management Service in one place.
+
+=> Firewall Manager allows you to centrally  setup and manage firewall rules across mutiple AWS accounts and mutiple applications in your AWS Organizations
+
+=> Using Firewall Manager, You can create the AWS WAF Rules for  CloudFront, API Gateway, Application Load Balancer etc.
+
+=> You can also mitigate DDoS attacks using Shield Advanced for your CloudFront , API Gateway, Application Load Balancer etc.
+
+=> Security Policy : common set of security rules
+	* WAF Rules ( ALB, CloudFront, API Gateway)
+	* Shield Advanced( ALB,CLB,NLB, CloudFront)
+	* Security groups(EC2)
+	* Network Firewall(VPC)
+	* Route 53 Resolver DNS Firewall. 
+
+=> With Firewall Manager, You set up your protections just once and the service automatically applies them across your accounts and resources, even as you add new accounts and new resources.
+
+=> To Use Firwall Manager, You accounts must be registered with AWS Organizations.
+
+5.2) Benefits of Firewall Manager
+--------------------------------------------
+  a) Helps to protect resources across accounts
+  b) Helps to protect all resources of a particular type, such as all CloudFront distributions
+  c) Helps to protect all resources with specific tags
+  d) Automatically adds protection to resources that are added to your account
+  e) Allows you to subscribe all member accounts in an AWS Organizations to AWS Shield Advanced
+  f) Allows you to apply security group rules to all member accounts
+  g) Lets you use your own rules, or purchase managed rules from AWS Marketplace
+
+
+WAF Vs Firewall Manager Vs Shiled
+============================
+=> WAF, Shield and Firewall Manager are used together for centalized protection.
+
+=> Define your Web ACL Rules in WAF.
+=> WAF alone is the right choice for Granular protection of your Resources.
+=> If you want to use AWS WAF across AWS Accounts , Centralize WAF Configuration and Automate the protection of new Resources then use Firewall manager with WAF.
+
+=> Shield Advanced adds the extra features on the top of WAF.
+=> If you are prone to frequent DDoS attacks the consider purchasing Shield Advanced.
+=> If you want deploy Shield Advanced across all of your AWS Accounts then use Firewall manager with Shield Advanced
+
+
+What is AWS Organizations?
+======================
+=> AWS Organizations is an account management service that enables you to consolidate multiple AWS accounts into an organization that you create and centrally manage. 
+
+=> AWS Organizations includes account management and consolidated billing capabilities that enable you to better meet the budgetary, security, and compliance needs of your business. 
+
+=> As an administrator of an organization, you can create accounts in your organization and invite existing accounts to join the organization.
+
+====================
+6) AWS Network Firwall
+===================
+
+6.1) Network Firwall - Introduction
+--------------------------------------------------
+=> Network Firwall is a managed service that makes it easy to deploy Physical Firewall Protection across your VPCs.
+
+=>Network Firwall has a Physical Infrastructure in AWS Data center that is managed by AWS. So no need to worry about management overheads.
+
+=>Network Firwall also provides Intrusion Prevention System(IPS) that gives you active traffic flow inspection.
+=> IPS - Detect the malicious activity and find a way to prevent that.
+
+=> AWS Network Firewall works with AWS Firwall Manager, So you can centrally manage Security Policies across existing and newly Created Accounts and VPCs.
+
+=> Network Firewall includes Firwall rules Engine that gives you complete control over your network traffic.
+
+6.2) Network Firwall - Use-Cases
+--------------------------------------------------
+a) Filter Internet Traffic:
+-------------------------------
+=> You can use methods like ACL Rules, Stateful Inspection,Protocal Dection and Intrusion Prevention to filter your internet traffic.
+
+b) Filter Outbound Traffic
+----------------------------------
+=> You can use Network Firwall to provide domain name , IP address and content-based outbound traffic filtering
+=> This will help you to stop possible data loss and block know malware communications
+
+c) Inspect VPC-to-VPC Traffic
+----------------------------------
+=> You can automatically Inspect traffic moving from One VPC to another VPC as well as across multiple accounts.
+
+
+===================
+7) Amazon GuardDuty
+===================
+
+7.1) GuardDuty - Introduction
+-----------------------------------------
+=> GuardDuty is a Threat Detection Service that uses AI and ML to continuously monitor the malicious behavior.
+
+a) Unusual API Calls
+b) Calls from Known malicious IP addresses
+c) Attempts to disable CloudTrail Logging***
+d) Unauthorized Deployments
+e) Compromised EC2 Instances
+f) Unusual Internal Traffic
+g) Port Scanning
+h) Failed Logins
+i) Potential EKS Cluster compromizes
+etc
+
+=> It takes 7-14 days to set baseline
+=> You can see Findings in the GuardDuty console and CloudWatch events
+
+=> Can Protect against Crypto Currency Attacks.*
+
+=> 30-days Free trail available and will be charged later based on the following
+	* Volume of CloudTrail Events
+	* Volume of DNS Logs
+	* Volume of VPC Flow Logs
+	etc
+
+
+7.2) GuardDuty - Features
+-----------------------------------------
+=> Centralize threat detection across multiple AWS Accounts.
+=> Findings appear in the GuardDuty console and CloudWatch events
+=> Automated Responses using CloudWatch events and Lambda
+=> Can receies the feed from third-parties line ProofPoint and CrowdStrike
+=> GuardDuty is a security monitoring service that analyzes and processes data sources, such as 
+	CloudTrail logs, 
+	EBS volume data, 
+	Kubernetes audit logs, 
+	VPC flow logs
+	RDS login activity
+	DNS Logs
+
+=================
+8) Amazon Congnito
+=================
+
+8.1) Introduction
+--------------------------
+=> Congnito provides Authentication , Authorization and User Management for your web apps and mobile apps in Single Service without writing the custom code.
+
+=> Your application Users can sign-in directly with username and password they have created in your applications.
+=> Your application Users can also sign-in through third-party (Facebook, Amazon,google,apple ).
+
+8.2) Cognito Features
+----------------------------
+=> Amazon Cognito provides the following features
+
+a) Sign-up and sign-in services for your apps.
+b) A built-in, customizable web UI to sign in users.
+c) Social sign-in with Facebook, Google, Amazon, Apple, 
+d) Access for Guest Users
+e) Security features such as multi-factor authentication (MFA), account takeover protection, and phone and email verification.
+etc
+
+8.3) Use-Cases:
+----------------------
+a) Authentication:
+------------------------
+=> Users can sign-in directly usin User Pool or through third-party Identity Provider  (Facebook, Amazon,google,apple).
+
+b) Third-Party Authetication:
+---------------------------------------
+=> Users can authenticate using Identity Pools that require Identity Provider Token(IdP token)
+
+c) Access Server-Side Resources:
+-------------------------------------------
+=> Signed-In User is given a token that allows the access to the resources that you specify.
+
+d) Access AWS AppSync Resources:
+----------------------------------------------
+=> Users can be given access to AppSync(GraphQL API) Resources with the tokens received from User Pool or Identity Pool in Cognito.
+
+
+8.4) Two Important components in Congnito
+------------------------------------------------------------
+=> There are two main components in Amazon Cognito 
+a) User Pools 
+b) Identity Pools. 
+
+=> You can use identity pools and user pools separately or together.
+
+a) User Pools:
+------------------
+=> User Pools are directories of users that provide sign-up and sign-in options for your app users. 
+
+b) Identity pools:
+-----------------------
+=> Identity pools allows you to grant your users the access to other AWS services.
+
+8.5) Cognito Flow:
+------------------------
+=> Cognito user pool and identity pool used together.
+
+***  Diagram **.
+
+Here the goal is to authenticate your user, and then grant your user access to another AWS service.
+
+a) Your App User signs in through a user pool and receives user pool tokens after a successful authentication.
+
+b) Your App exchanges the user pool tokens for AWS credentials through an identity pool.
+
+c) Your App User can then use AWS credentials to access other AWS services such as S3 or DynamoDB.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

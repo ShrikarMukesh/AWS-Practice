@@ -1,0 +1,201 @@
+=======================
+Module 17 - Security - Part 1
+=======================
+
+Part 1:
+---------
+1) AWS CloudTrail
+2) DDoS Overview
+
+Part 2:
+---------
+3) AWS Shield
+4) AWS WAF
+
+Part 3:
+---------
+5) AWS Firewall Manager
+6) Amazon GuardDuty
+7) Amazon Inspector
+8) Amazon Macie
+
+9) KMS and CloudHSM
+10) AWS Secrets Manager
+11) Parameter Store
+12) Advanced IAM Policy Documents
+13) AWS Certificate Manager
+14) AWS Audit Manager
+15) AWS Artifact
+16) Amazon Cognito
+17) Amazon Detective
+18) AWS Security Hub
+
+19) Security -  Tips
+Exam #16 - Security
+
+================
+1) AWS CloudTrail
+================
+
+1.1) CloudTrail Introduction
+----------------------------------------
+=> CloudTrail is an AWS service which provides governance, compliance and auditing for your AWS account. 
+=> Actions taken by a User, Role, or an AWS service are recorded as events in CloudTrail.
+=> Events include actions taken in the Console, CLI, SDKs and API Calls.
+
+=> Think of CloudTrail as CCTV monitoring for your AWS Account.
+
+=> CloudTrail is enabled on your AWS account by default.
+=> When activity occurs in your AWS account, that activity is recorded in a CloudTrail event. 
+
+=> You can store CloudTrail Logs/Events into S3 Bucket or CloudWatch Logs for longer retention period.
+
+=> Event/Log record contains the following
+	a) Metadata around API Calls
+	b) Identify of the API Caller
+	c) Time of API Call
+	d) Source IP Address of API Caller
+	e) Request Parameters
+	f) Response Elements returned by the Service
+	etc
+
+=> You can create two types of trails for an AWS account:
+   * Trail that applies to all regions
+   * Trail that applies to one region
+
+1.2) CloudTrail Events
+------------------------------
+=> There are 3 types of CloudTrail Events
+a) Management Events
+b) Data Events
+c) Insights Events
+
+a) Management Events
+-----------------------------
+=> Operations that are performed on Resources in your AWS Account
+=> These are also known as control plane operations
+    Ex:
+           *  Configure IAM Role
+           *  Configure SecurityGroup
+           *  Configure Subnet
+           *  Configure Network ACL
+	etc
+
+=> By Default, Trails are configured to log management events.
+=> These Events can be of two types
+         * Read Events ( that do not modify the resources)
+         * Write Events ( that modify the resources)
+
+b) Data Events
+--------------------
+=> These are also known as data plane operations.
+=> By Default, Data Events are not logged
+  Ex:
+       => S3 Object-Level Activity
+	* GetObject
+	* DeleteObject
+	* PutObject
+
+       => AWS Lambda Function Execution Activity
+	* Invoke API
+
+       => Amazon DynamoDB object-level API activity on Tables
+	* PutItem
+	* DeleteItem	
+	* UpdateItem
+
+c) Insights Events
+------------------------
+=> Insights Events capture unusual activity that is detected in your account. 
+=> If you Enable Insights Events then CloudTrail detects unusual activity.
+   Ex:
+     * Inaccurate Resource Provisoning
+     * Hitting Service Limits
+     * Gaps in the Periodic Maintainance activity
+
+=> CloudTrail Insights analyzes normal management events and create the baseline.
+=> And then continuously analyze Write Events to detect unusual activities.
+
+1.3) CloudTrail Event - Retention
+--------------------------------------------
+=> Events are stored in CloudTrail for 90 Days and will be deleted after 90 days.
+=> To keep the events for longer period, You can log them to S3 and Use Athena to analyze.
+
+1.4) CloudTrail - Demo
+-------------------------------
+=> Refer the Video and Write down the steps
+
+myjlc-demo-trail
+myjlc-cloud-trail-logs-bucket
+myjlc-cloud-trail-logs-group
+myjlc-cloud-trail-role
+
+================
+2) DDoS Overview
+================
+
+2.1) DDoS Introduction
+--------------------------------
+*** DDoS - Distributed Denial of Service.
+=> DDoS attack attempts to make your website or application Unavailable to end-user.
+
+=> DDoS attacks can be achieved by multiple mechanisams such as 
+	SYN Floods, Reflection/Amplification Attacks, Flood of Http Requests etc
+
+2.2) Layer-4 DDoS attacks
+----------------------------------
+=> Layer-4 DDoS attacks are offen referred as SYN Floods.
+=> It works at the Transport Layer.(TCP)
+
+=> To Establish a TCP Connection, 3-Way Handshake takes place.
+	a) Client Sends SYN packet to Server
+	b) Server Replies with SYN-ACK
+	c) Client Responds to that with ACK.
+
+=> After "3-Way Handshake" is complete, TCP Connection is established.
+
+=> After TCP Connection is established, 
+	* applications start sending data using Layer-7(Application Layer) Protocal such as Http etc
+
+SYN Floods:
+----------------
+
+*** Diagram ***
+
+=> SYN Flood uses the built-in patience of TCP Stack to drown the server by sending large number of SYN Packets and then Ignoring the SYN-ACKs returned to Server.
+
+=> This causes the server to use up the resources waiting for a set amout of time for the aniticipated ACK that should come from legitimate client.
+
+=> with this, there are so many concurrent TCP Connections open.
+
+=> So If Attacker send more SYN packets to server , it can easily eat through the allowed number of connections.
+
+=> This then prevents legimate user requests from being answered by the server.
+
+2.3) Amplification attacks
+----------------------------------
+
+*** Diagram ***
+
+=> Amplification/Reflection attacks can include things such as NTP, DNS, SNMP attcks.
+
+=> Attacker send the Third-Party Server ( such as NTP server, DNS server etc) requests using spoofed IP Address.
+
+=> Third-Party Server will respond to that request to the spoofed IP Adddress with greater payload than the initial request payload  
+
+=> This means that if the attcker sends the packet with 64 bytes, Third-Party Server would respond with upto 3,456 bytes of traffic.
+
+2.4) Layer-3 DDoS attacks
+----------------------------------
+=> Network volumetric attacks are also referred as the Layer-3 attacks 
+=> This is a sub category of infrastructure layer attack vectors. 
+=> These vectors attempt saturates the capacity of the targeted network or resource, to deny service to legitimate users.
+
+2.5) Layer-7 DDoS attacks
+----------------------------------
+*** Botnet - Network of computers infected by malware that are under the control of a single attacking party, 
+
+=> Layer-7 DDoS attack occurs when a Web server receives flood of Http Get or Post requests, usually from botnet or Large number of compromised computers
+
+*** Diagram ***
+

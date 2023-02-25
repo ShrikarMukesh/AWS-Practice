@@ -1,0 +1,77 @@
+=======================
+Module 18 - Serverless - Part 6
+=======================
+
+Part 1:
+---------
+1) Serverless Overview
+2) Exploring AWS Lambda
+
+Part 2:
+---------
+2) Exploring AWS Lambda(Conti..)
+
+Part 3:
+---------
+3) AWS Serverless Application Repository
+4) AWS AppRunner
+5) EventBridge
+
+Part 4:
+---------
+5) EventBridge(Conti..)
+
+Part 5:
+---------
+6) API Gateway ***
+
+Part 6:
+---------
+7) Step Functions
+
+Part 7:
+---------
+8) Serverless -  Exam Tips
+Exam #17 - Serverless 
+
+
+==============
+7) AWS Step Functions
+==============
+
+7.1) Introduction
+------------------------
+=> AWS Step Functions is a Serverless Service that allows you to orchestrate Lambda functions.
+
+=> A Reliable way to step through the Functions allows runs your applications in a particular order.
+=> Gives Visual workflows for distributed applications
+
+=> Allows you to configure State Machines using Amazon State Language.
+=> You can build State Machines using Step Functions
+=> State machine contains States.
+=> State machine is a workflow. 
+=> Each step in a workflow is a state.
+=> State in a workflow represents a single unit of work performed by another AWS service.
+=> Each State takes the Input and Produces the output 
+
+=> You can also create long-running, automated workflows for applications that require human interaction.
+
+7.2) Use-Cases
+----------------------
+1) We can design the Workflows/State Machines using Step Fenctions
+2) Long Running Business Processes that extend beyond the 15-minute life of a Lambda Function
+3) Can Involve in Human Approval
+4) Parallel execution of Lambda Functions
+5) Error Handling
+6) Retry-Logic
+
+=> AWS Offers two types of Workflows
+a) Standard workflow
+b) Express workflow
+
+
+7.3) Step Functions - Demo
+------------------------------------
+
+
+

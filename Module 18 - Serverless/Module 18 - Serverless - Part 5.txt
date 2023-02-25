@@ -1,0 +1,180 @@
+=======================
+Module 18 - Serverless - Part 5
+=======================
+
+Part 1:
+---------
+1) Serverless Overview
+2) Exploring AWS Lambda
+
+Part 2:
+---------
+2) Exploring AWS Lambda(Conti..)
+
+Part 3:
+---------
+3) AWS Serverless Application Repository
+4) AWS AppRunner
+5) EventBridge
+
+Part 4:
+---------
+5) EventBridge(Conti..)
+
+Part 5:
+---------
+6) API Gateway ***
+
+Part 6:
+---------
+7) Step Functions
+
+Part 7:
+---------
+8) Serverless -  Exam Tips
+Exam #17 - Serverless 
+
+==============
+6) API Gateway
+==============
+
+6.1) API Gateway - Introduction:
+-------------------------------------------
+=> API Gateway is Fully Managed , Highly Scalable and Serverless Service to build APIs
+
+=> Using API Gateway, you can create the following types of API
+a) HTTP API
+b) WebSocket API
+c) REST API
+d) REST API Private
+
+=> You can back the API Gateway with
+	* Custom Code via Lambda ( most commonly used one)
+	* Proxy for other AWS Service
+	* Any other Http API on AWS or elsewhere
+
+*** Diagram ***
+
+=> API Gateway makes it easy for developers to develop, publish, maintain, monitor, and secure APIs at any scale. 
+=> API Gateway is a Serverless Service i.e No worries about Infrastructure.
+
+=> Handles Security ( both Authentication and Autorization)
+
+=> Supports to Create API Keys, handles Request Throttling and Quotas
+
+=> Support for Swagger/ Open API import to define API quickly
+
+=> Validate Request and Responses
+
+=> Caches API Responses
+
+6.2) API Gateway - Endpoint Types
+----------------------------------------------
+
+=> API Gateway supports 3 types of Endpoints
+
+a) Edge-Optimized endpoints
+b) Regional Endpoints
+c) Private Endpoints
+
+a) Edge-Optimized endpoints:
+----------------------------------------
+=> Can be accessed from the Clients globally
+=> Requests are routed through the CloudFront edge locations
+=> API Gateway still lives in Only one Region
+
+b) Reginol Endpoints:
+----------------------------
+=> Can be accessed from the Clients within the Same Region
+=> Cloud Manually combine with CloudFront
+
+c) Private Endpoints:
+---------------------------
+=> Can be accessed from Your VPC only
+=> Use Resource Policy to define Access to the endpoints
+
+6.3) API Gateway - Integrations:
+-------------------------------------------
+a) Lambda Functions
+-----------------------------
+=> Invoke Lambda Function
+=> Easy way to Expose REST API backed by AWS Lambda
+=> Most common use-case
+
+b) HTTP:
+-----------
+=> Expose Http endpoints in the backend through the API Gateway
+Ex:
+	* Internal Http API in On-Premises
+	* Application Load Balancer
+	etc
+
+Q) Why we need to Expose Http endpoints through the API Gateway?
+Ans: 
+	Rate Limiting,
+	Caching
+	User Authentication,
+	API Keys
+	etc
+
+c) AWS Service:
+--------------------
+=> Expose any AWS API through the API Gateway
+Ex:
+	* Start AWS Step function workflow
+	* Post message to SQS
+	* Send SNS Notification
+	* Upload file to S3
+	etc
+
+Q) Why we need to Expose any AWS API through the API Gateway?
+Ans: 
+	Authentication, 
+	Rate Control, 
+	Deploy Publicly 
+	etc
+
+6.4) API Gateway - Security:
+--------------------------------------
+a) User Authentication:
+-----------------------------
+=> You can use IAM Roles for Internal Applications
+=> You can use Cognito for External Users( Web and Mobile Users)
+=> You can use Custom logic for Custom Authorizer
+
+b) Custom Domain Name- Https Security:
+------------------------------------------------------
+=> Integrates with AWS Centificate Manager(ACM) to enable https
+=> If you are using Edge-Optimized endpoint then cerificate must be in us-east-1
+=> If you are using Regional endpoint then cerificate must be in API Gateway region
+=> Must setup CNAME or ALIAS record in Route 53.
+
+6.5) API Gateway - Demo
+----------------------------------
+1) Makesure that One Lambda Function is ready.
+
+a) Lambda function Name : myjlc-lambda-1
+b) Runtime	:	python 3.7
+c) Lambda function Code as follows
+
+import json
+
+def lambda_handler(event, context):
+    body = "Hello Guys, Welcome to JLC- I am from myjlc-lambda-1";
+    statusCode = 200;
+   
+    print("myjlc-lambda-1 - called....");
+   
+    return {
+        'statusCode': statusCode,
+        'body': json.dumps(body)
+    }
+
+https://69ppldtd81.execute-api.us-east-1.amazonaws.com/dev-stage  => myjlc123.com
+https://69ppldtd81.execute-api.us-east-1.amazonaws.com/dev-stage/mycourses
+
+https://myjlc123.com/
+https://myjlc123.com/mycourses
+
+
+

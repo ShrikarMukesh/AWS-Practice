@@ -1,0 +1,395 @@
+==============================
+Module 16 - Machine Learning - Part 3
+==============================
+
+Part 1:
+---------
+1) Introduction to Machine Learning
+2) Amazon Comprehend
+3) Amazon Kendra
+4) Amazon Textract
+5) Amazon Forecast
+6) Amazon Fraud Detector
+
+Part 2:
+---------
+7) Amazon Transcribe
+8) Amazon Lex
+9) Amazon Polly
+10) Amazon Translate
+11) Amazon Rekognition***
+12) Amazon Sagemaker***
+
+Part 3:
+---------
+13) Machine Learning-  Tips
+Exam #15 - Machine Learning
+
+======================
+13) Machine Learning-  Tips
+=======================
+
+1) Amazon Comprehend
+===================
+=> Amazon Comprehend uses Natural Language Processing (NLP).
+=> Comprehend help you understand the Meaning and Sentiment  in the text.***
+
+Ex:
+*** You can understand whether people are saying Positive Things or Negative Things about your Product or Service.
+*** Twitter Conversations about your company.
+
+2) Amazon Kendra
+===================
+
+=> Amazon Kendra allows you to create Intelligent Search  Service powered by Machine Learning.
+=> Amazon Kendra  allows you to search unstructured and structured data from different sources like S3 Buckets, File Servers, Web sites, Data bases etc.
+=> Kendea allows your enterprise to have all the data Intelligently in One Place.
+
+3) Amazon Textract
+===================
+
+=> Textract uses Machine Learning to automatically extract Text , Hand-Writing and Data from Scanned Documents.
+
+=> Using Machine Learning and OCR (Optical Character Recognition) , Textract can process Text, Hand-Writing , Tables and more without Manual Intervention.
+
+=> You can quickly turn Text( such as Receipts, Applications Forms or Hand-Writtten Letters) into Data, which can be stored in AWS CLoud(may be Databases or S3 buckets)
+
+4) Amazon Forecast
+===================
+
+a) What is Time-Series Data:
+-------------------------------------
+=> Data points that are collected and logged over a Series of time
+
+Ex:
+a) Temperature Reading from weather stations around world for every hour
+14-Jan-23	6.30P.M 	44
+14-Jan-23	7.30P.M 	43
+14-Jan-23	8.30P.M 	40
+
+b) CPU Utilization from all the servers for every 10 minutes 
+14-Jan-23	6.30P.M	45%
+14-Jan-23	6.40P.M	46%
+14-Jan-23	6.50P.M	48%
+
+b) What is Amazon Forecast:
+-------------------------------------
+=> Amazon Forecast is a fully managed service that uses statistical and machine learning algorithms to analyze time-series data. 
+=> You can send your data to Amazon Forecast and It will automatically 
+	*** Learn your Time-Series Data , 
+	*** Select the right Machine Learning Algorithm 
+	*** then help you Forecast your data to get important business insights.
+
+5) Amazon Fraud Detector
+======================
+
+=> Amazon Fraud Detector is a fully managed AI  Service that automates the detection of  frauds in your Data. 
+
+=> These fraud  activities include unauthorized transactions and the creation of fake accounts etc
+
+6) Amazon Transcribe
+======================
+=> Powered by deep learning technologies, Amazon Transcribe is a fully managed automatic speech recognition service that automatically generates time-stamped text transcripts from audio files. 
+
+=> Amazon Transcribe is used to convert speech to text automatically.
+
+=> Amazon Transcribe makes it easy for developers to add speech-to-text capabilities to their applications.
+
+Ex:
+*** You can generate sub-titles on the fly.
+
+
+7) Amazon Lex
+======================
+
+=> Amazon Lex is an AWS service for building conversational interfaces for applications using voice and text 
+=> Lex uses Natural Language Understanding (NLU) and Automatic Speech Recognition (ASR).
+
+=> Chances are that when you are talking to an Automated bot online, You are intercating with Lex service on the Background.
+
+Ex:
+*** Calling American Airlines, tell to online bot  to cancel the flight and to initiate refund etc
+*** Calling Bank of America, tell to online bot to apply new Card, Block the Card etc
+
+
+8) Amazon Polly
+======================
+
+=> Polly turns your text into lifelike speech.
+=> Polly allows you to create applications that talk to customers using variety of languages and accents.
+
+
+=======================
+ Transcribe + Lex + Polly 
+========================
+Alexa uses Transcribe + Lex + Polly 
+
+=>When you speak to Alexa, following process happens
+A) Your Voice will be sent to Transcribe Service.
+B) Transcribe converts your voice to Text.
+C) Text will be sent to Lex Service.
+D) Lex Service decides what to respond and prepares the Response Text
+E) Lex Service send the Response Text to Polly.
+F) Polly converts that Text back to Voice.
+
+
+9) Amazon Translate
+======================
+
+=> Translate is a Machine Learning Service that allows you to automate Language Translations
+
+=> Using Deep Learning and Neural Networks, Amazon Translate allows you to Translate content from One Language to Another Language
+
+=> Easy to Integrate with your applications using APIs.
+
+10) Amazon Rekognition
+======================
+
+=> Rekognition is Amazon Computer Vision Product that automates the Recognition of pictures and Videos using 
+Deep Learning and Neural Networks.
+
+=> Rekognition allows you to analysis images and videos in your applications
+
+=> Rekognition allows you to identify objects, people, text, scenes, and activities in images and videos, as well as detect any inappropriate content. 
+
+
+11) Amazon SageMaker
+======================
+=> Amazon SageMaker is a fully managed machine learning service. 
+
+=> With SageMaker, data scientists and developers can build, train and deploy machine learning models.
+
+=> It provides an integrated Jupyter notebook instance for easy access to your data sources for exploration and analysis, so you don't have to manage servers. 
+
+=> It also provides common machine learning algorithms that are optimized to run efficiently against extremely large data in a distributed environment. 
+
+SageMaker Neo:
+----------------------
+=> Customize your Machine Learning Models for Specific hardware such as ARM, Intel and NVIDA Processors
+=> SageMaker Neo Includes a Compiler to convert the Machine Learning Model to an Environment that is optimized to execute the model on the targeted Architecture.
+
+Automatic Scaling:
+-------------------------
+=> SageMaker comes with Automatic Scaling
+=> Dynamically add and remove the Instances to the Production Variant based on the changes in the workloads
+=> You can define and apply the Scaling Policy that uses CloudWatch metrics.
+
+High Availability:
+--------------------
+=> You can run ML Container Hosts on Multi-AZ for High Availability
+
+=======================
+Exam #15 - Machine Learning
+=======================
+
+Q1) Which AWS service you can use to create machine learning models using Jupyter Notebooks?
+
+A) Amazon Comprehend
+
+B) Amazon Kendra
+
+C) Amazon SageMaker
+
+D) Amazon Textract
+
+Ans:  C
+
+
+Q2) What does Amazon Kendra allow you to do?
+
+A) To use natural language processing (NLP) to help you understand the meaning and sentiment in your text.
+
+B) To use machine learning to automatically extract text, handwriting, and data from scanned documents.
+
+C) To use a time-series forecasting service to generate important business insights.
+
+D) To create an intelligent search service powered by machine learning.
+
+Ans: D
+
+
+Q3) How would you use Amazon Forecast?
+
+A) To use natural language processing (NLP) to help you understand the meaning and sentiment in your text.
+
+B) To automatically extract text, handwriting, and data from scanned documents.
+
+C) To use a time-series forecasting service to generate important business insights.
+
+D) To predict the weather.
+
+Ans: C
+
+
+Q4) What would you use Amazon Textract for?
+
+A) For utilizing natural language processing (NLP) to help you understand the meaning and sentiment in your text.
+
+B) For applying machine learning to automatically extract text, handwriting, and data from scanned documents.
+
+C) For creating an intelligent search service powered by machine learning.
+
+D) For time-series forecasting to generate important business insights.
+
+Ans: B
+
+
+Q5) What would you use Amazon Comprehend for?
+
+A) To use machine learning to automatically extract text, handwriting, and data from scanned documents.
+
+B) To help you to create an intelligent search service powered by machine learning.
+
+C) To help you understand the meaning and sentiment in your text.
+
+D) To use machine learning to predict the weather.
+
+Ans: C
+
+
+Q6) Which AWS service you can use to translate one language to another?
+
+A) Amazon Kendra
+
+B) Amazon Translate
+
+C) Amazon Lex
+
+D) Amazon Comprehend
+
+Ans:  B
+
+
+Q7) Which AWS service uses machine learning and AI to recognize the content of images?
+
+A) Amazon Rekognition
+
+B) Amazon Lex
+
+C) Amazon Textract
+
+D) Amazon Polly
+
+Ans: A
+
+
+Q8) Which AWS AI and machine learning services are used to power the Alexa service?
+
+Choose 3
+
+A) Amazon Lex
+
+B) Amazon Transcribe
+
+C) Amazon Polly
+
+D) Amazon Comprehend
+
+Ans:  A, B, C
+
+
+Q9) What is Amazon Fraud Detector?
+
+A) An AI service that is used to perform vulnerability scans on EC2 instances.
+
+B) An AWS AI service that is built to detect fraud in your data.
+
+C) An AWS AI service that is used by fraudsters to prevent detection of fraudulent activity.
+
+D) An AWS AI service that is used to give you advice about how to save costs in your AWS account.
+
+Ans: B
+
+
+Q10) Which AWS service uses deep learning to convert speech to text?
+
+A) Amazon Lex
+
+B) Amazon Transcribe
+
+C) Amazon Polly
+
+D) Amazon Comprehend
+
+Ans: B
+
+
+Q11) Which AWS service uses machine learning to convert text to lifelike speech?
+
+A) Amazon Lex
+
+B) Amazon Transcribe
+
+C) Amazon Polly
+
+D) Amazon Comprehend
+
+Ans: C
+
+
+Q12) A company would like to implement a chatbot that will convert speech-to-text and recognize the customers' intentions. What service should it use?
+
+A) Amazon Lex
+
+B) Amazon Transcribe
+
+C) Amazon Polly
+
+D) Amazon Comprehend
+
+Ans: A
+
+
+Q13) A research team would like to group articles by topics using Natural Language Processing (NLP). Which service should they use?
+
+A) Amazon Lex
+
+B) Amazon Transcribe
+
+C) Amazon Rekognition
+
+D) Amazon Comprehend
+
+Ans: D
+
+
+Q14) A company would like to convert its documents into different languages, with natural and accurate wording. What should they use?
+
+A) Amazon Kendra
+
+B) Amazon Translate
+
+C) Amazon Lex
+
+D) Amazon Comprehend
+
+Ans: B
+
+
+Q15) A developer would like to build, train, and deploy a machine learning model quickly. Which service can he use?
+
+A) Amazon SageMaker
+
+B) Amazon Poly
+
+C) Amazon Rekognition
+
+D) Amazon Comprehend
+
+Ans: A
+
+
+Q16)  There is a requirement to find a solution that can automatically detect inappropriate and offensive images and videos and give you the ability to set a minimum confidence threshold for items that will be flagged and allows for manual review. Which AWS service can fit the requirement?
+
+A) Amazon SageMaker
+
+B) Amazon Poly
+
+C) Amazon Rekognition
+
+D) Amazon Comprehend
+
+Ans: C
+
+
+

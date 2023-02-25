@@ -1,0 +1,44 @@
+import json
+
+def lambda_handler(event, context):
+    
+   body = "Hello Guys, Welcome to JLC Courses !!!";
+   statusCode=200;
+   print("mycourse-home-lambda - Called from API Gateway");
+   print(event);
+
+   return {
+        'statusCode': statusCode,
+        'body': json.dumps(body),
+         "headers" : {
+           "Content-Type":"application/json"
+       }
+    }
+
+================================
+
+import json
+
+def lambda_handler(event, context):
+    
+   body = {
+       "mycourses" : [
+            {"courseId" : 101, "courseName" : "Master AWS", "price" : 15000, "trainer" : "Srinivas Dande" },
+            {"courseId" : 102, "courseName" : "Master DevOps", "price" : 15000, "trainer" : "Srinivas Dande" },   
+            {"courseId" : 103, "courseName" : "Master MicroServices", "price" : 15000, "trainer" : "Srinivas Dande" },   
+            {"courseId" : 104, "courseName" : "Master DSA", "price" : 15000, "trainer" : "Srinivas Dande" },   
+            {"courseId" : 105, "courseName" : "Master React JS", "price" : 15000, "trainer" : "Srinivas Dande" },   
+            {"courseId" : 106, "courseName" : "Master Angular", "price" : 15000, "trainer" : "Srinivas Dande" },   
+        ]
+       };
+   statusCode=200;
+   print("myall-courses-lambda - Called from API Gateway");
+   print(event);
+
+   return {
+        'statusCode': statusCode,
+        'body': json.dumps(body),
+         "headers" : {
+           "Content-Type":"application/json"
+       }
+    }
