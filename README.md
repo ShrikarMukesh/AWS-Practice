@@ -1,6 +1,23 @@
 ---
 
-# **AWS Practice – Services Explained**
+# **AWS – Services **
+
+---
+
+| Category             | Key AWS Services                            | What You Learn                          |
+| -------------------- | ------------------------------------------- | --------------------------------------- |
+| 🧠 Identity & Access | **IAM (Users, Roles, Policies)**            | Secure AWS resources                    |
+| 🌐 Networking        | **VPC, Subnets, Security Groups, Route 53** | Control networking and DNS              |
+| 💾 Storage           | **S3**                                      | Store static files, backups, app assets |
+| 🧮 Compute           | **EC2, Elastic Beanstalk, Lambda**          | Host microservices                      |
+| 🗃️ Database         | **RDS (MySQL/PostgreSQL)**, **DynamoDB**    | Use relational + NoSQL                  |
+| 🔒 Security          | **Secrets Manager, KMS, Cognito**           | Manage secrets & auth                   |
+| 📊 Monitoring        | **CloudWatch, X-Ray**                       | Logs, metrics, alerts                   |
+| 🚀 CI/CD             | **CodePipeline, CodeBuild, CodeDeploy**     | Automated deployments                   |
+| 🧱 Infra as Code     | **CloudFormation / Terraform**              | Automate infra provisioning             |
+| 📨 Messaging         | **SQS, SNS, EventBridge**                   | Decouple & scale background jobs        |
+| 🐳 Containers        | **ECS, Fargate, EKS**                       | Deploy containerized microservices      |
+
 
 ---
 
